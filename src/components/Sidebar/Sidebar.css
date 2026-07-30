@@ -12,7 +12,7 @@
 .sidebar-logo {
   font-size: 18px;
   font-weight: 600;
-  color: var(--color-green);
+  color: var(--app-accent);
   margin-bottom: var(--spacing-lg);
 }
 
@@ -28,7 +28,8 @@
   gap: var(--spacing-sm);
   padding: 10px 12px;
   border-radius: var(--radius-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-blue);
+  font-weight: 600;
   text-decoration: none;
   font-size: 14px;
 }

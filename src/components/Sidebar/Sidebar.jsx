@@ -20,7 +20,7 @@ function Sidebar() {
           const Icon = item.icon;
           return (
             <a key={item.path} href={item.path} className="sidebar-link">
-              <Icon size={20} />
+              <Icon size={20} color="var(--color-blue)" />
               <span>{item.label}</span>
             </a>
           );

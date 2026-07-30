@@ -57,7 +57,7 @@ function Commandes() {
         <tbody>
           {commandesFiltrees.map((c) => (
             <tr key={c.numero}>
-              <td>{c.numero}</td>
+              <td><span className="commandes-numero">{c.numero}</span></td>
               <td>{c.client}</td>
               <td>{c.montant}</td>
               <td>{c.mode}</td>

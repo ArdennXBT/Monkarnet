@@ -42,7 +42,10 @@ function Features() {
   return (
     <section className="ft-section" id="fonctionnalites">
       <div className="ft-intro">
-        <h2 className="ft-intro-title">Tout ce qu'il vous faut, au même endroit</h2>
+        <h2 className="ft-intro-title">
+  <span className="ft-intro-badge">Tout ce qu'il vous faut</span>{' '}
+  au même endroit
+</h2>
         <p className="ft-intro-subtitle">Fini le cahier, fini les messages perdus dans WhatsApp.</p>
       </div>
 

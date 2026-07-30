@@ -17,7 +17,7 @@ function Hero() {
             <span className="landing-title-highlight">enfin sous contrôle</span>
           </h1>
           <p className="landing-subtitle">
-            Fini le cahier et les messages perdus dans WhatsApp — tout votre commerce, au même endroit.
+           <strong>Fini le cahier et les messages perdus dans WhatsApp, tout votre commerce, au même endroit.</strong> 
           </p>
           <Link to="/login" className="landing-cta">Créer mon compte gratuit</Link>
         </Reveal>

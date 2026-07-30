@@ -33,6 +33,11 @@
   --font-main: 'Poppins', sans-serif;
   --color-status-green: #16A34A;
   --color-status-green-light: #EAFBEF;
+
+--app-primary: #12203D;
+--app-primary-light: #EDEFF3;
+--app-accent: #F5C518;
+--app-accent-text: #12203D;
 }
 
 * {
