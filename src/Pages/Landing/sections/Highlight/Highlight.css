@@ -4,21 +4,21 @@
 }
 
 .landing-highlight-title {
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.5;
   color: var(--color-text);
   letter-spacing: -0.02em;
   text-align: center;
-  max-width: 820px;
-  margin: 0 auto 48px;
+  max-width: 780px;
+  margin: 0 auto 40px;
 }
 
 .landing-highlight-badge {
   display: inline-block;
   background-color: var(--color-green);
   color: var(--color-white);
-  padding: 4px 14px;
+  padding: 3px 12px;
   border-radius: var(--radius-sm);
   font-weight: 700;
 }
@@ -53,7 +53,7 @@
 }
 
 .landing-highlight-value {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--color-text);
   letter-spacing: -0.02em;
@@ -61,7 +61,7 @@
 }
 
 .landing-highlight-label {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--color-text-secondary);
   line-height: 1.4;
   margin: 4px 0 0;
@@ -81,8 +81,8 @@
   }
 
   .landing-highlight-title {
-    font-size: 22px;
-    margin-bottom: 32px;
+    font-size: 15px;
+    margin-bottom: 28px;
   }
 
   .landing-highlight-grid {

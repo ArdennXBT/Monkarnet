@@ -71,13 +71,18 @@
 
 .landing-cta {
   display: inline-block;
-  background-color: var(--color-blue);
+  background: linear-gradient(135deg, #2F6B4E 0%, var(--color-green) 100%);
   color: var(--color-white);
   text-decoration: none;
   font-size: 15px;
   font-weight: 500;
   padding: 13px 28px;
   border-radius: var(--radius-pill);
+  transition: transform 0.2s ease;
+}
+
+.landing-cta:hover {
+  transform: scale(1.04);
 }
 
 /* --- Mobile --- */

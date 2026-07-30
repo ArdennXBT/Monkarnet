@@ -26,12 +26,17 @@
 }
 
 .landing-nav-login {
-  background-color: var(--color-blue);
+  background: linear-gradient(135deg, #2F6B4E 0%, var(--color-green) 100%);
   color: var(--color-white) !important;
   padding: 8px 18px;
   border-radius: var(--radius-pill);
   font-weight: 500;
   text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.landing-nav-login:hover {
+  transform: scale(1.04);
 }
 
 /* --- Mobile --- */
