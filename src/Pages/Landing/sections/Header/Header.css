@@ -26,19 +26,15 @@
 }
 
 .landing-nav-login {
-  background: linear-gradient(135deg, #2F6B4E 0%, var(--color-green) 100%);
+  background: var(--color-navy);
   color: var(--color-white) !important;
   padding: 8px 18px;
   border-radius: var(--radius-pill);
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   transition: transform 0.2s ease;
 }
-
-.landing-nav-login:hover {
-  transform: scale(1.04);
-}
-
+.landing-nav-login:hover { transform: scale(1.04); }
 /* --- Mobile --- */
 @media (max-width: 768px) {
   .landing-nav-link {

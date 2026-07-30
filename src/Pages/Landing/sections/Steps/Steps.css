@@ -42,8 +42,8 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm);
-  background-color: var(--color-green-light);
-  color: var(--color-green);
+  background-color: var(--color-navy-light);
+  color: var(--color-navy);
   display: flex;
   align-items: center;
   justify-content: center;

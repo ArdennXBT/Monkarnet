@@ -1,14 +1,15 @@
 
 .landing-faq {
-  padding: 80px var(--spacing-lg);
+  padding: var(--spacing-section) var(--spacing-lg);
   max-width: 700px;
   margin: 0 auto;
 }
 
 .landing-faq-title {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--color-text);
+  letter-spacing: -0.02em;
   text-align: center;
   margin: 0 0 var(--spacing-lg);
 }
@@ -28,8 +29,8 @@
 }
 
 .landing-faq-item-active {
-  background-color: var(--color-green-light);
-  border-color: var(--color-green);
+  background-color: var(--color-navy-light);
+  border-color: var(--color-navy);
 }
 
 .landing-faq-question {
@@ -49,7 +50,7 @@
 }
 
 .landing-faq-item-active .landing-faq-question {
-  color: var(--color-green);
+  color: var(--color-navy);
 }
 
 .landing-faq-question svg {
@@ -59,7 +60,7 @@
 }
 
 .landing-faq-item-active .landing-faq-question svg {
-  color: var(--color-green);
+  color: var(--color-navy);
 }
 
 .landing-faq-icon-open {
@@ -87,4 +88,15 @@
 
 .landing-faq-reponse-open p {
   margin-top: var(--spacing-sm);
+}
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  .landing-faq {
+    padding: var(--spacing-section-mobile) var(--spacing-lg);
+  }
+
+  .landing-faq-title {
+    font-size: 17px;
+  }
 }

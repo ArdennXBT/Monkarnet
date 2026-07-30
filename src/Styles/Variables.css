@@ -3,8 +3,13 @@
   /* Couleurs principales */
   --color-green: #1A3A2A;
   --color-green-light: #E8EFEA;
- --color-blue: #1E3A8A;
---color-blue-light: #E7ECF9;
+  --color-blue: #1E3A8A;
+  --color-blue-light: #E7ECF9;
+  --color-navy: #003D91;
+--color-navy-dark: #00234F;
+--color-navy-light: #E6EDF7;
+  --color-gold: #F4C52D;
+
   /* Neutres */
   --color-white: #FFFFFF;
   --color-bg-page: #F7F9FE;
