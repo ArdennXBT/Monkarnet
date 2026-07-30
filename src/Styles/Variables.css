@@ -1,0 +1,47 @@
+
+:root {
+  /* Couleurs principales */
+  --color-green: #1A3A2A;
+  --color-green-light: #E8EFEA;
+ --color-blue: #1E3A8A;
+--color-blue-light: #E7ECF9;
+  /* Neutres */
+  --color-white: #FFFFFF;
+  --color-bg-page: #F7F9FE;
+  --color-text: #1A1A18;
+  --color-text-secondary: #5F5E5A;
+  --color-border: #E9E7DF;
+
+  /* Rayons de bordure */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+
+  /* Espacements */
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-section: 64px;
+  --spacing-section-mobile: 40px;
+
+  /* Police */
+  --font-main: 'Poppins', sans-serif;
+  --color-status-green: #16A34A;
+  --color-status-green-light: #EAFBEF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--color-text);
+  background-color: var(--color-bg-page);
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-main);
+  letter-spacing: -0.02em;
+}

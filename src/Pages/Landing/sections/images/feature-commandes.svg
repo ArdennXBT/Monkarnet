@@ -1,0 +1,66 @@
+<svg width="520" height="400" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cmd-header" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EEF2FE"/>
+      <stop offset="100%" stop-color="#E1E9FE"/>
+    </linearGradient>
+    <linearGradient id="cmd-avatar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4A73F5"/>
+      <stop offset="100%" stop-color="#2246C9"/>
+    </linearGradient>
+    <linearGradient id="cmd-btn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3D68F0"/>
+      <stop offset="100%" stop-color="#2246C9"/>
+    </linearGradient>
+    <filter id="cmd-row-shadow" x="-20%" y="-40%" width="140%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#1A1A18" flood-opacity="0.06"/>
+    </filter>
+    <filter id="cmd-btn-shadow" x="-20%" y="-60%" width="140%" height="260%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#2246C9" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect x="20" y="20" width="480" height="360" rx="22" fill="#FFFFFF" stroke="#E9E7DF" stroke-width="1.5"/>
+
+  <path d="M20 42 Q20 20 42 20 H478 Q500 20 500 42 V92 H20 Z" fill="url(#cmd-header)"/>
+  <text x="44" y="60" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#0C447C">Commandes</text>
+  <text x="44" y="78" font-family="Arial, sans-serif" font-size="11" fill="#3D6FB8">4 commandes aujourd'hui</text>
+
+  <circle cx="460" cy="56" r="21" fill="url(#cmd-avatar)"/>
+  <text x="460" y="61" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">C</text>
+
+  <g filter="url(#cmd-row-shadow)">
+    <rect x="40" y="110" width="440" height="1" fill="#E9E7DF"/>
+  </g>
+
+  <text x="44" y="136" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#1A1A18">Awa Dossou</text>
+  <text x="44" y="152" font-family="Arial, sans-serif" font-size="11" fill="#888780">CMD-001 · 12 500 F</text>
+  <rect x="410" y="122" width="66" height="24" rx="12" fill="#EAF3EE"/>
+  <text x="443" y="138" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#27500A" text-anchor="middle">Livrée</text>
+
+  <line x1="44" y1="165" x2="476" y2="165" stroke="#F1EFE8" stroke-width="1"/>
+
+  <text x="44" y="191" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#1A1A18">Koffi Aza</text>
+  <text x="44" y="207" font-family="Arial, sans-serif" font-size="11" fill="#888780">CMD-002 · 8 000 F</text>
+  <rect x="398" y="177" width="78" height="24" rx="12" fill="#EEF2FE"/>
+  <text x="437" y="193" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#0C447C" text-anchor="middle">En cours</text>
+
+  <line x1="44" y1="220" x2="476" y2="220" stroke="#F1EFE8" stroke-width="1"/>
+
+  <text x="44" y="246" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#1A1A18">Fatou Bio</text>
+  <text x="44" y="262" font-family="Arial, sans-serif" font-size="11" fill="#888780">CMD-003 · 21 300 F</text>
+  <rect x="404" y="232" width="72" height="24" rx="12" fill="#FDEDEA"/>
+  <text x="440" y="248" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#791F1F" text-anchor="middle">En litige</text>
+
+  <line x1="44" y1="275" x2="476" y2="275" stroke="#F1EFE8" stroke-width="1"/>
+
+  <text x="44" y="301" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#1A1A18">Léa Sossou</text>
+  <text x="44" y="317" font-family="Arial, sans-serif" font-size="11" fill="#888780">CMD-004 · 5 500 F</text>
+  <rect x="390" y="287" width="86" height="24" rx="12" fill="#F1EFE8"/>
+  <text x="433" y="303" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#444441" text-anchor="middle">En attente</text>
+
+  <g filter="url(#cmd-btn-shadow)">
+    <rect x="44" y="335" width="432" height="32" rx="16" fill="url(#cmd-btn)"/>
+  </g>
+  <text x="260" y="356" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">Voir toutes les commandes</text>
+</svg>

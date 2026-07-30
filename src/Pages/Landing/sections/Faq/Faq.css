@@ -1,0 +1,90 @@
+
+.landing-faq {
+  padding: 80px var(--spacing-lg);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.landing-faq-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0 0 var(--spacing-lg);
+}
+
+.landing-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.landing-faq-item {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.landing-faq-item-active {
+  background-color: var(--color-green-light);
+  border-color: var(--color-green);
+}
+
+.landing-faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  color: var(--color-text);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.landing-faq-item-active .landing-faq-question {
+  color: var(--color-green);
+}
+
+.landing-faq-question svg {
+  color: var(--color-text-secondary);
+  transition: transform 0.3s ease, color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.landing-faq-item-active .landing-faq-question svg {
+  color: var(--color-green);
+}
+
+.landing-faq-icon-open {
+  transform: rotate(180deg);
+}
+
+/* La technique du dépliement fluide */
+.landing-faq-reponse-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.landing-faq-reponse-open {
+  grid-template-rows: 1fr;
+}
+
+.landing-faq-reponse-wrapper p {
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.landing-faq-reponse-open p {
+  margin-top: var(--spacing-sm);
+}

@@ -1,0 +1,100 @@
+
+.inscription {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-green-light);
+  padding: var(--spacing-lg) 0;
+}
+
+.inscription-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 420px;
+  text-align: center;
+}
+
+.inscription-logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-green);
+}
+
+.inscription-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: var(--spacing-md) 0 4px;
+}
+
+.inscription-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-lg);
+}
+
+.inscription-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  text-align: left;
+}
+
+.inscription-section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-green);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--spacing-sm);
+}
+
+.inscription-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inscription-form input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: var(--font-main);
+}
+
+.inscription-form input:focus {
+  outline: none;
+  border-color: var(--color-blue);
+}
+
+.inscription-submit {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  cursor: pointer;
+  margin-top: var(--spacing-sm);
+}
+
+.inscription-footer {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-lg);
+}
+
+.inscription-footer a {
+  color: var(--color-blue);
+  font-weight: 500;
+  text-decoration: none;
+}

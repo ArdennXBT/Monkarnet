@@ -1,0 +1,92 @@
+
+.souscomptes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+
+.souscomptes-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
+
+.souscomptes-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.souscomptes-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.souscomptes-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.souscomptes-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.souscomptes-card-info {
+  flex: 1;
+}
+
+.souscomptes-card-nom {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
+
+.souscomptes-card-date {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.souscomptes-card-permissions {
+  display: flex;
+  gap: 8px;
+}
+
+.souscomptes-badge {
+  background-color: var(--color-blue-light);
+  color: var(--color-blue);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.souscomptes-edit-btn {
+  background-color: var(--color-green-light);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  color: var(--color-green);
+  cursor: pointer;
+  display: flex;
+}
