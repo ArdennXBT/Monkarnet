@@ -26,8 +26,8 @@
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
-  --spacing-section: 64px;
-  --spacing-section-mobile: 40px;
+  --spacing-section: 56px;
+  --spacing-section-mobile: 32px;
 
   /* Police */
   --font-main: 'Poppins', sans-serif;
