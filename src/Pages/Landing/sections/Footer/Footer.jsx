@@ -32,10 +32,7 @@ function Footer() {
           <h4>Compte</h4>
           <Link to="/login">Connexion</Link>
           <Link to="/inscription">Inscription</Link>
-        </div>
-
-        <div className="landing-footer-col">
-          <h4>Légal</h4>
+          <h4 className="landing-footer-subheading">Légal</h4>
           <Link to="/mentions-legales">Mentions légales</Link>
           <Link to="/confidentialite">Politique de confidentialité</Link>
         </div>
