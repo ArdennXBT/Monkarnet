@@ -15,8 +15,7 @@ function Highlight() {
     <section className="landing-highlight">
       <Reveal>
         <h2 className="landing-highlight-title">
-          <span className="landing-highlight-badge">L'outil pensé pour les commerçants</span>
-          {' '}qui n'ont plus le temps de tout noter à la main.
+            L'outil pensé pour les commerçants qui n'ont plus le temps de tout noter à la main.
         </h2>
       </Reveal>
 

@@ -1,11 +1,17 @@
 
 import { Link } from 'react-router-dom';
+import { NotebookText } from 'lucide-react';
 import './Header.css';
 
 function Header() {
   return (
     <header className="landing-header">
-      <span className="landing-logo">Mon karnet</span>
+      <Link to="/" className="landing-logo">
+        <span className="landing-logo-icon">
+          <NotebookText size={18} />
+        </span>
+        Mon karnet
+      </Link>
       <nav className="landing-nav">
         <a href="#fonctionnalites" className="landing-nav-link"></a>
         <a href="#tarifs" className="landing-nav-link"></a>

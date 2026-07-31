@@ -1,5 +1,5 @@
 
-import { ClipboardList, Users, TrendingUp, Package, ArrowRight } from 'lucide-react';
+import { ClipboardList, Users, TrendingUp, Package } from 'lucide-react';
 import Reveal from '../../../../components/Reveal/Reveal';
 import './Features.css';
 
@@ -61,7 +61,7 @@ function Features() {
               <span className="ft-card-stat-value">{f.stat}</span> {f.statLabel}
             </p>
             <p className="ft-card-desc">{f.desc}</p>
-            <a href="#" className="ft-card-link">Explorer <ArrowRight size={15} /></a>
+            
           </Reveal>
         ))}
       </div>

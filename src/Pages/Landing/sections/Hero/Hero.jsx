@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import Reveal from '../../../../components/Reveal/Reveal';
+import heroMockup from '../../../../assets/hero-dashboard-mockup.png';
 import './Hero.css';
 
 function Hero() {
@@ -14,12 +15,14 @@ function Hero() {
           <span className="landing-badge">Gratuit pour les commerçants</span>
           <h1 className="landing-title">
             Vos ventes et vos livraisons,<br />
-            <span className="landing-title-highlight">enfin sous contrôle</span>
+            enfin sous contrôle
           </h1>
-          <p className="landing-subtitle">
-           <strong>Fini le cahier et les messages perdus dans WhatsApp, tout votre commerce, au même endroit.</strong> 
-          </p>
-          <Link to="/login" className="landing-cta">Créer mon compte gratuit</Link>
+          <img
+            src={heroMockup}
+            alt="Aperçu du tableau de bord Monkarnet"
+            className="landing-hero-image"
+          />
+          <Link to="/login" className="landing-cta">Commencer gratuitement</Link>
         </Reveal>
       </div>
     </section>

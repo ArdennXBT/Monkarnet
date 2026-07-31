@@ -8,9 +8,25 @@
 }
 
 .landing-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 18px;
-  font-weight: 600;
-  color: var(--color-green);
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.landing-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: var(--app-accent);
+  color: var(--color-navy);
 }
 
 .landing-nav {
@@ -35,6 +51,7 @@
   transition: transform 0.2s ease;
 }
 .landing-nav-login:hover { transform: scale(1.04); }
+
 /* --- Mobile --- */
 @media (max-width: 768px) {
   .landing-nav-link {
