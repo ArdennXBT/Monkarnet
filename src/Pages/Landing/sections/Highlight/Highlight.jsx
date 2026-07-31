@@ -15,7 +15,7 @@ function Highlight() {
     <section className="landing-highlight">
       <Reveal>
         <h2 className="landing-highlight-title">
-            L'outil pensé pour les commerçants qui n'ont plus le temps de tout noter à la main.
+            L'outil pensé pour les commerçants qui se retrouvent perdus après avoir noté toutes leurs ventes dans un cahier.
         </h2>
       </Reveal>
 
