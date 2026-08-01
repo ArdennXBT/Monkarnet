@@ -1,35 +1,152 @@
 
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { Plus, X, Trash2 } from 'lucide-react';
 import './Commandes.css';
 
-const commandesData = [
-  { numero: 'CMD-001', client: 'Awa Dossou', montant: '12 500 F', mode: 'Livraison', statut: 'Livrée', date: '28/07/2026' },
-  { numero: 'CMD-002', client: 'Koffi Aza', montant: '8 000 F', mode: 'Retrait', statut: 'En cours', date: '28/07/2026' },
-  { numero: 'CMD-003', client: 'Fatou Bio', montant: '21 300 F', mode: 'Livraison', statut: 'En litige', date: '27/07/2026' },
-  { numero: 'CMD-004', client: 'Léa Sossou', montant: '5 500 F', mode: 'Livraison', statut: 'En attente', date: '27/07/2026' },
-];
-
-const filtres = ['Toutes', 'En attente', 'En cours', 'Livrée', 'En litige'];
+const filtres = ['Toutes', 'en_attente', 'en_cours', 'livree', 'litige'];
+const filtreLabels = {
+  Toutes: 'Toutes',
+  en_attente: 'En attente',
+  en_cours: 'En cours',
+  livree: 'Livrée',
+  litige: 'En litige',
+};
 
 function statutClass(statut) {
-  if (statut === 'Livrée') return 'commandes-badge-green';
-  if (statut === 'En cours') return 'commandes-badge-blue';
-  if (statut === 'En litige') return 'commandes-badge-red';
+  if (statut === 'livree') return 'commandes-badge-green';
+  if (statut === 'en_cours') return 'commandes-badge-blue';
+  if (statut === 'litige') return 'commandes-badge-red';
   return 'commandes-badge-gray';
 }
 
 function Commandes() {
+  const [commandes, setCommandes] = useState([]);
+  const [produits, setProduits] = useState([]);
+  const [chargement, setChargement] = useState(true);
+  const [erreur, setErreur] = useState('');
   const [filtreActif, setFiltreActif] = useState('Toutes');
+  const [modalOuvert, setModalOuvert] = useState(false);
+
+  const [clientNom, setClientNom] = useState('');
+  const [clientTelephone, setClientTelephone] = useState('');
+  const [clientAdresse, setClientAdresse] = useState('');
+  const [lignesProduits, setLignesProduits] = useState([{ produit: '', quantite: 1 }]);
+
+  const token = localStorage.getItem('token');
+
+  const chargerDonnees = async () => {
+    try {
+      const [resCommandes, resProduits] = await Promise.all([
+        fetch('http://localhost:5000/api/commandes', {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        fetch('http://localhost:5000/api/produits', {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+      ]);
+
+      const dataCommandes = await resCommandes.json();
+      const dataProduits = await resProduits.json();
+
+      if (!resCommandes.ok) throw new Error(dataCommandes.message || 'Erreur commandes.');
+      if (!resProduits.ok) throw new Error(dataProduits.message || 'Erreur produits.');
+
+      setCommandes(dataCommandes);
+      setProduits(dataProduits);
+    } catch (err) {
+      setErreur(err.message);
+    } finally {
+      setChargement(false);
+    }
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    chargerDonnees();
+  }, []);
 
   const commandesFiltrees = filtreActif === 'Toutes'
-    ? commandesData
-    : commandesData.filter((c) => c.statut === filtreActif);
+    ? commandes
+    : commandes.filter((c) => c.statut === filtreActif);
+
+  const ajouterLigne = () => {
+    setLignesProduits([...lignesProduits, { produit: '', quantite: 1 }]);
+  };
+
+  const supprimerLigne = (index) => {
+    setLignesProduits(lignesProduits.filter((_, i) => i !== index));
+  };
+
+  const modifierLigne = (index, champ, valeur) => {
+    const nouvellesLignes = [...lignesProduits];
+    nouvellesLignes[index][champ] = valeur;
+    setLignesProduits(nouvellesLignes);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const produitsFormates = lignesProduits
+      .filter((l) => l.produit)
+      .map((l) => {
+        const produitInfo = produits.find((p) => p._id === l.produit);
+        return {
+          produit: l.produit,
+          quantite: Number(l.quantite),
+          prixUnitaire: produitInfo.prix,
+        };
+      });
+
+    if (produitsFormates.length === 0) {
+      setErreur('Ajoutez au moins un produit.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/commandes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          client: { nom: clientNom, telephone: clientTelephone, adresse: clientAdresse },
+          produits: produitsFormates,
+          statut: 'en_attente',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Erreur lors de la création de la commande.");
+      }
+
+      await chargerDonnees();
+      setModalOuvert(false);
+      setClientNom('');
+      setClientTelephone('');
+      setClientAdresse('');
+      setLignesProduits([{ produit: '', quantite: 1 }]);
+    } catch (err) {
+      setErreur(err.message);
+    }
+  };
 
   return (
     <div className="commandes">
-      <h1 className="commandes-title">Commandes</h1>
-      <p className="commandes-subtitle">Suivez et gérez toutes vos commandes.</p>
+      <div className="commandes-header">
+        <div>
+          <h1 className="commandes-title">Commandes</h1>
+          <p className="commandes-subtitle">Suivez et gérez toutes vos commandes.</p>
+        </div>
+        <button className="commandes-add-btn" onClick={() => setModalOuvert(true)}>
+          <Plus size={18} />
+          Nouvelle commande
+        </button>
+      </div>
+
+      {erreur && <p className="commandes-error">{erreur}</p>}
 
       <div className="commandes-filtres">
         {filtres.map((f) => (
@@ -38,35 +155,97 @@ function Commandes() {
             className={`commandes-filtre-btn ${filtreActif === f ? 'commandes-filtre-actif' : ''}`}
             onClick={() => setFiltreActif(f)}
           >
-            {f}
+            {filtreLabels[f]}
           </button>
         ))}
       </div>
 
-      <table className="commandes-table">
-        <thead>
-          <tr>
-            <th>Numéro</th>
-            <th>Client</th>
-            <th>Montant</th>
-            <th>Mode</th>
-            <th>Statut</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {commandesFiltrees.map((c) => (
-            <tr key={c.numero}>
-              <td><span className="commandes-numero">{c.numero}</span></td>
-              <td>{c.client}</td>
-              <td>{c.montant}</td>
-              <td>{c.mode}</td>
-              <td><span className={`commandes-badge ${statutClass(c.statut)}`}>{c.statut}</span></td>
-              <td>{c.date}</td>
+      {chargement ? (
+        <p className="commandes-loading">Chargement...</p>
+      ) : commandesFiltrees.length === 0 ? (
+        <p className="commandes-loading">Aucune commande pour l'instant.</p>
+      ) : (
+        <table className="commandes-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th>Date</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {commandesFiltrees.map((c) => (
+              <tr key={c._id}>
+                <td>{c.client?.nom}</td>
+                <td>{c.total.toLocaleString('fr-FR')} F</td>
+                <td><span className={`commandes-badge ${statutClass(c.statut)}`}>{filtreLabels[c.statut]}</span></td>
+                <td>{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {modalOuvert && (
+        <div className="commandes-modal-overlay" onClick={() => setModalOuvert(false)}>
+          <div className="commandes-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="commandes-modal-header">
+              <h2>Nouvelle commande</h2>
+              <button className="commandes-modal-close" onClick={() => setModalOuvert(false)}>
+                <X size={20} />
+              </button>
+            </div>
+            <form className="commandes-modal-form" onSubmit={handleSubmit}>
+              <label>
+                Nom du client
+                <input type="text" value={clientNom} onChange={(e) => setClientNom(e.target.value)} required />
+              </label>
+              <label>
+                Téléphone
+                <input type="tel" value={clientTelephone} onChange={(e) => setClientTelephone(e.target.value)} />
+              </label>
+              <label>
+                Adresse
+                <input type="text" value={clientAdresse} onChange={(e) => setClientAdresse(e.target.value)} />
+              </label>
+
+              <div className="commandes-modal-produits-label">Produits</div>
+              {lignesProduits.map((ligne, index) => (
+                <div key={index} className="commandes-modal-ligne">
+                  <select
+                    value={ligne.produit}
+                    onChange={(e) => modifierLigne(index, 'produit', e.target.value)}
+                    required
+                  >
+                    <option value="">Choisir un produit</option>
+                    {produits.map((p) => (
+                      <option key={p._id} value={p._id}>{p.nom} — {p.prix.toLocaleString('fr-FR')} F</option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    min="1"
+                    value={ligne.quantite}
+                    onChange={(e) => modifierLigne(index, 'quantite', e.target.value)}
+                    className="commandes-modal-qte"
+                  />
+                  {lignesProduits.length > 1 && (
+                    <button type="button" className="commandes-modal-remove" onClick={() => supprimerLigne(index)}>
+                      <Trash2 size={16} />
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button type="button" className="commandes-modal-add-ligne" onClick={ajouterLigne}>
+                + Ajouter un produit
+              </button>
+
+              <button type="submit" className="commandes-modal-submit">Créer la commande</button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

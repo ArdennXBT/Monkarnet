@@ -96,3 +96,166 @@
   color: var(--color-blue);
   font-weight: 600;
 }
+
+.commandes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.commandes-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.commandes-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.commandes-loading {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+}
+
+.commandes-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.commandes-modal {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 480px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.commandes-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.commandes-modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.commandes-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.commandes-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.commandes-modal-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.commandes-modal-form input,
+.commandes-modal-form select {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: var(--font-main);
+}
+
+.commandes-modal-form input:focus,
+.commandes-modal-form select:focus {
+  outline: none;
+  border-color: var(--color-navy);
+}
+
+.commandes-modal-produits-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 4px;
+}
+
+.commandes-modal-ligne {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.commandes-modal-ligne select {
+  flex: 1;
+}
+
+.commandes-modal-qte {
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.commandes-modal-remove {
+  background: none;
+  border: none;
+  color: #B3261E;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.commandes-modal-add-ligne {
+  background: none;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-family: var(--font-main);
+}
+
+.commandes-modal-submit {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+  margin-top: 4px;
+}

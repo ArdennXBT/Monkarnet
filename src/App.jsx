@@ -15,6 +15,7 @@ import AppLayout from './components/AppLayout/AppLayout';
 import Landing from './Pages/Landing/Landing';
 import Login from './Pages/Login/Login';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import RouteProtegee from './components/RouteProtegee/RouteProtegee';
 import './App.css';
 
 function App() {
@@ -26,7 +27,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/inscription" element={<Inscription />} />
         {/* Pages de l'espace Admin, avec sidebar/navbar */}
-        <Route element={<AppLayout />}>
+        <Route
+          element={
+            <RouteProtegee>
+              <AppLayout />
+            </RouteProtegee>
+          }
+        >
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/commandes" element={<Commandes />} />
           <Route path="/produits" element={<Produits />} />
@@ -34,12 +41,18 @@ function App() {
           <Route path="/sous-comptes" element={<SousComptes />} />
           <Route path="/profil" element={<Profil />} />
         </Route>
-        <Route element={<SuperAdminLayout />}>
-  <Route path="/admin/dashboard" element={<DashboardGlobal />} />
-  <Route path="/admin/commerces" element={<Commerces />} />
-  <Route path="/admin/paiements" element={<Paiements />} />
-  <Route path="/admin/notifications" element={<Notifications />} />
-</Route>
+        <Route
+          element={
+            <RouteProtegee>
+              <SuperAdminLayout />
+            </RouteProtegee>
+          }
+        >
+          <Route path="/admin/dashboard" element={<DashboardGlobal />} />
+          <Route path="/admin/commerces" element={<Commerces />} />
+          <Route path="/admin/paiements" element={<Paiements />} />
+          <Route path="/admin/notifications" element={<Notifications />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

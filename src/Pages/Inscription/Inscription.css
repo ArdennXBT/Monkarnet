@@ -168,3 +168,18 @@
   font-weight: 500;
   text-decoration: none;
 }
+
+.inscription-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+  text-align: left;
+}
+
+.inscription-google-btn {
+  display: flex;
+  justify-content: center;
+}

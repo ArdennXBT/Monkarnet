@@ -109,3 +109,18 @@
   font-size: 13px;
   color: var(--color-text-secondary);
 }
+
+.notifications-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.notifications-loading {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  padding: var(--spacing-md) 0;
+}

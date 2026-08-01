@@ -183,3 +183,19 @@
   color: var(--color-status-green);
   margin: 0;
 }
+
+.dashboard-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.dashboard-loading {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+}
