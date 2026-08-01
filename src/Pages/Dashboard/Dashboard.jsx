@@ -32,10 +32,10 @@ function Dashboard() {
   const chargerStats = async () => {
     try {
       const [resStats, resChart] = await Promise.all([
-        fetch('http://localhost:5000/api/stats', {
+        fetch('https://monkarnet-backend.onrender.com/api/stats', {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`http://localhost:5000/api/stats/chart?periode=${periodeCles[periode]}`, {
+        fetch(`https://monkarnet-backend.onrender.com/api/stats/chart?periode=${periodeCles[periode]}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);

@@ -12,7 +12,7 @@ function Commerces() {
   useEffect(() => {
     const chargerCommerces = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/superadmin/commerces', {
+        const response = await fetch('https://monkarnet-backend.onrender.com/api/superadmin/commerces', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();

@@ -37,10 +37,10 @@ function Commandes() {
   const chargerDonnees = async () => {
     try {
       const [resCommandes, resProduits] = await Promise.all([
-        fetch('http://localhost:5000/api/commandes', {
+        fetch('https://monkarnet-backend.onrender.com/api/commandes', {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch('http://localhost:5000/api/produits', {
+        fetch('https://monkarnet-backend.onrender.com/api/produits', {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -103,7 +103,7 @@ function Commandes() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/commandes', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/commandes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

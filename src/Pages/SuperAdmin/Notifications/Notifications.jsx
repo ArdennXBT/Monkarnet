@@ -14,7 +14,7 @@ function Notifications() {
 
   const chargerHistorique = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/notifications', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/notifications', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -44,7 +44,7 @@ function Notifications() {
     setErreur('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/notifications', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/notifications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

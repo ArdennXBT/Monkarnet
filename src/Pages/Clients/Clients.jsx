@@ -13,7 +13,7 @@ function Clients() {
   useEffect(() => {
     const chargerClients = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/clients', {
+        const response = await fetch('https://monkarnet-backend.onrender.com/api/clients', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();

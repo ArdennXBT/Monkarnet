@@ -20,7 +20,7 @@ function Produits() {
 
   const chargerProduits = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/produits', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/produits', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -48,7 +48,7 @@ function Produits() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/produits', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/produits', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ function Profil() {
   useEffect(() => {
     const chargerProfil = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/profil', {
+        const response = await fetch('https://monkarnet-backend.onrender.com/api/profil', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
@@ -54,7 +54,7 @@ function Profil() {
     setSucces('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/profil', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/profil', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

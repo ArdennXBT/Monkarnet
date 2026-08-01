@@ -14,7 +14,7 @@ function SousComptes() {
 
   const chargerSousComptes = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/sous-comptes', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/sous-comptes', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -41,7 +41,7 @@ function SousComptes() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/sous-comptes', {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/sous-comptes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ function SousComptes() {
 
   const handleSupprimer = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/sous-comptes/${id}`, {
+      const response = await fetch(`https://monkarnet-backend.onrender.com/api/sous-comptes/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });

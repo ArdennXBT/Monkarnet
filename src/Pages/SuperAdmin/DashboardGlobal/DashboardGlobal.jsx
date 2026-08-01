@@ -13,7 +13,7 @@ function DashboardGlobal() {
   useEffect(() => {
     const chargerStats = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/superadmin/stats', {
+        const response = await fetch('https://monkarnet-backend.onrender.com/api/superadmin/stats', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();

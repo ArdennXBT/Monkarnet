@@ -15,7 +15,7 @@ function Navbar() {
   useEffect(() => {
     const chargerNotifications = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/notifications/mes-notifications', {
+        const response = await fetch('https://monkarnet-backend.onrender.com/api/notifications/mes-notifications', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
