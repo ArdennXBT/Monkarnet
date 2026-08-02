@@ -203,21 +203,6 @@
   margin-right: var(--spacing-sm);
 }
 
-@media (max-width: 768px) {
-  .navbar-burger-btn {
-    display: block;
-  }
-
-  .navbar-search {
-    width: auto;
-    flex: 1;
-  }
-
-  .navbar-username {
-    display: none;
-  }
-}
-
 .navbar-commerce-block {
   display: flex;
   align-items: center;
@@ -225,11 +210,6 @@
   text-decoration: none;
   padding: 6px 10px;
   border-radius: var(--radius-sm);
-  transition: background-color 0.15s ease;
-}
-
-.navbar-commerce-block:hover {
-  background-color: var(--color-bg-page);
 }
 
 .navbar-commerce-photo {
@@ -278,7 +258,53 @@
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0 var(--spacing-sm);
+    gap: 8px;
+  }
+
+  .navbar-burger-btn {
+    display: block;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  .navbar-commerce-block {
+    flex: 1;
+    min-width: 0;
+    padding: 4px 6px;
+    gap: 8px;
+  }
+
+  .navbar-commerce-photo,
+  .navbar-commerce-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
   .navbar-commerce-texte {
+    min-width: 0;
+  }
+
+  .navbar-commerce-nom {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+  }
+
+  .navbar-commerce-role {
+    display: none;
+  }
+
+  .navbar-search {
+    width: auto;
+    flex: 1;
+  }
+
+  .navbar-username {
     display: none;
   }
 }

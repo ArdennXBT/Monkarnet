@@ -1,15 +1,13 @@
 
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Search, Bell, LogOut, Menu } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Search, Bell, Menu } from 'lucide-react';
 import { useCommercant } from '../../context/CommercantContext';
 import './Navbar.css';
 
 function Navbar({ onOuvrirMenu }) {
-  const [menuOuvert, setMenuOuvert] = useState(false);
   const [notifOuvert, setNotifOuvert] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const navigate = useNavigate();
   const location = useLocation();
   const { commercant } = useCommercant();
 
@@ -33,12 +31,6 @@ function Navbar({ onOuvrirMenu }) {
     chargerNotifications();
   }, [token]);
 
-  const handleDeconnexion = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('commercant');
-    navigate('/login');
-  };
-
   const initiale = commercant?.nomComplet?.charAt(0) || 'C';
 
   return (
@@ -48,7 +40,7 @@ function Navbar({ onOuvrirMenu }) {
       </button>
 
       {estSurDashboard ? (
-        <Link to="/profil" className="navbar-commerce-block">
+        <div className="navbar-commerce-block">
           {commercant?.photo ? (
             <img src={commercant.photo} alt="Photo du commerce" className="navbar-commerce-photo" />
           ) : (
@@ -60,7 +52,7 @@ function Navbar({ onOuvrirMenu }) {
               {commercant?.role === 'superadmin' ? 'Super Admin' : commercant?.role === 'sous-compte' ? 'Sous-compte' : 'Compte Admin'}
             </span>
           </div>
-        </Link>
+        </div>
       ) : (
         <div className="navbar-search">
           <Search size={18} />
@@ -88,25 +80,6 @@ function Navbar({ onOuvrirMenu }) {
                   </div>
                 ))
               )}
-            </div>
-          )}
-        </div>
-
-        <div className="navbar-profile-wrapper">
-          <button className="navbar-profile" onClick={() => setMenuOuvert(!menuOuvert)}>
-            {commercant?.photo ? (
-              <img src={commercant.photo} alt="Profil" className="navbar-avatar-img" />
-            ) : (
-              <div className="navbar-avatar">{initiale}</div>
-            )}
-            <span className="navbar-username">{commercant?.nomCommerce || 'Commerce'}</span>
-          </button>
-          {menuOuvert && (
-            <div className="navbar-dropdown">
-              <button className="navbar-dropdown-item" onClick={handleDeconnexion}>
-                <LogOut size={16} />
-                Se déconnecter
-              </button>
             </div>
           )}
         </div>

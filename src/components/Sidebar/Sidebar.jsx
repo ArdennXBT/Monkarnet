@@ -1,6 +1,6 @@
 
-import { Link } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, X, NotebookText } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, X, NotebookText, LogOut } from 'lucide-react';
 import './Sidebar.css';
 
 const menuItems = [
@@ -13,6 +13,14 @@ const menuItems = [
 ];
 
 function Sidebar({ ouverte, onFermer }) {
+  const navigate = useNavigate();
+
+  const handleDeconnexion = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('commercant');
+    navigate('/login');
+  };
+
   return (
     <aside className={`sidebar ${ouverte ? 'sidebar-ouverte' : ''}`}>
       <div className="sidebar-top">
@@ -36,6 +44,10 @@ function Sidebar({ ouverte, onFermer }) {
             </Link>
           );
         })}
+        <button className="sidebar-link sidebar-logout-btn" onClick={handleDeconnexion}>
+          <LogOut size={20} />
+          <span>Déconnexion</span>
+        </button>
       </nav>
     </aside>
   );
