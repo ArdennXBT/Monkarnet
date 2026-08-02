@@ -217,21 +217,16 @@
   }
 
   .dashboard-periode-switch {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     padding: 3px;
     margin-top: 4px;
-  }
-
-  .dashboard-periode-switch::-webkit-scrollbar {
-    display: none;
+    width: 100%;
   }
 
   .dashboard-periode-btn {
-    padding: 6px 10px;
+    flex: 1;
+    padding: 6px 4px;
     font-size: 12px;
     white-space: nowrap;
-    flex-shrink: 0;
   }
 
   .dashboard-stats {
