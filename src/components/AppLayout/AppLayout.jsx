@@ -17,7 +17,10 @@ function AppLayout() {
       )}
 
       <div className="app-layout-main">
-        <Navbar onOuvrirMenu={() => setSidebarOuverte(true)} />
+        <Navbar
+          menuOuvert={sidebarOuverte}
+          onToggleMenu={() => setSidebarOuverte((prev) => !prev)}
+        />
         <div className="app-layout-content">
           <Outlet />
         </div>
