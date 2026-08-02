@@ -16,6 +16,7 @@ import Landing from './Pages/Landing/Landing';
 import Login from './Pages/Login/Login';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import RouteProtegee from './components/RouteProtegee/RouteProtegee';
+import { CommercantProvider } from './context/CommercantContext';
 import './App.css';
 
 function App() {
@@ -30,7 +31,9 @@ function App() {
         <Route
           element={
             <RouteProtegee>
-              <AppLayout />
+              <CommercantProvider>
+                <AppLayout />
+              </CommercantProvider>
             </RouteProtegee>
           }
         >

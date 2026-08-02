@@ -1,49 +1,35 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useCommercant } from '../../context/CommercantContext';
 import './Profil.css';
 
 function Profil() {
-  const [profil, setProfil] = useState(null);
+  const { commercant, setCommercant, chargement } = useCommercant();
   const [formData, setFormData] = useState({
     nomCommerce: '',
     typeCommerce: '',
     adresse: '',
     telephone: '',
   });
-  const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
   const [succes, setSucces] = useState('');
+  const [uploadEnCours, setUploadEnCours] = useState(false);
+  const fileInputRef = useRef(null);
 
   const token = localStorage.getItem('token');
 
+  // Si les données du contexte arrivent après le premier rendu, on synchronise le formulaire
   useEffect(() => {
-    const chargerProfil = async () => {
-      try {
-        const response = await fetch('https://monkarnet-backend.onrender.com/api/profil', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.message || 'Erreur lors du chargement.');
-
-        setProfil(data);
-        setFormData({
-          nomCommerce: data.nomCommerce || '',
-          typeCommerce: data.typeCommerce || '',
-          adresse: data.adresse || '',
-          telephone: data.telephone || '',
-        });
-      } catch (err) {
-        setErreur(err.message);
-      } finally {
-        setChargement(false);
-      }
-    };
-
-    chargerProfil();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+    if (commercant) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setFormData({
+        nomCommerce: commercant.nomCommerce || '',
+        typeCommerce: commercant.typeCommerce || '',
+        adresse: commercant.adresse || '',
+        telephone: commercant.telephone || '',
+      });
+    }
+  }, [commercant]);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -67,14 +53,49 @@ function Profil() {
 
       if (!response.ok) throw new Error(data.message || 'Erreur lors de la mise à jour.');
 
-      setProfil(data);
+      setCommercant(data);
       setSucces('Informations mises à jour.');
     } catch (err) {
       setErreur(err.message);
     }
   };
 
-  if (chargement) {
+  const handlePhotoClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handlePhotoChange = async (e) => {
+    const fichier = e.target.files[0];
+    if (!fichier) return;
+
+    setErreur('');
+    setSucces('');
+    setUploadEnCours(true);
+
+    const formDataPhoto = new FormData();
+    formDataPhoto.append('photo', fichier);
+
+    try {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/profil/photo', {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formDataPhoto,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message || 'Erreur lors de l\'upload.');
+
+      setCommercant(data);
+      setSucces('Photo mise à jour.');
+    } catch (err) {
+      setErreur(err.message);
+    } finally {
+      setUploadEnCours(false);
+    }
+  };
+
+  if (chargement || !commercant) {
     return <p className="profil-loading">Chargement...</p>;
   }
 
@@ -84,10 +105,24 @@ function Profil() {
       <p className="profil-subtitle">Informations de votre commerce.</p>
 
       <div className="profil-card">
-        <div className="profil-avatar">{profil?.nomComplet?.charAt(0) || 'C'}</div>
+        <button className="profil-avatar-btn" onClick={handlePhotoClick} disabled={uploadEnCours}>
+          {commercant.photo ? (
+            <img src={commercant.photo} alt="Photo de profil" className="profil-avatar-img" />
+          ) : (
+            <div className="profil-avatar">{commercant.nomComplet?.charAt(0) || 'C'}</div>
+          )}
+          <span className="profil-avatar-overlay">{uploadEnCours ? '...' : 'Modifier'}</span>
+        </button>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handlePhotoChange}
+          style={{ display: 'none' }}
+        />
         <div>
-          <p className="profil-nom">{profil?.nomCommerce}</p>
-          <p className="profil-role">{profil?.role === 'superadmin' ? 'Super Admin' : profil?.role === 'sous-compte' ? 'Sous-compte' : 'Compte Admin'}</p>
+          <p className="profil-nom">{commercant.nomCommerce}</p>
+          <p className="profil-role">{commercant.role === 'superadmin' ? 'Super Admin' : commercant.role === 'sous-compte' ? 'Sous-compte' : 'Compte Admin'}</p>
         </div>
       </div>
 

@@ -1,7 +1,8 @@
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Search, Bell, LogOut, Menu } from 'lucide-react';
+import { useCommercant } from '../../context/CommercantContext';
 import './Navbar.css';
 
 function Navbar({ onOuvrirMenu }) {
@@ -9,6 +10,10 @@ function Navbar({ onOuvrirMenu }) {
   const [notifOuvert, setNotifOuvert] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { commercant } = useCommercant();
+
+  const estSurDashboard = location.pathname === '/dashboard';
 
   const token = localStorage.getItem('token');
 
@@ -34,16 +39,34 @@ function Navbar({ onOuvrirMenu }) {
     navigate('/login');
   };
 
+  const initiale = commercant?.nomComplet?.charAt(0) || 'C';
+
   return (
     <header className="navbar">
       <button className="navbar-burger-btn" onClick={onOuvrirMenu}>
         <Menu size={22} />
       </button>
 
-      <div className="navbar-search">
-        <Search size={18} />
-        <input type="text" placeholder="Rechercher une commande, un client..." />
-      </div>
+      {estSurDashboard ? (
+        <Link to="/profil" className="navbar-commerce-block">
+          {commercant?.photo ? (
+            <img src={commercant.photo} alt="Photo du commerce" className="navbar-commerce-photo" />
+          ) : (
+            <div className="navbar-commerce-avatar">{initiale}</div>
+          )}
+          <div className="navbar-commerce-texte">
+            <span className="navbar-commerce-nom">{commercant?.nomCommerce || 'Mon commerce'}</span>
+            <span className="navbar-commerce-role">
+              {commercant?.role === 'superadmin' ? 'Super Admin' : commercant?.role === 'sous-compte' ? 'Sous-compte' : 'Compte Admin'}
+            </span>
+          </div>
+        </Link>
+      ) : (
+        <div className="navbar-search">
+          <Search size={18} />
+          <input type="text" placeholder="Rechercher une commande, un client..." />
+        </div>
+      )}
 
       <div className="navbar-actions">
         <div className="navbar-notif-wrapper">
@@ -71,8 +94,12 @@ function Navbar({ onOuvrirMenu }) {
 
         <div className="navbar-profile-wrapper">
           <button className="navbar-profile" onClick={() => setMenuOuvert(!menuOuvert)}>
-            <div className="navbar-avatar">C</div>
-            <span className="navbar-username">Commerce</span>
+            {commercant?.photo ? (
+              <img src={commercant.photo} alt="Profil" className="navbar-avatar-img" />
+            ) : (
+              <div className="navbar-avatar">{initiale}</div>
+            )}
+            <span className="navbar-username">{commercant?.nomCommerce || 'Commerce'}</span>
           </button>
           {menuOuvert && (
             <div className="navbar-dropdown">
