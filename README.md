@@ -1,18 +1,110 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Modélisation des données
 
-Currently, two official plugins are available:
+```mermaid
+classDiagram
+    class Utilisateur {
+        +int id
+        +string nom
+        +string email
+        +string motDePasse
+        +string role
+        +seConnecter()
+        +seDeconnecter()
+    }
+    class SuperAdmin {
+        +voirStatistiquesGlobales()
+        +voirInscriptionsParPeriode()
+        +envoyerNotification()
+    }
+    class Admin {
+        +string nomCommerce
+        +string typeCommerce
+        +string categorie
+        +string adresse
+        +string telephone
+        +creerSousCompte()
+        +gererPermissions()
+        +voirStatistiques()
+        +voirActiviteSousComptes()
+    }
+    class SousCompte {
+        +json permissions
+        +date dateCreation
+        +enregistrerCommande()
+        +marquerLivree()
+    }
+    class Client {
+        +int id
+        +string nom
+        +string telephone
+        +string adresse
+        +historiqueCommandes()
+    }
+    class Commande {
+        +string numero
+        +float montantProduits
+        +float fraisLivraison
+        +float montantTotal
+        +string modeLivraison
+        +string lieuLivraison
+        +string statut
+        +date dateCommande
+        +calculerTotal()
+        +annuler()
+        +marquerLivree()
+    }
+    class LigneCommande {
+        +int quantite
+        +float prixUnitaire
+    }
+    class Produit {
+        +string nom
+        +float prix
+        +float coutPreparation
+    }
+    class Litige {
+        +string motif
+        +string statut
+        +date dateSignalement
+        +resoudre()
+    }
+    class Abonnement {
+        +string plan
+        +float prix
+        +date dateDebut
+        +date dateFin
+        +string statut
+        +activer()
+        +annuler()
+    }
+    class Paiement {
+        +float montant
+        +date datePaiement
+        +string moyenPaiement
+        +string statut
+    }
+    class Notification {
+        +string titre
+        +string message
+        +date dateEnvoi
+        +string cible
+        +envoyer()
+    }
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+    Utilisateur <|-- SuperAdmin
+    Utilisateur <|-- Admin
+    Utilisateur <|-- SousCompte
+    Admin "1" --> "0..*" SousCompte : cree
+    Admin "1" --> "0..*" Client : gere
+    Admin "1" --> "0..*" Produit : propose
+    Client "1" --> "0..*" Commande : passe
+    Commande "1" --> "1..*" LigneCommande : contient
+    LigneCommande "0..*" --> "1" Produit : concerne
+    Commande "1" --> "0..1" Litige : peut signaler
+    SousCompte "0..*" --> "0..*" Commande : enregistre
+    Admin "1" --> "1" Abonnement : possede
+    Abonnement "1" --> "0..*" Paiement : genere
+    SuperAdmin "1" --> "0..*" Notification : envoie
+    Notification "0..*" --> "0..*" Utilisateur : destinee a
+```
