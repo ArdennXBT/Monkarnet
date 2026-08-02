@@ -109,3 +109,18 @@
   background-color: #FDECEA;
   color: #B3261E;
 }
+
+.sidebar-superadmin-link {
+  color: var(--app-accent-text, #7A5B00);
+  background-color: rgba(245, 197, 24, 0.12);
+  margin-top: 4px;
+}
+
+.sidebar-superadmin-link svg {
+  color: #C9960C;
+}
+
+.sidebar-superadmin-link:hover {
+  background-color: rgba(245, 197, 24, 0.2);
+  color: var(--app-accent-text, #7A5B00);
+}

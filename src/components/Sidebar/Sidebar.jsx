@@ -1,6 +1,7 @@
 
 import { Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, X, NotebookText, LogOut } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, X, NotebookText, LogOut, ShieldCheck } from 'lucide-react';
+import { useCommercant } from '../../context/CommercantContext';
 import './Sidebar.css';
 
 const menuItems = [
@@ -14,6 +15,7 @@ const menuItems = [
 
 function Sidebar({ ouverte, onFermer }) {
   const navigate = useNavigate();
+  const { commercant } = useCommercant();
 
   const handleDeconnexion = () => {
     localStorage.removeItem('token');
@@ -44,6 +46,14 @@ function Sidebar({ ouverte, onFermer }) {
             </Link>
           );
         })}
+
+        {commercant?.role === 'superadmin' && (
+          <Link to="/admin/dashboard" className="sidebar-link sidebar-superadmin-link" onClick={onFermer}>
+            <ShieldCheck size={20} />
+            <span>Espace SuperAdmin</span>
+          </Link>
+        )}
+
         <button className="sidebar-link sidebar-logout-btn" onClick={handleDeconnexion}>
           <LogOut size={20} />
           <span>Déconnexion</span>
