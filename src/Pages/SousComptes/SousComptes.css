@@ -186,3 +186,35 @@
   cursor: pointer;
   margin-top: 4px;
 }
+
+@media (max-width: 768px) {
+  .souscomptes-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .souscomptes-title {
+    font-size: 20px;
+  }
+
+  .souscomptes-add-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .souscomptes-card {
+    flex-wrap: wrap;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+
+  .souscomptes-card-permissions {
+    flex-wrap: wrap;
+  }
+
+  .souscomptes-modal {
+    width: 92vw;
+    padding: var(--spacing-md);
+  }
+}

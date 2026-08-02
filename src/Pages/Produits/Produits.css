@@ -171,3 +171,29 @@
   cursor: pointer;
   margin-top: 4px;
 }
+
+@media (max-width: 768px) {
+  .produits-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .produits-title {
+    font-size: 20px;
+  }
+
+  .produits-add-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .produits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .produits-modal {
+    width: 92vw;
+    padding: var(--spacing-md);
+  }
+}

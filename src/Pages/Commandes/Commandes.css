@@ -259,3 +259,48 @@
   cursor: pointer;
   margin-top: 4px;
 }
+
+@media (max-width: 768px) {
+  .commandes-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .commandes-title {
+    font-size: 20px;
+  }
+
+  .commandes-add-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .commandes-filtres {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .commandes-filtres::-webkit-scrollbar {
+    display: none;
+  }
+
+  .commandes-filtre-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .commandes-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  .commandes-modal {
+    width: 92vw;
+    padding: var(--spacing-md);
+  }
+}
