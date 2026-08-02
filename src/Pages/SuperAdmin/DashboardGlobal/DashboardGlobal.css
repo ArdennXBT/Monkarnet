@@ -53,3 +53,30 @@
   text-align: center;
   padding: var(--spacing-lg) 0;
 }
+
+@media (max-width: 768px) {
+  .dashboardglobal-title {
+    font-size: 19px;
+  }
+
+  .dashboardglobal-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .dashboardglobal-card {
+    padding: 8px 6px;
+  }
+
+  .dashboardglobal-card-label {
+    font-size: 10px;
+    margin: 4px 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dashboardglobal-card-value {
+    font-size: 15px;
+  }
+}

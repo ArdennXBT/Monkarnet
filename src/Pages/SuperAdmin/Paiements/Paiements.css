@@ -45,3 +45,26 @@
   max-width: 380px;
   margin: 0 auto;
 }
+
+@media (max-width: 768px) {
+  .paiements-title {
+    font-size: 19px;
+  }
+
+  .paiements-empty {
+    padding: 32px var(--spacing-md);
+  }
+
+  .paiements-empty-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .paiements-empty-title {
+    font-size: 15px;
+  }
+
+  .paiements-empty-text {
+    font-size: 13px;
+  }
+}

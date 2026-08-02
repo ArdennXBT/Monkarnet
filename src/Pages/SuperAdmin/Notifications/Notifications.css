@@ -124,3 +124,24 @@
   font-size: 14px;
   padding: var(--spacing-md) 0;
 }
+
+@media (max-width: 768px) {
+  .notifications-title {
+    font-size: 19px;
+  }
+
+  .notifications-form-card {
+    max-width: 100%;
+    padding: var(--spacing-sm);
+  }
+
+  .notifications-history-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .notifications-history-date {
+    font-size: 12px;
+  }
+}

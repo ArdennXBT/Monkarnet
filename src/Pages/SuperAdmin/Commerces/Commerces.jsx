@@ -43,30 +43,32 @@ function Commerces() {
       ) : commerces.length === 0 ? (
         <p className="commerces-loading">Aucun commerce inscrit pour l'instant.</p>
       ) : (
-        <table className="commerces-table">
-          <thead>
-            <tr>
-              <th>Commerce</th>
-              <th>Type</th>
-              <th>Adresse</th>
-              <th>Inscrit le</th>
-              <th>Statut</th>
-            </tr>
-          </thead>
-          <tbody>
-            {commerces.map((c) => (
-              <tr key={c._id}>
-                <td>{c.nomCommerce}</td>
-                <td>{c.typeCommerce || 'Non renseigné'}</td>
-                <td>{c.adresse || 'Non renseignée'}</td>
-                <td>{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
-                <td>
-                  <span className="commerces-badge commerces-badge-green">Actif</span>
-                </td>
+        <div className="commerces-table-wrapper">
+          <table className="commerces-table">
+            <thead>
+              <tr>
+                <th>Commerce</th>
+                <th>Type</th>
+                <th>Adresse</th>
+                <th>Inscrit le</th>
+                <th>Statut</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {commerces.map((c) => (
+                <tr key={c._id}>
+                  <td>{c.nomCommerce}</td>
+                  <td>{c.typeCommerce || 'Non renseigné'}</td>
+                  <td>{c.adresse || 'Non renseignée'}</td>
+                  <td>{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
+                  <td>
+                    <span className="commerces-badge commerces-badge-green">Actif</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
