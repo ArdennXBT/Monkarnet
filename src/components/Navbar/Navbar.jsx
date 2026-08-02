@@ -1,10 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, LogOut } from 'lucide-react';
+import { Search, Bell, LogOut, Menu } from 'lucide-react';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ onOuvrirMenu }) {
   const [menuOuvert, setMenuOuvert] = useState(false);
   const [notifOuvert, setNotifOuvert] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -36,6 +36,10 @@ function Navbar() {
 
   return (
     <header className="navbar">
+      <button className="navbar-burger-btn" onClick={onOuvrirMenu}>
+        <Menu size={22} />
+      </button>
+
       <div className="navbar-search">
         <Search size={18} />
         <input type="text" placeholder="Rechercher une commande, un client..." />
