@@ -16,11 +16,12 @@
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+  padding: var(--spacing-lg);
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl, 32px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 .profil-avatar {
@@ -53,15 +54,18 @@
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 .profil-section-title {
   font-size: 15px;
   font-weight: 600;
   color: var(--color-text);
-  margin: 0 0 var(--spacing-md);
+  margin: 0 0 var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .profil-form {
@@ -99,12 +103,25 @@
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
-  padding: 10px 24px;
+  padding: 11px 28px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   font-family: var(--font-main);
   cursor: pointer;
   margin-top: 4px;
+  box-shadow: 0 4px 14px rgba(47, 95, 234, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.profil-save-btn:hover {
+  background-color: #2450C9;
+  box-shadow: 0 6px 18px rgba(47, 95, 234, 0.4);
+  transform: translateY(-1px);
+}
+
+.profil-save-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(47, 95, 234, 0.3);
 }
 
 .profil-plan-card {
@@ -158,4 +175,40 @@
   padding: 10px 12px;
   border-radius: var(--radius-sm);
   margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .profil-title {
+    font-size: 20px;
+  }
+
+  .profil-card {
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+  }
+
+  .profil-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 17px;
+  }
+
+  .profil-section {
+    padding: var(--spacing-md);
+  }
+
+  .profil-form {
+    max-width: 100%;
+  }
+
+  .profil-save-btn {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .profil-plan-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
 }
