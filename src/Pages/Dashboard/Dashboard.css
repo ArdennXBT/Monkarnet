@@ -200,20 +200,27 @@
   padding: var(--spacing-lg) 0;
 }
 
-
 @media (max-width: 768px) {
   .dashboard-header {
     flex-direction: column;
     align-items: stretch;
+    margin-bottom: var(--spacing-md);
   }
 
   .dashboard-title {
     font-size: 20px;
+    margin-bottom: 2px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 13px;
   }
 
   .dashboard-periode-switch {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    padding: 3px;
+    margin-top: 4px;
   }
 
   .dashboard-periode-switch::-webkit-scrollbar {
@@ -221,7 +228,7 @@
   }
 
   .dashboard-periode-btn {
-    padding: 8px 12px;
+    padding: 6px 10px;
     font-size: 12px;
     white-space: nowrap;
     flex-shrink: 0;
