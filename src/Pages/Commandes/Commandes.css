@@ -335,7 +335,7 @@
 @media (max-width: 768px) {
   .commandes-header {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     gap: var(--spacing-sm);
   }
 
@@ -344,8 +344,8 @@
   }
 
   .commandes-add-btn {
-    justify-content: center;
-    width: 100%;
+    padding: 9px 18px;
+    font-size: 13px;
   }
 
   .commandes-filtres {
@@ -364,56 +364,23 @@
   }
 
   .commandes-table-wrapper {
-    overflow-x: visible;
-  }
-
-  .commandes-table thead {
-    display: none;
-  }
-
-  .commandes-table,
-  .commandes-table tbody,
-  .commandes-table tr,
-  .commandes-table td {
-    display: block;
-    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
   }
 
   .commandes-table {
-    min-width: 0;
+    min-width: 560px;
     border: none;
-    background: none;
+    border-radius: 0;
   }
 
-  .commandes-table tr {
-    background-color: var(--color-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin-bottom: 10px;
-  }
-
+  .commandes-table th,
   .commandes-table td {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--color-border);
+    padding: 10px 12px;
     font-size: 13px;
-  }
-
-  .commandes-table td:last-child {
-    border-bottom: none;
-  }
-
-  .commandes-table td::before {
-    content: attr(data-label);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    flex-shrink: 0;
-    margin-right: 10px;
+    white-space: nowrap;
   }
 
   .commandes-modal {

@@ -217,10 +217,10 @@ function Commandes() {
             <tbody>
               {commandesFiltrees.map((c) => (
                 <tr key={c._id}>
-                  <td data-label="N°"><span className="commandes-numero">{c.numero || '—'}</span></td>
-                  <td data-label="Client">{c.client?.nom}</td>
-                  <td data-label="Montant">{c.total.toLocaleString('fr-FR')} F</td>
-                  <td data-label="Statut">
+                 <td><span className="commandes-numero">{c.numero || '—'}</span></td>
+                  <td>{c.client?.nom}</td>
+                  <td>{c.total.toLocaleString('fr-FR')} F</td>
+                  <td>
                     <select
                       className={`commandes-statut-select ${statutClass(c.statut)}`}
                       value={c.statut}
@@ -231,7 +231,7 @@ function Commandes() {
                       ))}
                     </select>
                   </td>
-                  <td data-label="Date">{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
+                  <td>{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
                 </tr>
               ))}
             </tbody>
