@@ -218,7 +218,7 @@ function Commandes() {
             <tbody>
               {commandesFiltrees.map((c) => (
                 <tr key={c._id}>
-                  <td>{c.numero}</td>
+                  <td><span className="commandes-numero">{c.numero}</span></td>
                   <td>{c.client?.nom}</td>
                   <td>{c.total.toLocaleString('fr-FR')} F</td>
                   <td>
