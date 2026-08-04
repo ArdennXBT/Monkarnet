@@ -198,71 +198,45 @@ function Commandes() {
         ))}
       </div>
 
-        {chargement ? (
+      {chargement ? (
         <p className="commandes-loading">Chargement...</p>
       ) : commandesFiltrees.length === 0 ? (
         <p className="commandes-loading">Aucune commande pour l'instant.</p>
       ) : (
-        <>
-          <div className="commandes-table-wrapper commandes-desktop-only">
-            <table className="commandes-table">
-              <thead>
-                <tr>
-                  <th>N°</th>
-                  <th>Client</th>
-                  <th>Montant</th>
-                  <th>Statut</th>
-                  <th>Date</th>
+        <div className="commandes-table-wrapper">
+          <table className="commandes-table">
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Client</th>
+                <th>Montant</th>
+                <th>Statut</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {commandesFiltrees.map((c) => (
+                <tr key={c._id}>
+                  <td><span className="commandes-numero">{c.numero || '—'}</span></td>
+                  <td>{c.client?.nom}</td>
+                  <td>{c.total.toLocaleString('fr-FR')} F</td>
+                  <td>
+                    <select
+                      className={`commandes-statut-select ${statutClass(c.statut)}`}
+                      value={c.statut}
+                      onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                    >
+                      {statutsPossibles.map((s) => (
+                        <option key={s} value={s}>{filtreLabels[s]}</option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {commandesFiltrees.map((c) => (
-                  <tr key={c._id}>
-                    <td><span className="commandes-numero">{c.numero || '—'}</span></td>
-                    <td>{c.client?.nom}</td>
-                    <td>{c.total.toLocaleString('fr-FR')} F</td>
-                    <td>
-                      <select
-                        className={`commandes-statut-select ${statutClass(c.statut)}`}
-                        value={c.statut}
-                        onChange={(e) => handleChangerStatut(c._id, e.target.value)}
-                      >
-                        {statutsPossibles.map((s) => (
-                          <option key={s} value={s}>{filtreLabels[s]}</option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="commandes-cards commandes-mobile-only">
-            {commandesFiltrees.map((c) => (
-              <div className="commande-card" key={c._id}>
-                <div className="commande-card-top">
-                  <span className="commandes-numero">{c.numero || '—'}</span>
-                  <span className="commande-card-date">{new Date(c.createdAt).toLocaleDateString('fr-FR')}</span>
-                </div>
-                <div className="commande-card-client">{c.client?.nom}</div>
-                <div className="commande-card-bottom">
-                  <span className="commande-card-montant">{c.total.toLocaleString('fr-FR')} F</span>
-                  <select
-                    className={`commandes-statut-select ${statutClass(c.statut)}`}
-                    value={c.statut}
-                    onChange={(e) => handleChangerStatut(c._id, e.target.value)}
-                  >
-                    {statutsPossibles.map((s) => (
-                      <option key={s} value={s}>{filtreLabels[s]}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {modalOuvert && (
