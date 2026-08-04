@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Plus, X, Trash2, Calendar, ChevronDown } from 'lucide-react';
 import './Commandes.css';
@@ -35,7 +36,7 @@ function Commandes() {
   const [filtreActif, setFiltreActif] = useState('Toutes');
   const [modalOuvert, setModalOuvert] = useState(false);
 
-  // === NOUVEAU : période ===
+  // Période
   const [periode, setPeriode] = useState('aujourdhui');
   const [dateCustom, setDateCustom] = useState(() => new Date().toISOString().split('T')[0]);
   const [menuPeriodeOuvert, setMenuPeriodeOuvert] = useState(false);
@@ -48,7 +49,7 @@ function Commandes() {
 
   const token = localStorage.getItem('token');
 
-  // Fermer le menu période si on clique dehors
+  // Fermer le menu si on clique dehors
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (periodeRef.current && !periodeRef.current.contains(e.target)) {
@@ -89,7 +90,7 @@ function Commandes() {
     chargerDonnees();
   }, []);
 
-  // === Filtrage par période ===
+  // Filtrage par période
   const getDateRange = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -253,11 +254,56 @@ function Commandes() {
 
   return (
     <div className="commandes">
+      {/* ========== HEADER ========== */}
       <div className="commandes-header">
-        <div>
+        <div className="commandes-header-top">
           <h1 className="commandes-title">Commandes</h1>
-          <p className="commandes-subtitle">Suivez et gérez toutes vos commandes.</p>
+
+          {/* Sélecteur de période - coin droit sur la même ligne que le titre */}
+          <div className="commandes-periode" ref={periodeRef}>
+            <button
+              className="commandes-periode-btn"
+              onClick={() => setMenuPeriodeOuvert(!menuPeriodeOuvert)}
+            >
+              <Calendar size={14} />
+              <span>{labelPeriodeAffiche}</span>
+              <ChevronDown size={14} className={menuPeriodeOuvert ? 'rotate' : ''} />
+            </button>
+
+            {menuPeriodeOuvert && (
+              <div className="commandes-periode-menu">
+                {Object.entries(periodeLabels).map(([key, label]) => (
+                  <button
+                    key={key}
+                    className={periode === key ? 'actif' : ''}
+                    onClick={() => {
+                      setPeriode(key);
+                      setMenuPeriodeOuvert(false);
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+
+                <div className="commandes-periode-custom">
+                  <span>Choisir une date</span>
+                  <input
+                    type="date"
+                    value={dateCustom}
+                    onChange={(e) => {
+                      setDateCustom(e.target.value);
+                      setPeriode('custom');
+                      setMenuPeriodeOuvert(false);
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
+
+        <p className="commandes-subtitle">Suivez et gérez toutes vos commandes.</p>
+
         <button className="commandes-add-btn" onClick={() => setModalOuvert(true)}>
           <Plus size={18} />
           Nouvelle commande
@@ -265,48 +311,6 @@ function Commandes() {
       </div>
 
       {erreur && <p className="commandes-error">{erreur}</p>}
-
-      {/* ========== SÉLECTEUR DE PÉRIODE ========== */}
-      <div className="commandes-periode" ref={periodeRef}>
-        <button
-          className="commandes-periode-btn"
-          onClick={() => setMenuPeriodeOuvert(!menuPeriodeOuvert)}
-        >
-          <Calendar size={16} />
-          <span>{labelPeriodeAffiche}</span>
-          <ChevronDown size={16} className={menuPeriodeOuvert ? 'rotate' : ''} />
-        </button>
-
-        {menuPeriodeOuvert && (
-          <div className="commandes-periode-menu">
-            {Object.entries(periodeLabels).map(([key, label]) => (
-              <button
-                key={key}
-                className={periode === key ? 'actif' : ''}
-                onClick={() => {
-                  setPeriode(key);
-                  setMenuPeriodeOuvert(false);
-                }}
-              >
-                {label}
-              </button>
-            ))}
-
-            <div className="commandes-periode-custom">
-              <span>Choisir une date</span>
-              <input
-                type="date"
-                value={dateCustom}
-                onChange={(e) => {
-                  setDateCustom(e.target.value);
-                  setPeriode('custom');
-                  setMenuPeriodeOuvert(false);
-                }}
-              />
-            </div>
-          </div>
-        )}
-      </div>
 
       {/* ========== FILTRES STATUT ========== */}
       <div className="commandes-filtres">

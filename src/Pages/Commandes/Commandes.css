@@ -1,41 +1,55 @@
+/* ========== HEADER ========== */
+.commandes-header {
+  margin-bottom: 20px;
+}
+
+.commandes-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
 .commandes-title {
   font-size: 24px;
   font-weight: 600;
   color: var(--color-text);
-  margin: 0 0 4px;
+  margin: 0;
 }
 
 .commandes-subtitle {
   font-size: 14px;
   color: var(--color-text-secondary);
-  margin: 0 0 var(--spacing-lg);
+  margin: 0 0 16px;
 }
 
 /* ========== SÉLECTEUR DE PÉRIODE ========== */
 .commandes-periode {
   position: relative;
-  margin-bottom: 16px;
-  display: inline-block;
+  flex-shrink: 0;
 }
 
 .commandes-periode-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 9px 14px;
-  font-size: 14px;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 12.5px;
   font-weight: 500;
   font-family: var(--font-main);
-  color: var(--color-text);
+  color: var(--color-text-secondary);
   cursor: pointer;
-  transition: border-color 0.15s ease;
+  white-space: nowrap;
+  transition: all 0.15s ease;
 }
 
 .commandes-periode-btn:hover {
   border-color: var(--color-navy);
+  color: var(--color-text);
 }
 
 .commandes-periode-btn .rotate {
@@ -46,14 +60,14 @@
 .commandes-periode-menu {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
+  right: 0;
   background: var(--color-white);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   padding: 6px;
   z-index: 50;
-  min-width: 200px;
+  min-width: 180px;
 }
 
 .commandes-periode-menu button {
@@ -62,11 +76,11 @@
   text-align: left;
   background: none;
   border: none;
-  padding: 9px 12px;
-  font-size: 14px;
+  padding: 8px 12px;
+  font-size: 13px;
   font-family: var(--font-main);
   color: var(--color-text);
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -82,27 +96,43 @@
 
 .commandes-periode-custom {
   border-top: 1px solid var(--color-border);
-  margin-top: 6px;
-  padding: 10px 12px 6px;
+  margin-top: 4px;
+  padding: 8px 12px 4px;
 }
 
 .commandes-periode-custom span {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--color-text-secondary);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .commandes-periode-custom input[type="date"] {
   width: 100%;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 8px 10px;
-  font-size: 14px;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
   font-family: var(--font-main);
 }
 
-/* ========== FILTRES STATUT ========== */
+/* Bouton Nouvelle commande (desktop) */
+.commandes-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+/* ========== FILTRES ========== */
 .commandes-filtres {
   display: flex;
   gap: 8px;
@@ -278,29 +308,6 @@
 .commandes-badge-red.commandes-statut-select {
   background-color: #FDEDEA;
   color: #C0392B;
-}
-
-/* Header + bouton */
-.commandes-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.commandes-add-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background-color: var(--color-navy);
-  color: var(--color-white);
-  border: none;
-  border-radius: 999px;
-  padding: 10px 18px;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: var(--font-main);
-  cursor: pointer;
 }
 
 .commandes-error {
@@ -487,10 +494,8 @@
 
 /* ========== MOBILE ========== */
 @media (max-width: 768px) {
-  .commandes-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .commandes-header-top {
+    margin-bottom: 2px;
   }
 
   .commandes-title {
@@ -499,28 +504,27 @@
 
   .commandes-subtitle {
     font-size: 13px;
-    margin-bottom: 0;
-  }
-
-  .commandes-add-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 11px 16px;
-    font-size: 14px;
-    border-radius: 12px;
-  }
-
-  .commandes-periode {
-    width: 100%;
+    margin-bottom: 12px;
   }
 
   .commandes-periode-btn {
+    padding: 5px 9px;
+    font-size: 12px;
+  }
+
+  /* Bouton qui respire bien sur mobile */
+  .commandes-add-btn {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    padding: 14px 20px;          /* ← plus d’air vertical */
+    font-size: 15px;
+    min-height: 48px;
+    border-radius: 999px;
   }
 
   .commandes-periode-menu {
-    width: 100%;
+    right: 0;
+    left: auto;
   }
 
   .commandes-filtres {
