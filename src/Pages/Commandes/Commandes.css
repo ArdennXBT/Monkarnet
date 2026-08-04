@@ -11,6 +11,98 @@
   margin: 0 0 var(--spacing-lg);
 }
 
+/* ========== SÉLECTEUR DE PÉRIODE ========== */
+.commandes-periode {
+  position: relative;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.commandes-periode-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.commandes-periode-btn:hover {
+  border-color: var(--color-navy);
+}
+
+.commandes-periode-btn .rotate {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+}
+
+.commandes-periode-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  z-index: 50;
+  min-width: 200px;
+}
+
+.commandes-periode-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: var(--font-main);
+  color: var(--color-text);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.commandes-periode-menu button:hover {
+  background-color: #f5f5f5;
+}
+
+.commandes-periode-menu button.actif {
+  background-color: var(--app-accent);
+  color: var(--app-accent-text);
+  font-weight: 500;
+}
+
+.commandes-periode-custom {
+  border-top: 1px solid var(--color-border);
+  margin-top: 6px;
+  padding: 10px 12px 6px;
+}
+
+.commandes-periode-custom span {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+.commandes-periode-custom input[type="date"] {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: var(--font-main);
+}
+
+/* ========== FILTRES STATUT ========== */
 .commandes-filtres {
   display: flex;
   gap: 8px;
@@ -43,7 +135,7 @@
   color: var(--app-accent-text);
 }
 
-/* ========== TABLEAU (Desktop) ========== */
+/* ========== TABLEAU ========== */
 .commandes-table-wrapper {
   width: 100%;
   border-radius: var(--radius-md);
@@ -105,7 +197,7 @@
   color: var(--color-text-secondary);
 }
 
-/* ========== CARTES (Mobile) - compactes ========== */
+/* ========== CARTES ========== */
 .commandes-cards {
   display: none;
   flex-direction: column;
@@ -410,13 +502,25 @@
     margin-bottom: 0;
   }
 
-  /* Bouton minimaliste et propre */
   .commandes-add-btn {
     width: 100%;
     justify-content: center;
     padding: 11px 16px;
     font-size: 14px;
-    border-radius: 12px; /* un peu moins arrondi = plus moderne et propre */
+    border-radius: 12px;
+  }
+
+  .commandes-periode {
+    width: 100%;
+  }
+
+  .commandes-periode-btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .commandes-periode-menu {
+    width: 100%;
   }
 
   .commandes-filtres {
@@ -437,15 +541,6 @@
 
   .commandes-card-top {
     margin-bottom: 10px;
-  }
-
-  .commandes-card-montant {
-    font-size: 15px;
-  }
-
-  .commandes-statut-select {
-    padding: 4px 11px;
-    font-size: 12px;
   }
 
   .commandes-modal {
