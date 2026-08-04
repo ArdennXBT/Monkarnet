@@ -13,19 +13,28 @@
 
 .commandes-filtres {
   display: flex;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-lg);
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+
+.commandes-filtres::-webkit-scrollbar {
+  display: none;
 }
 
 .commandes-filtre-btn {
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
-  padding: 8px 16px;
+  border-radius: 999px;
+  padding: 6px 14px;
   font-size: 13px;
   font-family: var(--font-main);
   color: var(--color-text-secondary);
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .commandes-filtre-actif {
@@ -55,7 +64,6 @@
   color: var(--color-text);
   padding: 12px 16px;
   border-bottom: 1px solid var(--color-border);
-  white-space: nowrap;
 }
 
 .commandes-table td {
@@ -97,17 +105,17 @@
   color: var(--color-text-secondary);
 }
 
-/* ========== CARTES (Mobile) ========== */
+/* ========== CARTES (Mobile) - compactes ========== */
 .commandes-cards {
   display: none;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .commandes-card {
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   padding: 14px 16px;
 }
 
@@ -146,10 +154,10 @@
   white-space: nowrap;
 }
 
-/* Select / Badges */
+/* Select statut */
 .commandes-statut-select {
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   padding: 4px 12px;
   font-size: 12px;
   font-weight: 500;
@@ -157,6 +165,7 @@
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
+  outline: none;
 }
 
 .commandes-badge-gray.commandes-statut-select {
@@ -184,7 +193,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 16px;
 }
 
 .commandes-add-btn {
@@ -194,8 +203,8 @@
   background-color: var(--color-navy);
   color: var(--color-white);
   border: none;
-  border-radius: var(--radius-pill);
-  padding: 10px 20px;
+  border-radius: 999px;
+  padding: 10px 18px;
   font-size: 14px;
   font-weight: 500;
   font-family: var(--font-main);
@@ -207,15 +216,15 @@
   color: #B3261E;
   font-size: 13px;
   padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--spacing-md);
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .commandes-loading {
   color: var(--color-text-secondary);
   font-size: 14px;
   text-align: center;
-  padding: var(--spacing-lg) 0;
+  padding: 32px 0;
 }
 
 /* ========== MODAL ========== */
@@ -335,7 +344,7 @@
   background-color: var(--color-navy);
   color: var(--color-white);
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   padding: 12px;
   font-size: 14px;
   font-weight: 600;
@@ -384,12 +393,12 @@
   font-family: var(--font-main);
 }
 
-/* ========== RESPONSIVE ========== */
+/* ========== MOBILE ========== */
 @media (max-width: 768px) {
   .commandes-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-sm);
+    gap: 12px;
   }
 
   .commandes-title {
@@ -398,33 +407,22 @@
 
   .commandes-subtitle {
     font-size: 13px;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 0;
   }
 
+  /* Bouton minimaliste et propre */
   .commandes-add-btn {
     width: 100%;
     justify-content: center;
     padding: 11px 16px;
+    font-size: 14px;
+    border-radius: 12px; /* un peu moins arrondi = plus moderne et propre */
   }
 
   .commandes-filtres {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 16px;
   }
 
-  .commandes-filtres::-webkit-scrollbar {
-    display: none;
-  }
-
-  .commandes-filtre-btn {
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding: 7px 14px;
-    font-size: 13px;
-  }
-
-  /* On cache le tableau et on affiche les cartes */
   .commandes-table-wrapper {
     display: none;
   }
@@ -433,8 +431,25 @@
     display: flex;
   }
 
+  .commandes-card {
+    padding: 13px 14px;
+  }
+
+  .commandes-card-top {
+    margin-bottom: 10px;
+  }
+
+  .commandes-card-montant {
+    font-size: 15px;
+  }
+
+  .commandes-statut-select {
+    padding: 4px 11px;
+    font-size: 12px;
+  }
+
   .commandes-modal {
     width: 94vw;
-    padding: var(--spacing-md);
+    padding: 20px;
   }
 }
