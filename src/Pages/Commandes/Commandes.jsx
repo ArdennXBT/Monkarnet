@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Plus, X, Trash2 } from 'lucide-react';
 import './Commandes.css';
@@ -207,7 +206,6 @@ function Commandes() {
           <table className="commandes-table">
             <thead>
               <tr>
-                <th>N°</th>
                 <th>Client</th>
                 <th>Montant</th>
                 <th>Statut</th>
@@ -217,8 +215,10 @@ function Commandes() {
             <tbody>
               {commandesFiltrees.map((c) => (
                 <tr key={c._id}>
-                  <td><span className="commandes-numero">{c.numero || '—'}</span></td>
-                  <td>{c.client?.nom}</td>
+                  <td className="commandes-cell-client">
+                    <span className="commandes-numero-mobile">{c.numero || '—'}</span>
+                    <span className="commandes-nom-client">{c.client?.nom}</span>
+                  </td>
                   <td>{c.total.toLocaleString('fr-FR')} F</td>
                   <td>
                     <select
@@ -231,7 +231,7 @@ function Commandes() {
                       ))}
                     </select>
                   </td>
-                  <td>{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
+                  <td className="commandes-date">{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
                 </tr>
               ))}
             </tbody>
