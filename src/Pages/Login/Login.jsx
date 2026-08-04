@@ -83,7 +83,7 @@ function Login() {
   return (
     <div className="login">
       <div className="login-card">
-        <span className="login-logo">Monkarnet</span>
+        <span className="login-logo">Comerza</span>
         <h1 className="login-title">Connexion</h1>
         <p className="login-subtitle">Accédez à votre espace commerçant.</p>
 
