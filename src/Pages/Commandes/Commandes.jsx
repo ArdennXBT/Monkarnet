@@ -202,41 +202,76 @@ function Commandes() {
       ) : commandesFiltrees.length === 0 ? (
         <p className="commandes-loading">Aucune commande pour l'instant.</p>
       ) : (
-        <div className="commandes-table-wrapper">
-          <table className="commandes-table">
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>Montant</th>
-                <th>Statut</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {commandesFiltrees.map((c) => (
-                <tr key={c._id}>
-                  <td className="commandes-cell-client">
+        <>
+          {/* ========== TABLEAU (Desktop) ========== */}
+          <div className="commandes-table-wrapper">
+            <table className="commandes-table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Montant</th>
+                  <th>Statut</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {commandesFiltrees.map((c) => (
+                  <tr key={c._id}>
+                    <td className="commandes-cell-client">
+                      <span className="commandes-numero-mobile">{c.numero || '—'}</span>
+                      <span className="commandes-nom-client">{c.client?.nom}</span>
+                    </td>
+                    <td className="commandes-montant">{c.total.toLocaleString('fr-FR')} F</td>
+                    <td>
+                      <select
+                        className={`commandes-statut-select ${statutClass(c.statut)}`}
+                        value={c.statut}
+                        onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                      >
+                        {statutsPossibles.map((s) => (
+                          <option key={s} value={s}>{filtreLabels[s]}</option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="commandes-date">
+                      {new Date(c.createdAt).toLocaleDateString('fr-FR')}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* ========== CARTES (Mobile) ========== */}
+          <div className="commandes-cards">
+            {commandesFiltrees.map((c) => (
+              <div key={c._id} className="commandes-card">
+                <div className="commandes-card-top">
+                  <div className="commandes-card-client">
                     <span className="commandes-numero-mobile">{c.numero || '—'}</span>
                     <span className="commandes-nom-client">{c.client?.nom}</span>
-                  </td>
-                  <td>{c.total.toLocaleString('fr-FR')} F</td>
-                  <td>
-                    <select
-                      className={`commandes-statut-select ${statutClass(c.statut)}`}
-                      value={c.statut}
-                      onChange={(e) => handleChangerStatut(c._id, e.target.value)}
-                    >
-                      {statutsPossibles.map((s) => (
-                        <option key={s} value={s}>{filtreLabels[s]}</option>
-                      ))}
-                    </select>
-                  </td>
-                  <td className="commandes-date">{new Date(c.createdAt).toLocaleDateString('fr-FR')}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                  <span className="commandes-card-montant">{c.total.toLocaleString('fr-FR')} F</span>
+                </div>
+
+                <div className="commandes-card-bottom">
+                  <select
+                    className={`commandes-statut-select ${statutClass(c.statut)}`}
+                    value={c.statut}
+                    onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                  >
+                    {statutsPossibles.map((s) => (
+                      <option key={s} value={s}>{filtreLabels[s]}</option>
+                    ))}
+                  </select>
+                  <span className="commandes-card-date">
+                    {new Date(c.createdAt).toLocaleDateString('fr-FR')}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       {modalOuvert && (
