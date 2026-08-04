@@ -10,7 +10,7 @@ function Header() {
         <span className="landing-logo-icon">
           <NotebookText size={18} />
         </span>
-        Mon karnet
+        Comerza
       </Link>
       <nav className="landing-nav">
         <a href="#fonctionnalites" className="landing-nav-link"></a>
