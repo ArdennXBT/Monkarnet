@@ -1,13 +1,34 @@
 import { useState, useEffect } from 'react';
-import { Plus, X, Pencil, Trash2, ImagePlus, Package } from 'lucide-react';
+import { Plus, X, Pencil, Trash2, ImagePlus, Package, Search, SlidersHorizontal } from 'lucide-react';
 import './Produits.css';
 
 const CLOUDINARY_CLOUD_NAME = 'pfmip5ll';
 const CLOUDINARY_UPLOAD_PRESET = 'comerza_produits';
 const SEUIL_STOCK_FAIBLE = 5;
 
+const CATEGORIES = [
+  'Alimentation',
+  'Boissons',
+  'Mode & Vêtements',
+  'Électronique',
+  'Beauté & Hygiène',
+  'Maison & Déco',
+  'Services',
+  'Autre',
+];
+
+const OPTIONS_TRI = [
+  { value: 'recent', label: 'Plus récents' },
+  { value: 'nom', label: 'Nom (A-Z)' },
+  { value: 'stock-asc', label: 'Stock (croissant)' },
+  { value: 'stock-desc', label: 'Stock (décroissant)' },
+  { value: 'marge-desc', label: 'Marge (décroissante)' },
+  { value: 'marge-asc', label: 'Marge (croissante)' },
+];
+
 const FORM_VIDE = {
   nom: '',
+  categorie: 'Autre',
   prix: '',
   coutRevient: '',
   stock: '',
@@ -19,6 +40,10 @@ function Produits() {
   const [produits, setProduits] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
+
+  const [recherche, setRecherche] = useState('');
+  const [categorieActive, setCategorieActive] = useState('Toutes');
+  const [tri, setTri] = useState('recent');
 
   const [modalOuvert, setModalOuvert] = useState(false);
   const [produitEnEdition, setProduitEnEdition] = useState(null);
@@ -99,6 +124,7 @@ function Produits() {
     setProduitEnEdition(produit);
     setFormData({
       nom: produit.nom || '',
+      categorie: produit.categorie || 'Autre',
       prix: produit.prix ?? '',
       coutRevient: produit.coutRevient ?? '',
       stock: produit.stock ?? '',
@@ -189,6 +215,42 @@ function Produits() {
     }
   };
 
+  const reinitialiserFiltres = () => {
+    setRecherche('');
+    setCategorieActive('Toutes');
+    setTri('recent');
+  };
+
+  // --- Filtrage + tri ---
+  const margeDe = (p) => p.prix - (p.coutRevient || 0);
+
+  let produitsAffiches = produits.filter((p) => {
+    const correspondCategorie = categorieActive === 'Toutes' || (p.categorie || 'Autre') === categorieActive;
+    const correspondRecherche = p.nom.toLowerCase().includes(recherche.trim().toLowerCase());
+    return correspondCategorie && correspondRecherche;
+  });
+
+  produitsAffiches = [...produitsAffiches].sort((a, b) => {
+    switch (tri) {
+      case 'nom':
+        return a.nom.localeCompare(b.nom, 'fr');
+      case 'stock-asc':
+        return a.stock - b.stock;
+      case 'stock-desc':
+        return b.stock - a.stock;
+      case 'marge-desc':
+        return margeDe(b) - margeDe(a);
+      case 'marge-asc':
+        return margeDe(a) - margeDe(b);
+      default:
+        return 0; // déjà triés du plus récent au plus ancien par le backend
+    }
+  });
+
+  const aucunProduitDuTout = !chargement && produits.length === 0;
+  const aucunResultatFiltre = !chargement && produits.length > 0 && produitsAffiches.length === 0;
+  const filtresActifs = recherche.trim() !== '' || categorieActive !== 'Toutes' || tri !== 'recent';
+
   return (
     <div className="produits">
       <div className="produits-header">
@@ -204,14 +266,83 @@ function Produits() {
 
       {erreur && <p className="produits-error">{erreur}</p>}
 
+      {!aucunProduitDuTout && (
+        <div className="produits-toolbar">
+          <div className="produits-search">
+            <Search size={16} />
+            <input
+              type="text"
+              placeholder="Rechercher un produit..."
+              value={recherche}
+              onChange={(e) => setRecherche(e.target.value)}
+            />
+          </div>
+
+          <div className="produits-sort">
+            <SlidersHorizontal size={15} />
+            <select value={tri} onChange={(e) => setTri(e.target.value)}>
+              {OPTIONS_TRI.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      )}
+
+      {!aucunProduitDuTout && (
+        <div className="produits-categories">
+          <button
+            className={`produits-categorie-chip ${categorieActive === 'Toutes' ? 'active' : ''}`}
+            onClick={() => setCategorieActive('Toutes')}
+          >
+            Toutes
+          </button>
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              className={`produits-categorie-chip ${categorieActive === cat ? 'active' : ''}`}
+              onClick={() => setCategorieActive(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
       {chargement ? (
         <p className="produits-loading">Chargement...</p>
-      ) : produits.length === 0 ? (
-        <p className="produits-loading">Aucun produit pour l'instant. Ajoutez-en un pour commencer.</p>
+      ) : aucunProduitDuTout ? (
+        <div className="produits-empty">
+          <div className="produits-empty-icon">
+            <Package size={32} strokeWidth={1.5} />
+          </div>
+          <h2>Votre catalogue est vide</h2>
+          <p>Ajoutez votre premier produit pour commencer à gérer vos ventes.</p>
+          <button className="produits-add-btn" onClick={ouvrirAjout}>
+            <Plus size={18} />
+            Ajouter un produit
+          </button>
+        </div>
+      ) : aucunResultatFiltre ? (
+        <div className="produits-empty">
+          <div className="produits-empty-icon">
+            <Search size={28} strokeWidth={1.5} />
+          </div>
+          <h2>Aucun produit trouvé</h2>
+          <p>Aucun produit ne correspond à votre recherche ou aux filtres sélectionnés.</p>
+          {filtresActifs && (
+            <button className="produits-reset-btn" onClick={reinitialiserFiltres}>
+              Réinitialiser les filtres
+            </button>
+          )}
+        </div>
       ) : (
         <div className="produits-grid">
-          {produits.map((p) => {
-            const marge = p.prix - (p.coutRevient || 0);
+          {produitsAffiches.map((p) => {
+            const marge = margeDe(p);
+            const pourcentageMarge = p.prix > 0 ? Math.round((marge / p.prix) * 100) : 0;
             const stockFaible = p.stock <= SEUIL_STOCK_FAIBLE;
 
             return (
@@ -224,6 +355,8 @@ function Produits() {
                       <Package size={28} strokeWidth={1.5} />
                     </div>
                   )}
+
+                  <span className="produits-card-categorie">{p.categorie || 'Autre'}</span>
 
                   <div className="produits-card-actions">
                     <button
@@ -241,6 +374,12 @@ function Produits() {
                       <Trash2 size={15} />
                     </button>
                   </div>
+
+                  {stockFaible && (
+                    <div className="produits-card-stock-ribbon">
+                      Stock faible — {p.stock} restant{p.stock > 1 ? 's' : ''}
+                    </div>
+                  )}
                 </div>
 
                 <div className="produits-card-body">
@@ -256,15 +395,12 @@ function Produits() {
                   </div>
                   <div className="produits-card-row">
                     <span>Stock</span>
-                    {stockFaible ? (
-                      <span className="produits-stock-badge">{p.stock} restant{p.stock > 1 ? 's' : ''}</span>
-                    ) : (
-                      <strong>{p.stock}</strong>
-                    )}
+                    <strong>{p.stock}</strong>
                   </div>
 
                   <div className="produits-card-marge">
-                    Marge : {marge.toLocaleString('fr-FR')} F
+                    <span>Marge : {marge.toLocaleString('fr-FR')} F</span>
+                    <span className="produits-card-marge-pct">{pourcentageMarge}%</span>
                   </div>
                 </div>
               </div>
@@ -308,6 +444,18 @@ function Produits() {
                 Nom du produit
                 <input type="text" name="nom" value={formData.nom} onChange={handleChange} required />
               </label>
+
+              <label>
+                Catégorie
+                <select name="categorie" value={formData.categorie} onChange={handleChange}>
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
               <label>
                 Prix de vente (F)
                 <input type="number" name="prix" value={formData.prix} onChange={handleChange} required />

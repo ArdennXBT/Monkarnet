@@ -38,6 +38,7 @@
   cursor: pointer;
   line-height: 1;
   transition: opacity 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
 }
 
 .produits-add-btn:hover {
@@ -47,6 +48,98 @@
 .produits-add-btn:active {
   transform: scale(0.98);
 }
+
+/* --- Barre recherche + tri --- */
+
+.produits-toolbar {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.produits-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 10px 16px;
+  color: var(--color-text-secondary);
+}
+
+.produits-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: var(--font-main);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.produits-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 10px 14px;
+  color: var(--color-text-secondary);
+}
+
+.produits-sort select {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  font-family: var(--font-main);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* --- Filtres cat\u00e9gories --- */
+
+.produits-categories {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: var(--spacing-lg);
+  scrollbar-width: none;
+}
+
+.produits-categories::-webkit-scrollbar {
+  display: none;
+}
+
+.produits-categorie-chip {
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.produits-categorie-chip:hover {
+  border-color: var(--color-navy);
+}
+
+.produits-categorie-chip.active {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* --- Grille --- */
 
 .produits-grid {
   display: grid;
@@ -64,7 +157,7 @@
   flex-direction: column;
 }
 
-/* --- Zone image : hauteur fixe, jamais de débordement --- */
+/* --- Zone image --- */
 
 .produits-card-media {
   position: relative;
@@ -93,6 +186,19 @@
   justify-content: center;
   color: var(--color-text-secondary);
   opacity: 0.4;
+}
+
+.produits-card-categorie {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--color-text);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
 }
 
 .produits-card-actions {
@@ -136,6 +242,20 @@
   color: #B3261E;
 }
 
+.produits-card-stock-ribbon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background-color: rgba(179, 38, 30, 0.92);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  padding: 5px 8px;
+}
+
 /* --- Corps de la carte --- */
 
 .produits-card-body {
@@ -177,15 +297,6 @@
   font-size: 14px;
 }
 
-.produits-stock-badge {
-  background-color: #FDECEA;
-  color: #B3261E;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: var(--radius-pill);
-}
-
 .produits-card-marge {
   margin-top: var(--spacing-sm);
   padding: 8px 10px;
@@ -196,6 +307,14 @@
   color: var(--color-green);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.produits-card-marge-pct {
+  background-color: rgba(16, 141, 79, 0.15);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
 }
 
 .produits-error {
@@ -214,7 +333,63 @@
   padding: var(--spacing-lg) 0;
 }
 
-/* --- Modal ajout / édition --- */
+/* --- \u00c9tat vide --- */
+
+.produits-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 56px 24px;
+  background-color: var(--color-white);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.produits-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--color-bg, #F4F5F9);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.produits-empty h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 6px;
+}
+
+.produits-empty p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-lg);
+  max-width: 320px;
+}
+
+.produits-reset-btn {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.produits-reset-btn:hover {
+  border-color: var(--color-navy);
+  color: var(--color-navy);
+}
+
+/* --- Modal ajout / \u00e9dition --- */
 
 .produits-modal-overlay {
   position: fixed;
@@ -274,17 +449,21 @@
 }
 
 .produits-modal-form input,
-.produits-modal-form textarea {
+.produits-modal-form textarea,
+.produits-modal-form select {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   font-size: 14px;
   font-family: var(--font-main);
   resize: none;
+  background-color: var(--color-white);
+  color: var(--color-text);
 }
 
 .produits-modal-form input:focus,
-.produits-modal-form textarea:focus {
+.produits-modal-form textarea:focus,
+.produits-modal-form select:focus {
   outline: none;
   border-color: var(--color-navy);
 }
@@ -307,7 +486,7 @@
   cursor: not-allowed;
 }
 
-/* --- Upload image (dans le modal) --- */
+/* --- Upload image --- */
 
 .produits-image-upload-zone {
   position: relative;
@@ -443,6 +622,19 @@
     font-size: 14px;
   }
 
+  .produits-toolbar {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .produits-sort {
+    width: 100%;
+  }
+
+  .produits-sort select {
+    width: 100%;
+  }
+
   .produits-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
@@ -476,13 +668,17 @@
     transform: none;
   }
 
+  .produits-empty {
+    padding: 40px 16px;
+  }
+
   .produits-modal {
     width: 92vw;
     padding: var(--spacing-md);
   }
 }
 
-/* Très petit mobile */
+/* Tr\u00e8s petit mobile */
 @media (max-width: 380px) {
   .produits-title {
     font-size: 19px;
