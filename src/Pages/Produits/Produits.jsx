@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Plus, X, Pencil, Trash2, ImagePlus, Package, Search, SlidersHorizontal } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { Plus, X, Pencil, Trash2, ImagePlus, Package, Search } from 'lucide-react';
 import './Produits.css';
 
 const CLOUDINARY_CLOUD_NAME = 'pfmip5ll';
@@ -17,15 +18,6 @@ const CATEGORIES = [
   'Autre',
 ];
 
-const OPTIONS_TRI = [
-  { value: 'recent', label: 'Plus récents' },
-  { value: 'nom', label: 'Nom (A-Z)' },
-  { value: 'stock-asc', label: 'Stock (croissant)' },
-  { value: 'stock-desc', label: 'Stock (décroissant)' },
-  { value: 'marge-desc', label: 'Marge (décroissante)' },
-  { value: 'marge-asc', label: 'Marge (croissante)' },
-];
-
 const FORM_VIDE = {
   nom: '',
   categorie: 'Autre',
@@ -41,9 +33,11 @@ function Produits() {
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
 
-  const [recherche, setRecherche] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const recherche = searchParams.get('q') || '';
+  const tri = searchParams.get('tri') || 'recent';
+
   const [categorieActive, setCategorieActive] = useState('Toutes');
-  const [tri, setTri] = useState('recent');
 
   const [modalOuvert, setModalOuvert] = useState(false);
   const [produitEnEdition, setProduitEnEdition] = useState(null);
@@ -216,9 +210,11 @@ function Produits() {
   };
 
   const reinitialiserFiltres = () => {
-    setRecherche('');
     setCategorieActive('Toutes');
-    setTri('recent');
+    const nouveaux = new URLSearchParams(searchParams);
+    nouveaux.delete('q');
+    nouveaux.delete('tri');
+    setSearchParams(nouveaux);
   };
 
   // --- Filtrage + tri ---
@@ -243,7 +239,7 @@ function Produits() {
       case 'marge-asc':
         return margeDe(a) - margeDe(b);
       default:
-        return 0; // déjà triés du plus récent au plus ancien par le backend
+        return 0;
     }
   });
 
@@ -265,31 +261,6 @@ function Produits() {
       </div>
 
       {erreur && <p className="produits-error">{erreur}</p>}
-
-      {!aucunProduitDuTout && (
-        <div className="produits-toolbar">
-          <div className="produits-search">
-            <Search size={16} />
-            <input
-              type="text"
-              placeholder="Rechercher un produit..."
-              value={recherche}
-              onChange={(e) => setRecherche(e.target.value)}
-            />
-          </div>
-
-          <div className="produits-sort">
-            <SlidersHorizontal size={15} />
-            <select value={tri} onChange={(e) => setTri(e.target.value)}>
-              {OPTIONS_TRI.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      )}
 
       {!aucunProduitDuTout && (
         <div className="produits-categories">

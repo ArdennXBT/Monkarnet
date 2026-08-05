@@ -1,5 +1,6 @@
 .produits {
   width: 100%;
+  position: relative;
 }
 
 .produits-header {
@@ -49,12 +50,16 @@
   transform: scale(0.98);
 }
 
+/* --- Barre recherche + tri (montée à côté de la cloche) --- */
+
 /* --- Barre recherche + tri --- */
 
 .produits-toolbar {
   display: flex;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+  width: 100%;
 }
 
 .produits-search {
@@ -65,7 +70,7 @@
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
-  padding: 10px 16px;
+  padding: 9px 16px;
   color: var(--color-text-secondary);
 }
 
@@ -86,8 +91,9 @@
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
-  padding: 10px 14px;
+  padding: 9px 14px;
   color: var(--color-text-secondary);
+  flex-shrink: 0;
 }
 
 .produits-sort select {
@@ -100,7 +106,7 @@
   cursor: pointer;
 }
 
-/* --- Filtres cat\u00e9gories --- */
+/* --- Filtres catégories --- */
 
 .produits-categories {
   display: flex;
@@ -333,7 +339,7 @@
   padding: var(--spacing-lg) 0;
 }
 
-/* --- \u00c9tat vide --- */
+/* --- État vide --- */
 
 .produits-empty {
   display: flex;
@@ -389,7 +395,7 @@
   color: var(--color-navy);
 }
 
-/* --- Modal ajout / \u00e9dition --- */
+/* --- Modal ajout / édition --- */
 
 .produits-modal-overlay {
   position: fixed;
@@ -600,6 +606,20 @@
     padding-right: 4px;
   }
 
+ .produits-toolbar {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .produits-sort {
+    width: 100%;
+  }
+
+  .produits-sort select {
+    width: 100%;
+  }
+
   .produits-header {
     flex-direction: column;
     align-items: stretch;
@@ -620,19 +640,6 @@
     align-self: flex-start;
     padding: 11px 22px;
     font-size: 14px;
-  }
-
-  .produits-toolbar {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .produits-sort {
-    width: 100%;
-  }
-
-  .produits-sort select {
-    width: 100%;
   }
 
   .produits-grid {
@@ -678,7 +685,7 @@
   }
 }
 
-/* Tr\u00e8s petit mobile */
+/* Très petit mobile */
 @media (max-width: 380px) {
   .produits-title {
     font-size: 19px;

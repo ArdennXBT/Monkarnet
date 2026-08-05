@@ -1,6 +1,5 @@
-
 import { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Search, Bell, X } from 'lucide-react';
 import { useCommercant } from '../../context/CommercantContext';
 import './Navbar.css';
@@ -8,16 +7,23 @@ import './Navbar.css';
 function Navbar({ menuOuvert, onToggleMenu }) {
   const [notifOuvert, setNotifOuvert] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [recherche, setRecherche] = useState('');
+  const [rechercheGlobale, setRechercheGlobale] = useState('');
   const [resultats, setResultats] = useState({ commandes: [], produits: [] });
   const [rechercheOuverte, setRechercheOuverte] = useState(false);
   const [rechercheEnCours, setRechercheEnCours] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { commercant } = useCommercant();
   const debounceRef = useRef(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const estSurDashboard = location.pathname === '/dashboard';
+  const estSurProduits = location.pathname === '/produits';
+
+  // Valeur pour la page Produits
+  const rechercheProduits = searchParams.get('q') || '';
 
   const token = localStorage.getItem('token');
 
@@ -29,7 +35,7 @@ function Navbar({ menuOuvert, onToggleMenu }) {
       const data = await response.json();
       if (response.ok) setNotifications(data);
     } catch (err) {
-      // silencieux, pas critique
+      // silencieux
     }
   };
 
@@ -51,13 +57,14 @@ function Navbar({ menuOuvert, onToggleMenu }) {
         headers: { Authorization: `Bearer ${token}` },
       });
     } catch (err) {
-      // silencieux, pas critique
+      // silencieux
     }
   };
 
-  const handleChangeRecherche = (e) => {
+  // === Recherche globale (autres pages) ===
+  const handleChangeRechercheGlobale = (e) => {
     const valeur = e.target.value;
-    setRecherche(valeur);
+    setRechercheGlobale(valeur);
 
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
@@ -70,9 +77,10 @@ function Navbar({ menuOuvert, onToggleMenu }) {
     debounceRef.current = setTimeout(async () => {
       setRechercheEnCours(true);
       try {
-        const response = await fetch(`https://monkarnet-backend.onrender.com/api/recherche?q=${encodeURIComponent(valeur.trim())}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await fetch(
+          `https://monkarnet-backend.onrender.com/api/recherche?q=${encodeURIComponent(valeur.trim())}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         const data = await response.json();
         if (response.ok) {
           setResultats(data);
@@ -88,20 +96,36 @@ function Navbar({ menuOuvert, onToggleMenu }) {
 
   const handleClicResultat = (type) => {
     setRechercheOuverte(false);
-    setRecherche('');
+    setRechercheGlobale('');
     setResultats({ commandes: [], produits: [] });
     navigate(type === 'commande' ? '/commandes' : '/produits');
   };
 
-  const effacerRecherche = () => {
-    setRecherche('');
+  const effacerRechercheGlobale = () => {
+    setRechercheGlobale('');
     setResultats({ commandes: [], produits: [] });
     setRechercheOuverte(false);
   };
 
+  // === Recherche Produits ===
+  const handleRechercheProduits = (e) => {
+    const valeur = e.target.value;
+    const nouveaux = new URLSearchParams(searchParams);
+    if (valeur) {
+      nouveaux.set('q', valeur);
+    } else {
+      nouveaux.delete('q');
+    }
+    setSearchParams(nouveaux);
+  };
+
   const nombreNonLues = notifications.filter((n) => !n.lu).length;
   const initiale = commercant?.nomComplet?.charAt(0) || 'C';
-  const aucunResultat = recherche.trim().length >= 2 && !rechercheEnCours && resultats.commandes.length === 0 && resultats.produits.length === 0;
+  const aucunResultat =
+    rechercheGlobale.trim().length >= 2 &&
+    !rechercheEnCours &&
+    resultats.commandes.length === 0 &&
+    resultats.produits.length === 0;
 
   return (
     <header className="navbar">
@@ -125,8 +149,24 @@ function Navbar({ menuOuvert, onToggleMenu }) {
           <div className="navbar-commerce-texte">
             <span className="navbar-commerce-nom">{commercant?.nomCommerce || 'Mon commerce'}</span>
             <span className="navbar-commerce-role">
-              {commercant?.role === 'superadmin' ? 'Super Admin' : commercant?.role === 'sous-compte' ? 'Sous-compte' : 'Compte Admin'}
+              {commercant?.role === 'superadmin'
+                ? 'Super Admin'
+                : commercant?.role === 'sous-compte'
+                ? 'Sous-compte'
+                : 'Compte Admin'}
             </span>
+          </div>
+        </div>
+      ) : estSurProduits ? (
+        <div className="navbar-produits-toolbar">
+          <div className="navbar-produits-search">
+            <Search size={16} />
+            <input
+              type="text"
+              placeholder="Rechercher un produit..."
+              value={rechercheProduits}
+              onChange={handleRechercheProduits}
+            />
           </div>
         </div>
       ) : (
@@ -136,12 +176,12 @@ function Navbar({ menuOuvert, onToggleMenu }) {
             <input
               type="text"
               placeholder="Rechercher une commande, un client, un produit..."
-              value={recherche}
-              onChange={handleChangeRecherche}
-              onFocus={() => recherche.trim().length >= 2 && setRechercheOuverte(true)}
+              value={rechercheGlobale}
+              onChange={handleChangeRechercheGlobale}
+              onFocus={() => rechercheGlobale.trim().length >= 2 && setRechercheOuverte(true)}
             />
-            {recherche && (
-              <button className="navbar-search-clear" onClick={effacerRecherche}>
+            {rechercheGlobale && (
+              <button className="navbar-search-clear" onClick={effacerRechercheGlobale}>
                 <X size={14} />
               </button>
             )}
@@ -152,16 +192,22 @@ function Navbar({ menuOuvert, onToggleMenu }) {
               {rechercheEnCours && <p className="navbar-search-empty">Recherche...</p>}
 
               {!rechercheEnCours && aucunResultat && (
-                <p className="navbar-search-empty">Aucun résultat pour « {recherche} ».</p>
+                <p className="navbar-search-empty">Aucun résultat pour « {rechercheGlobale} ».</p>
               )}
 
               {!rechercheEnCours && resultats.commandes.length > 0 && (
                 <div className="navbar-search-section">
                   <p className="navbar-search-section-title">Commandes</p>
                   {resultats.commandes.map((c) => (
-                    <button key={c._id} className="navbar-search-item" onClick={() => handleClicResultat('commande')}>
+                    <button
+                      key={c._id}
+                      className="navbar-search-item"
+                      onClick={() => handleClicResultat('commande')}
+                    >
                       <span className="navbar-search-item-titre">{c.client?.nom}</span>
-                      <span className="navbar-search-item-sub">{c.total?.toLocaleString('fr-FR')} F · {c.statut}</span>
+                      <span className="navbar-search-item-sub">
+                        {c.total?.toLocaleString('fr-FR')} F · {c.statut}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -171,9 +217,15 @@ function Navbar({ menuOuvert, onToggleMenu }) {
                 <div className="navbar-search-section">
                   <p className="navbar-search-section-title">Produits</p>
                   {resultats.produits.map((p) => (
-                    <button key={p._id} className="navbar-search-item" onClick={() => handleClicResultat('produit')}>
+                    <button
+                      key={p._id}
+                      className="navbar-search-item"
+                      onClick={() => handleClicResultat('produit')}
+                    >
                       <span className="navbar-search-item-titre">{p.nom}</span>
-                      <span className="navbar-search-item-sub">{p.prix?.toLocaleString('fr-FR')} F</span>
+                      <span className="navbar-search-item-sub">
+                        {p.prix?.toLocaleString('fr-FR')} F
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -206,7 +258,9 @@ function Navbar({ menuOuvert, onToggleMenu }) {
                       <p className="navbar-notif-item-titre">{n.titre}</p>
                     </div>
                     <p className="navbar-notif-item-message">{n.message}</p>
-                    <span className="navbar-notif-item-date">{new Date(n.createdAt).toLocaleDateString('fr-FR')}</span>
+                    <span className="navbar-notif-item-date">
+                      {new Date(n.createdAt).toLocaleDateString('fr-FR')}
+                    </span>
                   </button>
                 ))
               )}
