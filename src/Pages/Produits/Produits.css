@@ -59,6 +59,80 @@
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Zone image --- */
+
+.produits-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: var(--color-bg, #F4F5F9);
+}
+
+.produits-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.produits-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  opacity: 0.4;
+}
+
+.produits-card-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.produits-card:hover .produits-card-actions,
+.produits-card:focus-within .produits-card-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.produits-card-action-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.15s ease;
+}
+
+.produits-card-action-btn:hover {
+  background-color: var(--color-white);
+}
+
+.produits-card-action-danger:hover {
+  color: #B3261E;
+}
+
+/* --- Corps de la carte --- */
+
+.produits-card-body {
   padding: var(--spacing-md);
 }
 
@@ -97,6 +171,15 @@
   font-size: 14px;
 }
 
+.produits-stock-badge {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
 .produits-card-marge {
   margin-top: var(--spacing-sm);
   padding: 8px 10px;
@@ -124,6 +207,8 @@
   text-align: center;
   padding: var(--spacing-lg) 0;
 }
+
+/* --- Modal ajout / édition --- */
 
 .produits-modal-overlay {
   position: fixed;
@@ -211,6 +296,106 @@
   margin-top: 4px;
 }
 
+.produits-modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Upload image --- */
+
+.produits-image-upload-zone {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-bg, #F4F5F9);
+}
+
+.produits-image-upload-zone input[type='file'] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.produits-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.produits-image-upload-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+/* --- Modal de confirmation suppression --- */
+
+.produits-confirm-modal {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 360px;
+  max-width: 90vw;
+}
+
+.produits-confirm-modal h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.produits-confirm-modal p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0 0 var(--spacing-lg);
+}
+
+.produits-confirm-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.produits-confirm-cancel,
+.produits-confirm-delete {
+  flex: 1;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.produits-confirm-cancel {
+  background-color: var(--color-bg, #F4F5F9);
+  color: var(--color-text);
+}
+
+.produits-confirm-delete {
+  background-color: #B3261E;
+  color: var(--color-white);
+}
+
+.produits-confirm-cancel:disabled,
+.produits-confirm-delete:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Tablette */
 @media (max-width: 1024px) {
   .produits-grid {
@@ -252,7 +437,7 @@
     gap: var(--spacing-md);
   }
 
-  .produits-card {
+  .produits-card-body {
     padding: 16px;
   }
 
@@ -269,6 +454,11 @@
   .produits-card-marge {
     margin-top: var(--spacing-sm);
     font-size: 13px;
+  }
+
+  .produits-card-actions {
+    opacity: 1;
+    transform: none;
   }
 
   .produits-modal {
