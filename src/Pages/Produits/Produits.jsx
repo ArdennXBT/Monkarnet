@@ -102,12 +102,12 @@ function Produits() {
             return (
               <div key={p._id} className="produits-card">
                 <p className="produits-card-nom">{p.nom}</p>
-                <div className="produits-card-row">
+                <div className="produits-card-row prix-vente">
                   <span>Prix de vente</span>
                   <strong>{p.prix.toLocaleString('fr-FR')} F</strong>
                 </div>
                 <div className="produits-card-row">
-                  <span>Coût de préparation</span>
+                  <span>Prix d'achat</span>
                   <strong>{p.coutRevient.toLocaleString('fr-FR')} F</strong>
                 </div>
                 <div className="produits-card-row">
@@ -142,7 +142,7 @@ function Produits() {
                 <input type="number" name="prix" value={formData.prix} onChange={handleChange} required />
               </label>
               <label>
-                Coût de préparation (F)
+                Prix d'achat (F)
                 <input type="number" name="coutRevient" value={formData.coutRevient} onChange={handleChange} />
               </label>
               <label>

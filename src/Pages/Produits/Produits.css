@@ -1,3 +1,4 @@
+
 .produits {
   width: 100%;
 }
@@ -75,22 +76,37 @@
 .produits-card-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 13px;
   color: var(--color-text-secondary);
   margin-bottom: 8px;
+  padding: 4px 0;
 }
 
 .produits-card-row:last-of-type {
   margin-bottom: 0;
 }
 
+.produits-card-row strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.produits-card-row.prix-vente strong {
+  color: var(--color-navy);
+  font-size: 14px;
+}
+
 .produits-card-marge {
   margin-top: var(--spacing-sm);
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--color-border);
+  padding: 8px 10px;
+  background-color: rgba(16, 141, 79, 0.08);
+  border-radius: var(--radius-sm);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-green);
+  display: flex;
+  justify-content: space-between;
 }
 
 .produits-error {
@@ -252,7 +268,6 @@
 
   .produits-card-marge {
     margin-top: var(--spacing-sm);
-    padding-top: var(--spacing-sm);
     font-size: 13px;
   }
 
