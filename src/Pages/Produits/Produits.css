@@ -1,3 +1,6 @@
+.produits {
+  width: 100%;
+}
 
 .produits-header {
   display: flex;
@@ -22,16 +25,27 @@
 .produits-add-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 8px;
   background-color: var(--color-blue);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 14px;
   font-weight: 500;
   font-family: var(--font-main);
   cursor: pointer;
+  line-height: 1;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.produits-add-btn:hover {
+  opacity: 0.92;
+}
+
+.produits-add-btn:active {
+  transform: scale(0.98);
 }
 
 .produits-grid {
@@ -49,9 +63,13 @@
 
 .produits-card-nom {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text);
-  margin: 0 0 var(--spacing-sm);
+  line-height: 1.4;
+  margin: 0 0 var(--spacing-md);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .produits-card-row {
@@ -59,7 +77,11 @@
   justify-content: space-between;
   font-size: 13px;
   color: var(--color-text-secondary);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.produits-card-row:last-of-type {
+  margin-bottom: 0;
 }
 
 .produits-card-marge {
@@ -95,6 +117,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 16px;
 }
 
 .produits-modal {
@@ -172,28 +195,81 @@
   margin-top: 4px;
 }
 
+/* Tablette */
+@media (max-width: 1024px) {
+  .produits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
+  .produits {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
   .produits-header {
     flex-direction: column;
     align-items: stretch;
     gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
   }
 
   .produits-title {
-    font-size: 20px;
+    font-size: 21px;
+  }
+
+  .produits-subtitle {
+    font-size: 13px;
   }
 
   .produits-add-btn {
-    justify-content: center;
-    width: 100%;
+    width: auto;
+    align-self: flex-start;
+    padding: 11px 22px;
+    font-size: 14px;
   }
 
   .produits-grid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .produits-card {
+    padding: 16px;
+  }
+
+  .produits-card-nom {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .produits-card-row {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .produits-card-marge {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    font-size: 13px;
   }
 
   .produits-modal {
     width: 92vw;
     padding: var(--spacing-md);
+  }
+}
+
+/* Très petit mobile */
+@media (max-width: 380px) {
+  .produits-title {
+    font-size: 19px;
+  }
+
+  .produits-add-btn {
+    width: 100%;
+    padding: 12px 20px;
   }
 }
