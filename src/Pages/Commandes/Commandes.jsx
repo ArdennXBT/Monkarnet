@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
-import { Plus, X, Trash2, Calendar, ChevronDown, Pencil, Printer, Search } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { Plus, X, Trash2, Calendar, ChevronDown, Pencil, Printer } from 'lucide-react';
 import './Commandes.css';
 
 const filtres = ['Toutes', 'en_attente', 'en_cours', 'livree', 'litige'];
@@ -43,8 +44,10 @@ function Commandes() {
   const [erreur, setErreur] = useState('');
   const [filtreActif, setFiltreActif] = useState('Toutes');
 
-  // Recherche (nom client, téléphone, numéro de commande)
-  const [recherche, setRecherche] = useState('');
+  // Recherche (nom client, téléphone, numéro de commande) — pilotée par la barre
+  // de la Navbar via l'URL (?q=...), comme sur la page Produits.
+  const [searchParams] = useSearchParams();
+  const recherche = searchParams.get('q') || '';
 
   // Modal création / modification (même modal, deux modes)
   const [modalOuvert, setModalOuvert] = useState(false);
@@ -407,6 +410,10 @@ function Commandes() {
               </span>
             </div>
           ))}
+          <div className="commandes-details-total-ligne">
+            <span>Total</span>
+            <span>{c.total.toLocaleString('fr-FR')} F</span>
+          </div>
         </div>
       </div>
 
@@ -507,28 +514,6 @@ function Commandes() {
       </div>
 
       {erreur && <p className="commandes-error">{erreur}</p>}
-
-      {/* ========== BARRE DE RECHERCHE ========== */}
-      <div className="commandes-search-wrap">
-        <Search size={16} className="commandes-search-icon" />
-        <input
-          type="text"
-          className="commandes-search"
-          placeholder="Rechercher par nom, téléphone ou n° de commande..."
-          value={recherche}
-          onChange={(e) => setRecherche(e.target.value)}
-        />
-        {recherche && (
-          <button
-            type="button"
-            className="commandes-search-clear"
-            onClick={() => setRecherche('')}
-            aria-label="Effacer la recherche"
-          >
-            <X size={14} />
-          </button>
-        )}
-      </div>
 
       {/* ========== FILTRES STATUT ========== */}
       <div className="commandes-filtres">

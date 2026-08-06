@@ -21,9 +21,10 @@ function Navbar({ menuOuvert, onToggleMenu }) {
 
   const estSurDashboard = location.pathname === '/dashboard';
   const estSurProduits = location.pathname === '/produits';
+  const estSurCommandes = location.pathname === '/commandes';
 
-  // Valeur pour la page Produits
-  const rechercheProduits = searchParams.get('q') || '';
+  // Valeur pour la page Produits / Commandes (recherche locale via URL ?q=)
+  const rechercheLocale = searchParams.get('q') || '';
 
   const token = localStorage.getItem('token');
 
@@ -107,8 +108,8 @@ function Navbar({ menuOuvert, onToggleMenu }) {
     setRechercheOuverte(false);
   };
 
-  // === Recherche Produits ===
-  const handleRechercheProduits = (e) => {
+  // === Recherche Produits / Commandes (via URL ?q=) ===
+  const handleRechercheLocale = (e) => {
     const valeur = e.target.value;
     const nouveaux = new URLSearchParams(searchParams);
     if (valeur) {
@@ -157,16 +158,34 @@ function Navbar({ menuOuvert, onToggleMenu }) {
             </span>
           </div>
         </div>
-      ) : estSurProduits ? (
+      ) : estSurProduits || estSurCommandes ? (
         <div className="navbar-produits-toolbar">
           <div className="navbar-produits-search">
             <Search size={16} />
             <input
               type="text"
-              placeholder="Rechercher un produit..."
-              value={rechercheProduits}
-              onChange={handleRechercheProduits}
+              placeholder={
+                estSurCommandes
+                  ? 'Rechercher par nom, téléphone ou n° de commande...'
+                  : 'Rechercher un produit...'
+              }
+              value={rechercheLocale}
+              onChange={handleRechercheLocale}
             />
+            {rechercheLocale && (
+              <button
+                type="button"
+                className="navbar-search-clear"
+                onClick={() => {
+                  const nouveaux = new URLSearchParams(searchParams);
+                  nouveaux.delete('q');
+                  setSearchParams(nouveaux);
+                }}
+                aria-label="Effacer la recherche"
+              >
+                <X size={14} />
+              </button>
+            )}
           </div>
         </div>
       ) : (

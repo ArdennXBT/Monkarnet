@@ -132,59 +132,6 @@
   cursor: pointer;
 }
 
-/* ========== BARRE DE RECHERCHE ========== */
-.commandes-search-wrap {
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.commandes-search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-text-secondary);
-  pointer-events: none;
-}
-
-.commandes-search {
-  width: 100%;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  padding: 10px 40px;
-  font-size: 14px;
-  font-family: var(--font-main);
-  color: var(--color-text);
-  outline: none;
-  transition: border-color 0.15s ease;
-  background-color: var(--color-white);
-}
-
-.commandes-search:focus {
-  border-color: var(--color-navy);
-}
-
-.commandes-search-clear {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-radius: 50%;
-}
-
-.commandes-search-clear:hover {
-  background-color: #F1EFE8;
-  color: var(--color-text);
-}
-
 /* ========== FILTRES ========== */
 .commandes-filtres {
   display: flex;
@@ -385,6 +332,18 @@
 .commandes-details-produit-prix {
   color: var(--color-text-secondary);
   white-space: nowrap;
+}
+
+.commandes-details-total-ligne {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--color-navy);
+  padding: 8px 0 2px;
+  margin-top: 4px;
+  border-top: 1px solid var(--color-border);
 }
 
 /* ========== CARTES ========== */
