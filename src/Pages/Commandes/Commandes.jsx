@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
-import { Plus, X, Trash2, Calendar, ChevronDown } from 'lucide-react';
+import { Plus, X, Trash2, Calendar, ChevronDown, Pencil, Printer } from 'lucide-react';
 import './Commandes.css';
 
 const filtres = ['Toutes', 'en_attente', 'en_cours', 'livree', 'litige'];
@@ -34,13 +34,26 @@ function nomProduit(ligne) {
   return 'Produit';
 }
 
+const ligneVide = { produit: '', nomLibre: '', prixLibre: '', quantite: 1 };
+
 function Commandes() {
   const [commandes, setCommandes] = useState([]);
   const [produits, setProduits] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
   const [filtreActif, setFiltreActif] = useState('Toutes');
+
+  // Modal création / modification (même modal, deux modes)
   const [modalOuvert, setModalOuvert] = useState(false);
+  const [modeModal, setModeModal] = useState('creer'); // 'creer' | 'modifier'
+  const [commandeEnEditionId, setCommandeEnEditionId] = useState(null);
+
+  // Confirmation de suppression
+  const [commandeASupprimer, setCommandeASupprimer] = useState(null);
+  const [suppressionEnCours, setSuppressionEnCours] = useState(false);
+
+  // Reçu imprimable
+  const [commandeRecu, setCommandeRecu] = useState(null);
 
   // Détail de commande déplié (une seule commande ouverte à la fois)
   const [detailOuvert, setDetailOuvert] = useState(null);
@@ -54,7 +67,7 @@ function Commandes() {
   const [clientNom, setClientNom] = useState('');
   const [clientTelephone, setClientTelephone] = useState('');
   const [clientAdresse, setClientAdresse] = useState('');
-  const [lignesProduits, setLignesProduits] = useState([{ produit: '', nomLibre: '', prixLibre: '', quantite: 1 }]);
+  const [lignesProduits, setLignesProduits] = useState([{ ...ligneVide }]);
 
   const token = localStorage.getItem('token');
 
@@ -153,7 +166,7 @@ function Commandes() {
       : commandesParPeriode.filter((c) => c.statut === filtreActif);
 
   const ajouterLigne = () => {
-    setLignesProduits([...lignesProduits, { produit: '', nomLibre: '', prixLibre: '', quantite: 1 }]);
+    setLignesProduits([...lignesProduits, { ...ligneVide }]);
   };
 
   const supprimerLigne = (index) => {
@@ -199,6 +212,76 @@ function Commandes() {
     }
   };
 
+  // ===== Ouverture des modals =====
+
+  const ouvrirCreation = () => {
+    setModeModal('creer');
+    setCommandeEnEditionId(null);
+    setClientNom('');
+    setClientTelephone('');
+    setClientAdresse('');
+    setLignesProduits([{ ...ligneVide }]);
+    setErreur('');
+    setModalOuvert(true);
+  };
+
+  const ouvrirEdition = (c) => {
+    setModeModal('modifier');
+    setCommandeEnEditionId(c._id);
+    setClientNom(c.client?.nom || '');
+    setClientTelephone(c.client?.telephone || '');
+    setClientAdresse(c.client?.adresse || '');
+
+    const lignes = (c.produits || []).map((p) => ({
+      produit: p.produit && typeof p.produit === 'object' ? p.produit._id : p.produit || '',
+      nomLibre: p.nomLibre || '',
+      prixLibre: p.nomLibre ? String(p.prixUnitaire ?? '') : '',
+      quantite: p.quantite || 1,
+    }));
+
+    setLignesProduits(lignes.length ? lignes : [{ ...ligneVide }]);
+    setErreur('');
+    setModalOuvert(true);
+  };
+
+  const fermerModal = () => {
+    setModalOuvert(false);
+    setModeModal('creer');
+    setCommandeEnEditionId(null);
+  };
+
+  const demanderSuppression = (c) => setCommandeASupprimer(c);
+  const annulerSuppression = () => setCommandeASupprimer(null);
+
+  const confirmerSuppression = async () => {
+    if (!commandeASupprimer) return;
+    setSuppressionEnCours(true);
+    try {
+      const response = await fetch(
+        `https://monkarnet-backend.onrender.com/api/commandes/${commandeASupprimer._id}`,
+        {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression.');
+      }
+
+      setCommandes((prev) => prev.filter((c) => c._id !== commandeASupprimer._id));
+      if (detailOuvert === commandeASupprimer._id) setDetailOuvert(null);
+      setCommandeASupprimer(null);
+    } catch (err) {
+      setErreur(err.message);
+    } finally {
+      setSuppressionEnCours(false);
+    }
+  };
+
+  const ouvrirRecu = (c) => setCommandeRecu(c);
+  const fermerRecu = () => setCommandeRecu(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -210,7 +293,7 @@ function Commandes() {
         produitsFormates.push({
           produit: l.produit,
           quantite: Number(l.quantite),
-          prixUnitaire: produitInfo.prix,
+          prixUnitaire: produitInfo ? produitInfo.prix : Number(l.prixLibre) || 0,
         });
       } else if (l.nomLibre.trim()) {
         produitsFormates.push({
@@ -226,32 +309,45 @@ function Commandes() {
       return;
     }
 
+    const estModification = modeModal === 'modifier';
+    const url = estModification
+      ? `https://monkarnet-backend.onrender.com/api/commandes/${commandeEnEditionId}`
+      : 'https://monkarnet-backend.onrender.com/api/commandes';
+
+    const body = estModification
+      ? {
+          client: { nom: clientNom, telephone: clientTelephone, adresse: clientAdresse },
+          produits: produitsFormates,
+        }
+      : {
+          client: { nom: clientNom, telephone: clientTelephone, adresse: clientAdresse },
+          produits: produitsFormates,
+          statut: 'en_attente',
+        };
+
     try {
-      const response = await fetch('https://monkarnet-backend.onrender.com/api/commandes', {
-        method: 'POST',
+      const response = await fetch(url, {
+        method: estModification ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          client: { nom: clientNom, telephone: clientTelephone, adresse: clientAdresse },
-          produits: produitsFormates,
-          statut: 'en_attente',
-        }),
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Erreur lors de la création de la commande.");
+        throw new Error(
+          data.message ||
+            (estModification
+              ? 'Erreur lors de la modification de la commande.'
+              : 'Erreur lors de la création de la commande.')
+        );
       }
 
       await chargerDonnees();
-      setModalOuvert(false);
-      setClientNom('');
-      setClientTelephone('');
-      setClientAdresse('');
-      setLignesProduits([{ produit: '', nomLibre: '', prixLibre: '', quantite: 1 }]);
+      fermerModal();
     } catch (err) {
       setErreur(err.message);
     }
@@ -265,6 +361,75 @@ function Commandes() {
           year: 'numeric',
         })
       : periodeLabels[periode];
+
+  const renderDetails = (c) => (
+    <>
+      <div className="commandes-details-box">
+        <div className="commandes-details-infos">
+          <div>
+            <div className="commandes-details-label">Téléphone</div>
+            <div className="commandes-details-value">{c.client?.telephone || '—'}</div>
+          </div>
+          <div>
+            <div className="commandes-details-label">Adresse de livraison</div>
+            <div className="commandes-details-value">{c.client?.adresse || '—'}</div>
+          </div>
+        </div>
+
+        <div className="commandes-details-produits">
+          <div className="commandes-details-label" style={{ marginBottom: 6 }}>
+            Produits commandés
+          </div>
+          {(c.produits || []).map((p, i) => (
+            <div key={i} className="commandes-details-produit-ligne">
+              <span className="commandes-details-produit-nom">
+                {nomProduit(p)} × {p.quantite}
+              </span>
+              <span className="commandes-details-produit-prix">
+                {(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="commandes-details-actions">
+        <button
+          type="button"
+          className="commandes-details-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            ouvrirEdition(c);
+          }}
+        >
+          <Pencil size={14} />
+          Modifier
+        </button>
+        <button
+          type="button"
+          className="commandes-details-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            ouvrirRecu(c);
+          }}
+        >
+          <Printer size={14} />
+          Reçu
+        </button>
+        <button
+          type="button"
+          className="commandes-details-btn commandes-details-btn-danger"
+          onClick={(e) => {
+            e.stopPropagation();
+            demanderSuppression(c);
+          }}
+        >
+          <Trash2 size={14} />
+          Supprimer
+        </button>
+      </div>
+    </>
+  );
 
   return (
     <div className="commandes">
@@ -318,7 +483,7 @@ function Commandes() {
 
         <p className="commandes-subtitle">Suivez et gérez toutes vos commandes.</p>
 
-        <button className="commandes-add-btn" onClick={() => setModalOuvert(true)}>
+        <button className="commandes-add-btn" onClick={ouvrirCreation}>
           <Plus size={18} />
           Nouvelle commande
         </button>
@@ -364,10 +529,7 @@ function Commandes() {
                   const estOuvert = detailOuvert === c._id;
                   return (
                     <Fragment key={c._id}>
-                      <tr
-                        className="commandes-row"
-                        onClick={() => toggleDetail(c._id)}
-                      >
+                      <tr className="commandes-row" onClick={() => toggleDetail(c._id)}>
                         <td className="commandes-cell-client">
                           <span className="commandes-numero-mobile">{c.numero || '—'}</span>
                           <span className="commandes-nom-client">{c.client?.nom}</span>
@@ -397,40 +559,7 @@ function Commandes() {
                       <tr className={`commandes-details-row ${estOuvert ? 'open' : ''}`}>
                         <td colSpan={5}>
                           <div className="commandes-details-inner">
-                            <div className="commandes-details-content">
-                              <div className="commandes-details-box">
-                                <div className="commandes-details-infos">
-                                  <div>
-                                    <div className="commandes-details-label">Téléphone</div>
-                                    <div className="commandes-details-value">
-                                      {c.client?.telephone || '—'}
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <div className="commandes-details-label">Adresse de livraison</div>
-                                    <div className="commandes-details-value">
-                                      {c.client?.adresse || '—'}
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="commandes-details-produits">
-                                  <div className="commandes-details-label" style={{ marginBottom: 6 }}>
-                                    Produits commandés
-                                  </div>
-                                  {(c.produits || []).map((p, i) => (
-                                    <div key={i} className="commandes-details-produit-ligne">
-                                      <span className="commandes-details-produit-nom">
-                                        {nomProduit(p)} × {p.quantite}
-                                      </span>
-                                      <span className="commandes-details-produit-prix">
-                                        {(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F
-                                      </span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
+                            <div className="commandes-details-content">{renderDetails(c)}</div>
                           </div>
                         </td>
                       </tr>
@@ -480,38 +609,7 @@ function Commandes() {
 
                   <div className="commandes-card-details">
                     <div className="commandes-card-details-inner">
-                      <div className="commandes-card-details-box">
-                        <div className="commandes-details-infos">
-                          <div>
-                            <div className="commandes-details-label">Téléphone</div>
-                            <div className="commandes-details-value">
-                              {c.client?.telephone || '—'}
-                            </div>
-                          </div>
-                          <div>
-                            <div className="commandes-details-label">Adresse de livraison</div>
-                            <div className="commandes-details-value">
-                              {c.client?.adresse || '—'}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="commandes-details-produits">
-                          <div className="commandes-details-label" style={{ marginBottom: 6 }}>
-                            Produits commandés
-                          </div>
-                          {(c.produits || []).map((p, i) => (
-                            <div key={i} className="commandes-details-produit-ligne">
-                              <span className="commandes-details-produit-nom">
-                                {nomProduit(p)} × {p.quantite}
-                              </span>
-                              <span className="commandes-details-produit-prix">
-                                {(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                      <div className="commandes-card-details-box">{renderDetails(c)}</div>
                     </div>
                   </div>
                 </div>
@@ -521,13 +619,13 @@ function Commandes() {
         </>
       )}
 
-      {/* ========== MODAL ========== */}
+      {/* ========== MODAL CRÉATION / MODIFICATION ========== */}
       {modalOuvert && (
-        <div className="commandes-modal-overlay" onClick={() => setModalOuvert(false)}>
+        <div className="commandes-modal-overlay" onClick={fermerModal}>
           <div className="commandes-modal" onClick={(e) => e.stopPropagation()}>
             <div className="commandes-modal-header">
-              <h2>Nouvelle commande</h2>
-              <button className="commandes-modal-close" onClick={() => setModalOuvert(false)}>
+              <h2>{modeModal === 'modifier' ? 'Modifier la commande' : 'Nouvelle commande'}</h2>
+              <button className="commandes-modal-close" onClick={fermerModal}>
                 <X size={20} />
               </button>
             </div>
@@ -618,9 +716,102 @@ function Commandes() {
               </button>
 
               <button type="submit" className="commandes-modal-submit">
-                Créer la commande
+                {modeModal === 'modifier' ? 'Enregistrer les modifications' : 'Créer la commande'}
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ========== CONFIRMATION SUPPRESSION ========== */}
+      {commandeASupprimer && (
+        <div className="commandes-modal-overlay" onClick={annulerSuppression}>
+          <div className="commandes-confirm-box" onClick={(e) => e.stopPropagation()}>
+            <h3>Supprimer la commande {commandeASupprimer.numero} ?</h3>
+            <p>
+              Cette action est définitive et ne peut pas être annulée. La commande de{' '}
+              <strong>{commandeASupprimer.client?.nom}</strong> sera supprimée.
+            </p>
+            <div className="commandes-confirm-actions">
+              <button className="commandes-confirm-cancel" onClick={annulerSuppression}>
+                Annuler
+              </button>
+              <button
+                className="commandes-confirm-delete"
+                onClick={confirmerSuppression}
+                disabled={suppressionEnCours}
+              >
+                {suppressionEnCours ? 'Suppression...' : 'Supprimer définitivement'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========== REÇU IMPRIMABLE ========== */}
+      {commandeRecu && (
+        <div className="commandes-modal-overlay" onClick={fermerRecu}>
+          <div className="commandes-recu-box" onClick={(e) => e.stopPropagation()}>
+            <div className="commandes-recu-header no-print">
+              <h2>Reçu — {commandeRecu.numero}</h2>
+              <button className="commandes-modal-close" onClick={fermerRecu}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="commandes-recu-print-zone">
+              <div className="commandes-recu-titre">Comerza</div>
+              <div className="commandes-recu-sous-titre">
+                Reçu de commande {commandeRecu.numero}
+              </div>
+              <div className="commandes-recu-date">
+                {new Date(commandeRecu.createdAt).toLocaleDateString('fr-FR', {
+                  day: '2-digit',
+                  month: 'long',
+                  year: 'numeric',
+                })}
+              </div>
+
+              <div className="commandes-recu-separateur" />
+
+              <div className="commandes-recu-champ">
+                <span>Client</span>
+                <span>{commandeRecu.client?.nom || '—'}</span>
+              </div>
+              <div className="commandes-recu-champ">
+                <span>Téléphone</span>
+                <span>{commandeRecu.client?.telephone || '—'}</span>
+              </div>
+              <div className="commandes-recu-champ">
+                <span>Adresse</span>
+                <span>{commandeRecu.client?.adresse || '—'}</span>
+              </div>
+
+              <div className="commandes-recu-separateur" />
+
+              {(commandeRecu.produits || []).map((p, i) => (
+                <div key={i} className="commandes-recu-ligne">
+                  <span>
+                    {nomProduit(p)} × {p.quantite}
+                  </span>
+                  <span>{(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F</span>
+                </div>
+              ))}
+
+              <div className="commandes-recu-separateur" />
+
+              <div className="commandes-recu-total">
+                <span>Total</span>
+                <span>{commandeRecu.total.toLocaleString('fr-FR')} F</span>
+              </div>
+
+              <div className="commandes-recu-merci">Merci pour votre commande !</div>
+            </div>
+
+            <button className="commandes-modal-submit no-print" onClick={() => window.print()}>
+              <Printer size={16} style={{ marginRight: 6, verticalAlign: 'middle' }} />
+              Imprimer le reçu
+            </button>
           </div>
         </div>
       )}
