@@ -30,7 +30,7 @@ function Sidebar({ ouverte, onFermer }) {
           <span className="sidebar-logo-icon">
             <NotebookText size={20} />
           </span>
-          <span className="sidebar-logo-text">Comerza</span>
+          <span className="sidebar-logo-text">Orbizo</span>
         </Link>
         <button className="sidebar-close-btn" onClick={onFermer}>
           <X size={22} />

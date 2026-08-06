@@ -83,7 +83,7 @@ function Login() {
   return (
     <div className="login">
       <div className="login-card">
-        <span className="login-logo">Comerza</span>
+        <span className="login-logo">Orbizo</span>
         <h1 className="login-title">Connexion</h1>
         <p className="login-subtitle">Accédez à votre espace commerçant.</p>
 

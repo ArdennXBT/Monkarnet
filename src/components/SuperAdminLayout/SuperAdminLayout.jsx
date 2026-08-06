@@ -14,7 +14,7 @@ function SuperAdminLayout() {
   return (
     <div className="superadmin-layout">
       <header className="superadmin-navbar">
-        <span className="superadmin-logo">Monkarnet <span className="superadmin-tag">Admin</span></span>
+        <span className="superadmin-logo">Orbizo <span className="superadmin-tag">Admin</span></span>
         <nav className="superadmin-nav">
           {navItems.map((item) => (
             <Link key={item.path} to={item.path} className="superadmin-nav-link">

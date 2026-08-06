@@ -7,7 +7,7 @@ function Footer() {
     <footer className="landing-footer">
       <div className="landing-footer-main">
         <div className="landing-footer-brand">
-          <span className="landing-footer-logo">Comerza</span>
+          <span className="landing-footer-logo">Orbizo</span>
           <p className="landing-footer-desc">
             L'outil gratuit qui remplace le cahier et WhatsApp pour les commerçants.
           </p>
