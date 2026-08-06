@@ -50,8 +50,6 @@
   transform: scale(0.98);
 }
 
-/* --- Barre recherche + tri (montée à côté de la cloche) --- */
-
 /* --- Barre recherche + tri --- */
 
 .produits-toolbar {
@@ -110,6 +108,7 @@
 
 .produits-categories {
   display: flex;
+  align-items: center;
   gap: 8px;
   overflow-x: auto;
   padding-bottom: 4px;
@@ -143,6 +142,32 @@
   background-color: var(--color-navy);
   border-color: var(--color-navy);
   color: var(--color-white);
+}
+
+/* Bouton minimaliste de gestion des catégories : icône + texte, discret */
+.produits-categorie-manage-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px dashed var(--color-border);
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+  margin-left: 2px;
+}
+
+.produits-categorie-manage-btn:hover {
+  border-color: var(--color-navy);
+  color: var(--color-navy);
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 /* --- Grille --- */
@@ -588,6 +613,161 @@
   cursor: not-allowed;
 }
 
+/* --- Modal de gestion des catégories --- */
+
+.produits-categorie-modal {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 380px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.produits-categorie-modal-hint {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-md);
+  line-height: 1.4;
+}
+
+.produits-categorie-modal-souptitre {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-md) 0 8px;
+}
+
+.produits-categorie-liste {
+  list-style: none;
+  margin: 0 0 var(--spacing-md);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.produits-categorie-liste-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.produits-categorie-liste-item:has(.produits-categorie-checkbox) {
+  padding: 2px 4px;
+}
+
+/* Checkbox custom minimaliste */
+.produits-categorie-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease;
+}
+
+.produits-categorie-checkbox:hover {
+  background-color: var(--color-bg, #F4F5F9);
+}
+
+.produits-categorie-checkbox input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.produits-categorie-checkbox-box {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.produits-categorie-checkbox-box.checked {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+}
+
+.produits-categorie-supprimer-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.produits-categorie-supprimer-btn:hover {
+  color: #B3261E;
+}
+
+.produits-categorie-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.produits-categorie-form input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: var(--font-main);
+  background-color: var(--color-white);
+  color: var(--color-text);
+}
+
+.produits-categorie-form input:focus {
+  outline: none;
+  border-color: var(--color-navy);
+}
+
+.produits-categorie-form button {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.produits-categorie-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Tablette */
 @media (max-width: 1024px) {
   .produits-grid {
@@ -680,6 +860,11 @@
   }
 
   .produits-modal {
+    width: 92vw;
+    padding: var(--spacing-md);
+  }
+
+  .produits-categorie-modal {
     width: 92vw;
     padding: var(--spacing-md);
   }

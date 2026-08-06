@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Plus, X, Pencil, Trash2, ImagePlus, Package, Search } from 'lucide-react';
+import { Plus, X, Pencil, Trash2, ImagePlus, Package, Search, Settings2, Check } from 'lucide-react';
 import './Produits.css';
 
 const CLOUDINARY_CLOUD_NAME = 'pfmip5ll';
 const CLOUDINARY_UPLOAD_PRESET = 'comerza_produits';
 const SEUIL_STOCK_FAIBLE = 5;
 
-const CATEGORIES = [
+// Catégories courantes proposées par défaut : le commerçant coche celles qu'il veut, décoche celles qu'il ne veut pas
+const CATEGORIES_SUGGEREES = [
   'Alimentation',
   'Boissons',
   'Mode & Vêtements',
@@ -15,7 +16,6 @@ const CATEGORIES = [
   'Beauté & Hygiène',
   'Maison & Déco',
   'Services',
-  'Autre',
 ];
 
 const FORM_VIDE = {
@@ -38,6 +38,14 @@ function Produits() {
   const tri = searchParams.get('tri') || 'recent';
 
   const [categorieActive, setCategorieActive] = useState('Toutes');
+
+  // Catégories dynamiques créées par le commerçant
+  const [categories, setCategories] = useState([]);
+  const [categorieModalOuvert, setCategorieModalOuvert] = useState(false);
+  const [nouvelleCategorie, setNouvelleCategorie] = useState('');
+  const [ajoutCategorieEnCours, setAjoutCategorieEnCours] = useState(false);
+  const [categorieEnChargement, setCategorieEnChargement] = useState('');
+  const [erreurCategorie, setErreurCategorie] = useState('');
 
   const [modalOuvert, setModalOuvert] = useState(false);
   const [produitEnEdition, setProduitEnEdition] = useState(null);
@@ -69,8 +77,24 @@ function Produits() {
     }
   };
 
+  const chargerCategories = async () => {
+    try {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/produits/categories', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        setCategories(data);
+      }
+    } catch (err) {
+      // silencieux, la page reste utilisable sans catégories
+    }
+  };
+
   useEffect(() => {
     chargerProduits();
+    chargerCategories();
   }, []);
 
   const handleChange = (e) => {
@@ -209,6 +233,106 @@ function Produits() {
     }
   };
 
+  // --- Gestion des catégories ---
+  const ouvrirGestionCategories = () => {
+    setErreurCategorie('');
+    setNouvelleCategorie('');
+    setCategorieModalOuvert(true);
+  };
+
+  const fermerGestionCategories = () => {
+    setCategorieModalOuvert(false);
+    setNouvelleCategorie('');
+    setErreurCategorie('');
+  };
+
+  const creerCategorieParNom = async (nom) => {
+    const response = await fetch('https://monkarnet-backend.onrender.com/api/produits/categories', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ nom }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Erreur lors de la création de la catégorie.');
+    }
+
+    setCategories((prev) => [...prev, data].sort((a, b) => a.nom.localeCompare(b.nom, 'fr')));
+  };
+
+  const supprimerCategorieParObjet = async (categorie) => {
+    const response = await fetch(
+      `https://monkarnet-backend.onrender.com/api/produits/categories/${categorie._id}`,
+      {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Erreur lors de la suppression.');
+    }
+
+    setCategories((prev) => prev.filter((c) => c._id !== categorie._id));
+
+    if (categorieActive === categorie.nom) {
+      setCategorieActive('Toutes');
+    }
+  };
+
+  // Coche / décoche une catégorie suggérée
+  const toggleCategorieSuggeree = async (nom) => {
+    setErreurCategorie('');
+    setCategorieEnChargement(nom);
+
+    const existante = categories.find((c) => c.nom === nom);
+
+    try {
+      if (existante) {
+        await supprimerCategorieParObjet(existante);
+      } else {
+        await creerCategorieParNom(nom);
+      }
+    } catch (err) {
+      setErreurCategorie(err.message);
+    } finally {
+      setCategorieEnChargement('');
+    }
+  };
+
+  const ajouterCategoriePersonnalisee = async (e) => {
+    e.preventDefault();
+    if (!nouvelleCategorie.trim()) return;
+
+    setAjoutCategorieEnCours(true);
+    setErreurCategorie('');
+
+    try {
+      await creerCategorieParNom(nouvelleCategorie.trim());
+      setNouvelleCategorie('');
+    } catch (err) {
+      setErreurCategorie(err.message);
+    } finally {
+      setAjoutCategorieEnCours(false);
+    }
+  };
+
+  const supprimerCategoriePersonnalisee = async (categorie) => {
+    setErreurCategorie('');
+    try {
+      await supprimerCategorieParObjet(categorie);
+    } catch (err) {
+      setErreurCategorie(err.message);
+    }
+  };
+
   const reinitialiserFiltres = () => {
     setCategorieActive('Toutes');
     const nouveaux = new URLSearchParams(searchParams);
@@ -247,6 +371,14 @@ function Produits() {
   const aucunResultatFiltre = !chargement && produits.length > 0 && produitsAffiches.length === 0;
   const filtresActifs = recherche.trim() !== '' || categorieActive !== 'Toutes' || tri !== 'recent';
 
+  // Catégories personnalisées = celles créées par le commerçant qui ne sont pas dans la liste suggérée
+  const categoriesPersonnalisees = categories.filter((c) => !CATEGORIES_SUGGEREES.includes(c.nom));
+
+  // Options du select catégorie dans le formulaire produit
+  const optionsCategorieForm = categories.some((c) => c.nom === 'Autre')
+    ? categories.map((c) => c.nom)
+    : [...categories.map((c) => c.nom), 'Autre'];
+
   return (
     <div className="produits">
       <div className="produits-header">
@@ -270,15 +402,19 @@ function Produits() {
           >
             Toutes
           </button>
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
-              key={cat}
-              className={`produits-categorie-chip ${categorieActive === cat ? 'active' : ''}`}
-              onClick={() => setCategorieActive(cat)}
+              key={cat._id}
+              className={`produits-categorie-chip ${categorieActive === cat.nom ? 'active' : ''}`}
+              onClick={() => setCategorieActive(cat.nom)}
             >
-              {cat}
+              {cat.nom}
             </button>
           ))}
+          <button className="produits-categorie-manage-btn" onClick={ouvrirGestionCategories}>
+            <Settings2 size={14} />
+            Catégories
+          </button>
         </div>
       )}
 
@@ -419,7 +555,7 @@ function Produits() {
               <label>
                 Catégorie
                 <select name="categorie" value={formData.categorie} onChange={handleChange}>
-                  {CATEGORIES.map((cat) => (
+                  {optionsCategorieForm.map((cat) => (
                     <option key={cat} value={cat}>
                       {cat}
                     </option>
@@ -480,6 +616,80 @@ function Produits() {
                 {suppressionEnCours ? 'Suppression...' : 'Supprimer'}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {categorieModalOuvert && (
+        <div className="produits-modal-overlay" onClick={fermerGestionCategories}>
+          <div className="produits-categorie-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="produits-modal-header">
+              <h2>Catégories</h2>
+              <button className="produits-modal-close" onClick={fermerGestionCategories}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <p className="produits-categorie-modal-hint">
+              Coche les catégories que tu veux afficher dans ton catalogue.
+            </p>
+
+            {erreurCategorie && <p className="produits-error">{erreurCategorie}</p>}
+
+            <ul className="produits-categorie-liste">
+              {CATEGORIES_SUGGEREES.map((nom) => {
+                const cochee = categories.some((c) => c.nom === nom);
+                const enChargement = categorieEnChargement === nom;
+                return (
+                  <li key={nom} className="produits-categorie-liste-item">
+                    <label className="produits-categorie-checkbox">
+                      <span className={`produits-categorie-checkbox-box ${cochee ? 'checked' : ''}`}>
+                        {cochee && <Check size={12} strokeWidth={3} />}
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={cochee}
+                        disabled={enChargement}
+                        onChange={() => toggleCategorieSuggeree(nom)}
+                      />
+                      {nom}
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {categoriesPersonnalisees.length > 0 && (
+              <>
+                <p className="produits-categorie-modal-souptitre">Tes catégories personnalisées</p>
+                <ul className="produits-categorie-liste">
+                  {categoriesPersonnalisees.map((cat) => (
+                    <li key={cat._id} className="produits-categorie-liste-item">
+                      <span>{cat.nom}</span>
+                      <button
+                        className="produits-categorie-supprimer-btn"
+                        onClick={() => supprimerCategoriePersonnalisee(cat)}
+                        aria-label={`Supprimer ${cat.nom}`}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            <form className="produits-categorie-form" onSubmit={ajouterCategoriePersonnalisee}>
+              <input
+                type="text"
+                placeholder="Créer une autre catégorie..."
+                value={nouvelleCategorie}
+                onChange={(e) => setNouvelleCategorie(e.target.value)}
+              />
+              <button type="submit" disabled={ajoutCategorieEnCours || !nouvelleCategorie.trim()}>
+                <Plus size={16} />
+              </button>
+            </form>
           </div>
         </div>
       )}
