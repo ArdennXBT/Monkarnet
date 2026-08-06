@@ -10,7 +10,7 @@ function Header() {
         <span className="landing-logo-icon">
           <NotebookText size={18} />
         </span>
-        Orbiza
+        Orbizo
       </Link>
       <nav className="landing-nav">
         <a href="#fonctionnalites" className="landing-nav-link"></a>

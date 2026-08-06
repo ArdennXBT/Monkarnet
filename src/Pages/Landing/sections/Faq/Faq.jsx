@@ -14,7 +14,7 @@ const questions = [
     r: "Vos données vous appartiennent et ne sont partagées avec personne. Nous mettons tout en œuvre pour les protéger."
   },
   {
-    q: "Puis-je utiliser Orbiza pour n'importe quel commerce ?",
+    q: "Puis-je utiliser Orbizo pour n'importe quel commerce ?",
     r: "Oui, que vous soyez restaurant, boutique, ou tout autre commerce en ligne avec livraison, Monkarnet s'adapte à votre activité."
   },
   {
