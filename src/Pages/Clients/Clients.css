@@ -1,3 +1,8 @@
+.clients {
+  padding: var(--spacing-lg) var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
 .clients-title {
   font-size: 24px;
@@ -12,20 +17,213 @@
   margin: 0 0 var(--spacing-lg);
 }
 
-.clients-grid {
+/* ---------- Barre d'outils (onglets activité) ---------- */
+/* La recherche a été déplacée dans la navbar */
+
+.clients-toolbar {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.clients-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.clients-tab {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.clients-tab:hover {
+  border-color: var(--color-blue);
+}
+
+.clients-tab.active {
+  background-color: var(--color-blue);
+  border-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* ---------- Compteur ---------- */
+
+.clients-compteur {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-sm);
+}
+
+/* ---------- Bloc Top clients ---------- */
+
+.clients-top-section {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+}
+
+.clients-top-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.clients-top-toggle span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clients-top-content {
+  padding: 0 var(--spacing-md) var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.clients-top-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: var(--spacing-md) 0;
+}
+
+.clients-top-periodes,
+.clients-top-tri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.clients-chip {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.clients-chip.active {
+  background-color: #FFF4D9;
+  border-color: #F0B429;
+  color: #8A5A00;
+}
+
+.clients-top-note {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  background-color: #F5F5F5;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  margin: 0 0 var(--spacing-sm);
+}
+
+.clients-top-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.clients-top-item {
+  display: grid;
+  grid-template-columns: 24px 40px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  background-color: #FAFAFA;
+}
+
+.clients-top-rang {
+  font-size: 15px;
+  text-align: center;
+}
+
+.clients-top-avatar {
+  width: 36px;
+  height: 36px;
+  font-size: 13px;
+}
+
+.clients-top-info {
+  min-width: 0;
+}
+
+.clients-top-info .clients-card-nom {
+  margin: 0;
+}
+
+.clients-top-info .clients-card-detail {
+  margin: 0;
+}
+
+.clients-top-montant {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.clients-top-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ---------- Grille des clients ---------- */
+
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-md);
 }
 
 .clients-card {
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.clients-card.ouverte {
+  border-color: var(--color-blue);
+}
+
+/* Le header est un <button> qui déplie/replie la carte */
+.clients-card-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
   padding: var(--spacing-md);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-md);
+  font: inherit;
+  color: inherit;
 }
 
 .clients-card-avatar {
@@ -44,6 +242,7 @@
 
 .clients-card-info {
   flex: 1;
+  min-width: 0;
 }
 
 .clients-card-nom {
@@ -51,6 +250,21 @@
   font-weight: 600;
   color: var(--color-text);
   margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.clients-badge-nouveau {
+  font-size: 10px;
+  font-weight: 600;
+  color: #1A7F37;
+  background-color: #E6F6EA;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .clients-card-detail {
@@ -60,6 +274,26 @@
   font-size: 13px;
   color: var(--color-text-secondary);
   margin: 2px 0;
+  word-break: break-word;
+}
+
+.clients-card-chevron {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  padding-top: 4px;
+}
+
+/* Partie repliée : commandes, total dépensé, appel/whatsapp */
+.clients-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+  border-top: 1px solid var(--color-border);
 }
 
 .clients-card-stats {
@@ -82,6 +316,34 @@
   text-align: right;
 }
 
+.clients-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.clients-action-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+}
+
+.clients-action-btn:hover {
+  opacity: 0.85;
+}
+
+.clients-action-btn.whatsapp {
+  background-color: #25D366;
+}
+
+/* ---------- États ---------- */
+
 .clients-error {
   background-color: #FDECEA;
   color: #B3261E;
@@ -98,14 +360,28 @@
   padding: var(--spacing-lg) 0;
 }
 
+/* ---------- Responsive ---------- */
+
 @media (max-width: 768px) {
+  .clients {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
   .clients-title {
     font-size: 20px;
   }
 
-  .clients-card {
+  .clients-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clients-card-header {
     padding: var(--spacing-sm);
     gap: var(--spacing-sm);
+  }
+
+  .clients-card-footer {
+    padding: var(--spacing-sm);
   }
 
   .clients-card-avatar {
@@ -132,5 +408,44 @@
 
   .clients-card-stat-label {
     font-size: 11px;
+  }
+
+  .clients-top-item {
+    grid-template-columns: 20px 34px 1fr;
+    row-gap: 6px;
+  }
+
+  .clients-top-montant {
+    grid-column: 2 / 4;
+    text-align: right;
+  }
+
+  .clients-top-actions {
+    grid-column: 1 / 4;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .clients-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .clients-card-stats {
+    justify-content: space-between;
+  }
+
+  .clients-card-actions {
+    justify-content: flex-end;
+  }
+
+  .clients-tabs {
+    gap: 6px;
+  }
+
+  .clients-tab {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 }

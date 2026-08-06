@@ -22,8 +22,9 @@ function Navbar({ menuOuvert, onToggleMenu }) {
   const estSurDashboard = location.pathname === '/dashboard';
   const estSurProduits = location.pathname === '/produits';
   const estSurCommandes = location.pathname === '/commandes';
+  const estSurClients = location.pathname === '/clients';
 
-  // Valeur pour la page Produits / Commandes (recherche locale via URL ?q=)
+  // Valeur pour les pages avec recherche locale via URL ?q= (Produits / Commandes / Clients)
   const rechercheLocale = searchParams.get('q') || '';
 
   const token = localStorage.getItem('token');
@@ -108,7 +109,7 @@ function Navbar({ menuOuvert, onToggleMenu }) {
     setRechercheOuverte(false);
   };
 
-  // === Recherche Produits / Commandes (via URL ?q=) ===
+  // === Recherche locale Produits / Commandes / Clients (via URL ?q=) ===
   const handleRechercheLocale = (e) => {
     const valeur = e.target.value;
     const nouveaux = new URLSearchParams(searchParams);
@@ -119,6 +120,18 @@ function Navbar({ menuOuvert, onToggleMenu }) {
     }
     setSearchParams(nouveaux);
   };
+
+  const effacerRechercheLocale = () => {
+    const nouveaux = new URLSearchParams(searchParams);
+    nouveaux.delete('q');
+    setSearchParams(nouveaux);
+  };
+
+  const placeholderRechercheLocale = estSurCommandes
+    ? 'Rechercher par nom, téléphone ou n° de commande...'
+    : estSurClients
+    ? 'Rechercher un client, un numéro, une adresse...'
+    : 'Rechercher un produit...';
 
   const nombreNonLues = notifications.filter((n) => !n.lu).length;
   const initiale = commercant?.nomComplet?.charAt(0) || 'C';
@@ -158,17 +171,13 @@ function Navbar({ menuOuvert, onToggleMenu }) {
             </span>
           </div>
         </div>
-      ) : estSurProduits || estSurCommandes ? (
+      ) : estSurProduits || estSurCommandes || estSurClients ? (
         <div className="navbar-produits-toolbar">
           <div className="navbar-produits-search">
             <Search size={16} />
             <input
               type="text"
-              placeholder={
-                estSurCommandes
-                  ? 'Rechercher par nom, téléphone ou n° de commande...'
-                  : 'Rechercher un produit...'
-              }
+              placeholder={placeholderRechercheLocale}
               value={rechercheLocale}
               onChange={handleRechercheLocale}
             />
@@ -176,11 +185,7 @@ function Navbar({ menuOuvert, onToggleMenu }) {
               <button
                 type="button"
                 className="navbar-search-clear"
-                onClick={() => {
-                  const nouveaux = new URLSearchParams(searchParams);
-                  nouveaux.delete('q');
-                  setSearchParams(nouveaux);
-                }}
+                onClick={effacerRechercheLocale}
                 aria-label="Effacer la recherche"
               >
                 <X size={14} />
