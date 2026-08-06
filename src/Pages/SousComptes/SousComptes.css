@@ -1,9 +1,8 @@
-
 .souscomptes-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
 }
 
 .souscomptes-title {
@@ -34,6 +33,51 @@
   cursor: pointer;
 }
 
+.souscomptes-add-btn:disabled {
+  background-color: var(--color-border);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+/* Compteur d'utilisation du plan */
+.souscomptes-plan-limit {
+  margin-bottom: var(--spacing-lg);
+}
+
+.souscomptes-plan-limit-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.souscomptes-plan-limit-top span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.souscomptes-plan-limit-warning {
+  color: #B3261E;
+  font-weight: 600;
+}
+
+.souscomptes-plan-bar {
+  height: 6px;
+  background-color: var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.souscomptes-plan-bar-fill {
+  height: 100%;
+  background-color: var(--color-blue);
+  border-radius: var(--radius-pill);
+  transition: width 0.3s ease;
+}
+
 .souscomptes-error {
   background-color: #FDECEA;
   color: #B3261E;
@@ -60,53 +104,193 @@
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.souscomptes-card-main {
   padding: var(--spacing-md);
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
 }
 
+.souscomptes-avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 15px;
+}
+
 .souscomptes-card-info {
   flex: 1;
+  min-width: 0;
+}
+
+.souscomptes-card-name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
 .souscomptes-card-nom {
   font-size: 15px;
   font-weight: 600;
   color: var(--color-text);
+  margin: 0;
+}
+
+.souscomptes-card-email {
+  font-size: 13px;
+  color: var(--color-text-secondary);
   margin: 0 0 4px;
 }
 
-.souscomptes-card-date {
+.souscomptes-card-connexion {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Badges de rôle */
+.souscomptes-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.role-admin {
+  background-color: #F3E8FD;
+  color: #7C3AED;
+}
+
+.role-vendeur {
+  background-color: var(--color-blue-light);
+  color: var(--color-blue);
+}
+
+.role-comptable {
+  background-color: #E6F4EA;
+  color: #1E7E34;
+}
+
+.role-livreur {
+  background-color: #FFF4E5;
+  color: #B76E00;
+}
+
+/* Badges de statut */
+.souscomptes-status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.status-actif {
+  background-color: #E6F4EA;
+  color: #1E7E34;
+}
+
+.status-attente {
+  background-color: #FFF4E5;
+  color: #B76E00;
+}
+
+/* Actions */
+.souscomptes-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.souscomptes-icon-btn {
+  background-color: var(--color-blue-light);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  color: var(--color-blue);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.souscomptes-delete-btn {
+  background-color: #FDECEA;
+  color: #B3261E;
+}
+
+.souscomptes-expand-btn {
+  background-color: var(--color-bg, #F5F6F8);
+  color: var(--color-text-secondary);
+  transition: transform 0.2s ease;
+}
+
+.souscomptes-expand-btn.ouvert {
+  transform: rotate(180deg);
+}
+
+/* Panneau d'activité */
+.souscomptes-activity-panel {
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: #FAFAFB;
+}
+
+.souscomptes-activity-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0 0 8px;
+}
+
+.souscomptes-empty-activity {
   font-size: 13px;
   color: var(--color-text-secondary);
   margin: 0;
 }
 
-.souscomptes-card-permissions {
+.souscomptes-activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.souscomptes-badge {
-  background-color: var(--color-blue-light);
-  color: var(--color-blue);
+.souscomptes-activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.souscomptes-activity-date {
   font-size: 12px;
-  font-weight: 500;
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
 }
 
-.souscomptes-delete-btn {
-  background-color: #FDECEA;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: 8px;
-  color: #B3261E;
-  cursor: pointer;
-  display: flex;
-}
-
+/* Modal */
 .souscomptes-modal-overlay {
   position: fixed;
   inset: 0;
@@ -161,15 +345,18 @@
   gap: 6px;
 }
 
-.souscomptes-modal-form input {
+.souscomptes-modal-form input,
+.souscomptes-modal-form select {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   font-size: 14px;
   font-family: var(--font-main);
+  background-color: var(--color-white);
 }
 
-.souscomptes-modal-form input:focus {
+.souscomptes-modal-form input:focus,
+.souscomptes-modal-form select:focus {
   outline: none;
   border-color: var(--color-navy);
 }
@@ -203,14 +390,15 @@
     width: 100%;
   }
 
-  .souscomptes-card {
+  .souscomptes-card-main {
     flex-wrap: wrap;
     padding: var(--spacing-sm);
     gap: var(--spacing-sm);
   }
 
-  .souscomptes-card-permissions {
-    flex-wrap: wrap;
+  .souscomptes-card-actions {
+    width: 100%;
+    justify-content: flex-end;
   }
 
   .souscomptes-modal {
