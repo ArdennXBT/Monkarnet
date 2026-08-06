@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
-import { Plus, X, Trash2, Calendar, ChevronDown, Pencil, Printer } from 'lucide-react';
+import { Plus, X, Trash2, Calendar, ChevronDown, Pencil, Printer, Search } from 'lucide-react';
 import './Commandes.css';
 
 const filtres = ['Toutes', 'en_attente', 'en_cours', 'livree', 'litige'];
@@ -42,6 +42,9 @@ function Commandes() {
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
   const [filtreActif, setFiltreActif] = useState('Toutes');
+
+  // Recherche (nom client, téléphone, numéro de commande)
+  const [recherche, setRecherche] = useState('');
 
   // Modal création / modification (même modal, deux modes)
   const [modalOuvert, setModalOuvert] = useState(false);
@@ -160,10 +163,24 @@ function Commandes() {
     return d >= start && d <= end;
   });
 
-  const commandesFiltrees =
+  const commandesFiltreesParStatut =
     filtreActif === 'Toutes'
       ? commandesParPeriode
       : commandesParPeriode.filter((c) => c.statut === filtreActif);
+
+  // Recherche : nom client, téléphone, numéro de commande
+  // Note : la recherche s'applique sur les commandes déjà filtrées par période + statut.
+  // Si tu veux que la recherche ignore la période (chercher dans TOUTES les commandes),
+  // remplace "commandesFiltreesParStatut" par "commandes" ci-dessous.
+  const commandesFiltrees = commandesFiltreesParStatut.filter((c) => {
+    if (!recherche.trim()) return true;
+    const q = recherche.trim().toLowerCase();
+    return (
+      c.numero?.toLowerCase().includes(q) ||
+      c.client?.nom?.toLowerCase().includes(q) ||
+      c.client?.telephone?.toLowerCase().includes(q)
+    );
+  });
 
   const ajouterLigne = () => {
     setLignesProduits([...lignesProduits, { ...ligneVide }]);
@@ -491,6 +508,28 @@ function Commandes() {
 
       {erreur && <p className="commandes-error">{erreur}</p>}
 
+      {/* ========== BARRE DE RECHERCHE ========== */}
+      <div className="commandes-search-wrap">
+        <Search size={16} className="commandes-search-icon" />
+        <input
+          type="text"
+          className="commandes-search"
+          placeholder="Rechercher par nom, téléphone ou n° de commande..."
+          value={recherche}
+          onChange={(e) => setRecherche(e.target.value)}
+        />
+        {recherche && (
+          <button
+            type="button"
+            className="commandes-search-clear"
+            onClick={() => setRecherche('')}
+            aria-label="Effacer la recherche"
+          >
+            <X size={14} />
+          </button>
+        )}
+      </div>
+
       {/* ========== FILTRES STATUT ========== */}
       <div className="commandes-filtres">
         {filtres.map((f) => (
@@ -508,7 +547,9 @@ function Commandes() {
         <p className="commandes-loading">Chargement...</p>
       ) : commandesFiltrees.length === 0 ? (
         <p className="commandes-loading">
-          Aucune commande pour {labelPeriodeAffiche.toLowerCase()}.
+          {recherche.trim()
+            ? `Aucune commande ne correspond à "${recherche}".`
+            : `Aucune commande pour ${labelPeriodeAffiche.toLowerCase()}.`}
         </p>
       ) : (
         <>
