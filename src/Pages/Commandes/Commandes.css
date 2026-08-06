@@ -227,6 +227,113 @@
   color: var(--color-text-secondary);
 }
 
+/* ========== LIGNE CLIQUABLE + CHEVRON ========== */
+.commandes-row {
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.commandes-row:hover {
+  background-color: #FAFAF8;
+}
+
+.commandes-chevron-cell {
+  width: 32px;
+  text-align: right;
+  padding-right: 14px !important;
+}
+
+.commandes-chevron {
+  color: var(--color-text-secondary);
+  transition: transform 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.commandes-chevron.open {
+  transform: rotate(180deg);
+  color: var(--color-navy);
+}
+
+/* ========== DÉTAILS COMMANDE (accordéon desktop) ========== */
+.commandes-details-row td {
+  padding: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.commandes-details-row:not(.open) td {
+  border-bottom: none;
+}
+
+.commandes-details-inner {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.commandes-details-row.open .commandes-details-inner {
+  grid-template-rows: 1fr;
+}
+
+.commandes-details-content {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.commandes-details-box {
+  padding: 18px 20px;
+  background-color: #FAFAF9;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.commandes-details-infos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.commandes-details-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.commandes-details-value {
+  font-size: 13.5px;
+  color: var(--color-text);
+}
+
+.commandes-details-produits {
+  flex: 1;
+  min-width: 220px;
+}
+
+.commandes-details-produit-ligne {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13.5px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.commandes-details-produit-ligne:last-child {
+  border-bottom: none;
+}
+
+.commandes-details-produit-nom {
+  color: var(--color-text);
+}
+
+.commandes-details-produit-prix {
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
 /* ========== CARTES ========== */
 .commandes-cards {
   display: none;
@@ -247,6 +354,7 @@
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .commandes-card-client {
@@ -254,6 +362,13 @@
   flex-direction: column;
   gap: 2px;
   min-width: 0;
+}
+
+.commandes-card-montant-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .commandes-card-montant {
@@ -274,6 +389,31 @@
   font-size: 13px;
   color: var(--color-text-secondary);
   white-space: nowrap;
+}
+
+/* Détails accordéon mobile */
+.commandes-card-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.commandes-card.open .commandes-card-details {
+  grid-template-rows: 1fr;
+}
+
+.commandes-card-details-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.commandes-card-details-box {
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 /* Select statut */

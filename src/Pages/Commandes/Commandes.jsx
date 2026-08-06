@@ -1,5 +1,4 @@
-
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import { Plus, X, Trash2, Calendar, ChevronDown } from 'lucide-react';
 import './Commandes.css';
 
@@ -28,6 +27,13 @@ function statutClass(statut) {
   return 'commandes-badge-gray';
 }
 
+// Récupère un nom de produit lisible, que ce soit un produit du catalogue ou un produit libre
+function nomProduit(ligne) {
+  if (ligne.nomLibre) return ligne.nomLibre;
+  if (ligne.produit && typeof ligne.produit === 'object') return ligne.produit.nom || 'Produit';
+  return 'Produit';
+}
+
 function Commandes() {
   const [commandes, setCommandes] = useState([]);
   const [produits, setProduits] = useState([]);
@@ -35,6 +41,9 @@ function Commandes() {
   const [erreur, setErreur] = useState('');
   const [filtreActif, setFiltreActif] = useState('Toutes');
   const [modalOuvert, setModalOuvert] = useState(false);
+
+  // Détail de commande déplié (une seule commande ouverte à la fois)
+  const [detailOuvert, setDetailOuvert] = useState(null);
 
   // Période
   const [periode, setPeriode] = useState('aujourdhui');
@@ -159,6 +168,11 @@ function Commandes() {
       nouvellesLignes[index].prixLibre = '';
     }
     setLignesProduits(nouvellesLignes);
+  };
+
+  // Ouvre/ferme le détail d'une commande (une seule à la fois)
+  const toggleDetail = (commandeId) => {
+    setDetailOuvert((prev) => (prev === commandeId ? null : commandeId));
   };
 
   const handleChangerStatut = async (commandeId, nouveauStatut) => {
@@ -342,70 +356,167 @@ function Commandes() {
                   <th>Montant</th>
                   <th>Statut</th>
                   <th>Date</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                {commandesFiltrees.map((c) => (
-                  <tr key={c._id}>
-                    <td className="commandes-cell-client">
-                      <span className="commandes-numero-mobile">{c.numero || '—'}</span>
-                      <span className="commandes-nom-client">{c.client?.nom}</span>
-                    </td>
-                    <td className="commandes-montant">{c.total.toLocaleString('fr-FR')} F</td>
-                    <td>
-                      <select
-                        className={`commandes-statut-select ${statutClass(c.statut)}`}
-                        value={c.statut}
-                        onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                {commandesFiltrees.map((c) => {
+                  const estOuvert = detailOuvert === c._id;
+                  return (
+                    <Fragment key={c._id}>
+                      <tr
+                        className="commandes-row"
+                        onClick={() => toggleDetail(c._id)}
                       >
-                        {statutsPossibles.map((s) => (
-                          <option key={s} value={s}>
-                            {filtreLabels[s]}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td className="commandes-date">
-                      {new Date(c.createdAt).toLocaleDateString('fr-FR')}
-                    </td>
-                  </tr>
-                ))}
+                        <td className="commandes-cell-client">
+                          <span className="commandes-numero-mobile">{c.numero || '—'}</span>
+                          <span className="commandes-nom-client">{c.client?.nom}</span>
+                        </td>
+                        <td className="commandes-montant">{c.total.toLocaleString('fr-FR')} F</td>
+                        <td onClick={(e) => e.stopPropagation()}>
+                          <select
+                            className={`commandes-statut-select ${statutClass(c.statut)}`}
+                            value={c.statut}
+                            onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                          >
+                            {statutsPossibles.map((s) => (
+                              <option key={s} value={s}>
+                                {filtreLabels[s]}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="commandes-date">
+                          {new Date(c.createdAt).toLocaleDateString('fr-FR')}
+                        </td>
+                        <td className="commandes-chevron-cell">
+                          <ChevronDown size={16} className={`commandes-chevron ${estOuvert ? 'open' : ''}`} />
+                        </td>
+                      </tr>
+
+                      <tr className={`commandes-details-row ${estOuvert ? 'open' : ''}`}>
+                        <td colSpan={5}>
+                          <div className="commandes-details-inner">
+                            <div className="commandes-details-content">
+                              <div className="commandes-details-box">
+                                <div className="commandes-details-infos">
+                                  <div>
+                                    <div className="commandes-details-label">Téléphone</div>
+                                    <div className="commandes-details-value">
+                                      {c.client?.telephone || '—'}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div className="commandes-details-label">Adresse de livraison</div>
+                                    <div className="commandes-details-value">
+                                      {c.client?.adresse || '—'}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="commandes-details-produits">
+                                  <div className="commandes-details-label" style={{ marginBottom: 6 }}>
+                                    Produits commandés
+                                  </div>
+                                  {(c.produits || []).map((p, i) => (
+                                    <div key={i} className="commandes-details-produit-ligne">
+                                      <span className="commandes-details-produit-nom">
+                                        {nomProduit(p)} × {p.quantite}
+                                      </span>
+                                      <span className="commandes-details-produit-prix">
+                                        {(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </Fragment>
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
           {/* CARTES Mobile */}
           <div className="commandes-cards">
-            {commandesFiltrees.map((c) => (
-              <div key={c._id} className="commandes-card">
-                <div className="commandes-card-top">
-                  <div className="commandes-card-client">
-                    <span className="commandes-numero-mobile">{c.numero || '—'}</span>
-                    <span className="commandes-nom-client">{c.client?.nom}</span>
+            {commandesFiltrees.map((c) => {
+              const estOuvert = detailOuvert === c._id;
+              return (
+                <div key={c._id} className={`commandes-card ${estOuvert ? 'open' : ''}`}>
+                  <div className="commandes-card-top" onClick={() => toggleDetail(c._id)}>
+                    <div className="commandes-card-client">
+                      <span className="commandes-numero-mobile">{c.numero || '—'}</span>
+                      <span className="commandes-nom-client">{c.client?.nom}</span>
+                    </div>
+                    <div className="commandes-card-montant-wrap">
+                      <span className="commandes-card-montant">
+                        {c.total.toLocaleString('fr-FR')} F
+                      </span>
+                      <ChevronDown size={16} className={`commandes-chevron ${estOuvert ? 'open' : ''}`} />
+                    </div>
                   </div>
-                  <span className="commandes-card-montant">
-                    {c.total.toLocaleString('fr-FR')} F
-                  </span>
-                </div>
 
-                <div className="commandes-card-bottom">
-                  <select
-                    className={`commandes-statut-select ${statutClass(c.statut)}`}
-                    value={c.statut}
-                    onChange={(e) => handleChangerStatut(c._id, e.target.value)}
-                  >
-                    {statutsPossibles.map((s) => (
-                      <option key={s} value={s}>
-                        {filtreLabels[s]}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="commandes-card-date">
-                    {new Date(c.createdAt).toLocaleDateString('fr-FR')}
-                  </span>
+                  <div className="commandes-card-bottom">
+                    <select
+                      className={`commandes-statut-select ${statutClass(c.statut)}`}
+                      value={c.statut}
+                      onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {statutsPossibles.map((s) => (
+                        <option key={s} value={s}>
+                          {filtreLabels[s]}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="commandes-card-date">
+                      {new Date(c.createdAt).toLocaleDateString('fr-FR')}
+                    </span>
+                  </div>
+
+                  <div className="commandes-card-details">
+                    <div className="commandes-card-details-inner">
+                      <div className="commandes-card-details-box">
+                        <div className="commandes-details-infos">
+                          <div>
+                            <div className="commandes-details-label">Téléphone</div>
+                            <div className="commandes-details-value">
+                              {c.client?.telephone || '—'}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="commandes-details-label">Adresse de livraison</div>
+                            <div className="commandes-details-value">
+                              {c.client?.adresse || '—'}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="commandes-details-produits">
+                          <div className="commandes-details-label" style={{ marginBottom: 6 }}>
+                            Produits commandés
+                          </div>
+                          {(c.produits || []).map((p, i) => (
+                            <div key={i} className="commandes-details-produit-ligne">
+                              <span className="commandes-details-produit-nom">
+                                {nomProduit(p)} × {p.quantite}
+                              </span>
+                              <span className="commandes-details-produit-prix">
+                                {(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </>
       )}
