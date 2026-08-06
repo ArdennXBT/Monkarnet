@@ -416,3 +416,7 @@
     margin-right: 8px;
   }
 }
+
+.navbar-spacer {
+  flex: 1;
+}

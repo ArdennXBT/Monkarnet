@@ -23,6 +23,8 @@ function Navbar({ menuOuvert, onToggleMenu }) {
   const estSurProduits = location.pathname === '/produits';
   const estSurCommandes = location.pathname === '/commandes';
   const estSurClients = location.pathname === '/clients';
+  const estSurProfil = location.pathname === '/profil';
+  const estSurSousComptes = location.pathname === '/sous-comptes';
 
   // Valeur pour les pages avec recherche locale via URL ?q= (Produits / Commandes / Clients)
   const rechercheLocale = searchParams.get('q') || '';
@@ -193,6 +195,8 @@ function Navbar({ menuOuvert, onToggleMenu }) {
             )}
           </div>
         </div>
+      ) : estSurProfil || estSurSousComptes ? (
+        <div className="navbar-spacer" />
       ) : (
         <div className="navbar-search-wrapper">
           <div className="navbar-search">
