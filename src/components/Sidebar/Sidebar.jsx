@@ -1,6 +1,5 @@
-
 import { Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, X, NotebookText, LogOut, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, X, LogOut, ShieldCheck } from 'lucide-react';
 import { useCommercant } from '../../context/CommercantContext';
 import './Sidebar.css';
 
@@ -27,10 +26,11 @@ function Sidebar({ ouverte, onFermer }) {
     <aside className={`sidebar ${ouverte ? 'sidebar-ouverte' : ''}`}>
       <div className="sidebar-top">
         <Link to="/dashboard" className="sidebar-logo" onClick={onFermer}>
-          <span className="sidebar-logo-icon">
-            <NotebookText size={20} />
-          </span>
-          <span className="sidebar-logo-text">Orbizo</span>
+          <img
+            src="/logo-orbizo-full.svg"
+            alt="Orbizo"
+            className="sidebar-logo-full"
+          />
         </Link>
         <button className="sidebar-close-btn" onClick={onFermer}>
           <X size={22} />
