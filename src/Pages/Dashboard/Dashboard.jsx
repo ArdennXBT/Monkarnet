@@ -102,7 +102,7 @@ function Dashboard() {
               <p className="dashboard-card-value">{donneesPeriode.nombreCommandes}</p>
             </div>
 
-            <div className="dashboard-card dashboard-card-white dashboard-card-top-produit">
+            <div className="dashboard-card dashboard-card-gradient-3 dashboard-card-top-produit">
               {topProduit ? (
                 <>
                   {topProduit.image ? (
