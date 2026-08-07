@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Reveal from '../../../../components/Reveal/Reveal';
 import heroMockup from '../../../../assets/hero-dashboard-mockup.png';
@@ -17,11 +16,19 @@ function Hero() {
             Vos ventes et vos livraisons,<br />
             enfin sous contrôle
           </h1>
-          <img
-            src={heroMockup}
-            alt="Aperçu du tableau de bord Monkarnet"
-            className="landing-hero-image"
-          />
+
+          <div className="landing-hero-image-frame">
+            <img
+              src={heroMockup}
+              alt="Aperçu du tableau de bord Monkarnet"
+              className="landing-hero-image"
+              width="1895"
+              height="871"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+
           <Link to="/login" className="landing-cta">Commencer gratuitement</Link>
         </Reveal>
       </div>
