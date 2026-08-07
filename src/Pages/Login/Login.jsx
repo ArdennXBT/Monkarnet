@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
@@ -66,6 +65,11 @@ function Login() {
       const data = await response.json();
 
       if (!response.ok) {
+        // Compte existant mais email pas encore vérifié : on redirige vers la page de code
+        if (data.besoinVerification) {
+          navigate('/verifier-email', { state: { email: data.email || email } });
+          return;
+        }
         throw new Error(data.message || 'Erreur de connexion.');
       }
 

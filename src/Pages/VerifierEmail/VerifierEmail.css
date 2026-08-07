@@ -1,0 +1,155 @@
+.verifier-email {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F6F8;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.verifier-email-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 420px;
+  max-width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.verifier-email-logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-navy);
+  display: block;
+  margin-bottom: var(--spacing-md);
+}
+
+.verifier-email-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.verifier-email-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-lg);
+  line-height: 1.5;
+}
+
+.verifier-email-subtitle strong {
+  color: var(--color-text);
+}
+
+.verifier-email-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.verifier-email-success {
+  background-color: #E6F4EA;
+  color: #1E7E34;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.verifier-email-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.verifier-email-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.verifier-email-inputs input {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-main);
+  color: var(--color-text);
+}
+
+.verifier-email-inputs input:focus {
+  outline: none;
+  border-color: var(--color-navy);
+  border-width: 2px;
+}
+
+.verifier-email-submit {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.verifier-email-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.verifier-email-footer {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-lg) 0 0;
+}
+
+.verifier-email-renvoyer {
+  background: none;
+  border: none;
+  color: var(--color-blue);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--font-main);
+  padding: 0;
+}
+
+.verifier-email-renvoyer:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .verifier-email-inputs input {
+    width: 40px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .verifier-email-card {
+    padding: var(--spacing-md);
+  }
+
+  .verifier-email-inputs {
+    gap: 6px;
+  }
+
+  .verifier-email-inputs input {
+    width: 36px;
+    height: 44px;
+    font-size: 18px;
+  }
+}

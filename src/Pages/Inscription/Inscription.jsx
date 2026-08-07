@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
@@ -80,10 +79,8 @@ function Inscription() {
         throw new Error(data.message || "Erreur lors de l'inscription.");
       }
 
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('commercant', JSON.stringify(data));
-
-      navigate('/dashboard');
+      // Le compte est créé mais pas encore vérifié : on redirige vers la page de code
+      navigate('/verifier-email', { state: { email: formData.email } });
     } catch (err) {
       setErreur(err.message);
     } finally {

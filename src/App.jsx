@@ -1,4 +1,3 @@
-
 import Notifications from './Pages/SuperAdmin/Notifications/Notifications';
 import Paiements from './Pages/SuperAdmin/Paiements/Paiements';
 import Commerces from './Pages/SuperAdmin/Commerces/Commerces';
@@ -10,6 +9,7 @@ import Clients from './Pages/Clients/Clients';
 import Produits from './Pages/Produits/Produits';
 import Commandes from './Pages/Commandes/Commandes';
 import Inscription from './Pages/Inscription/Inscription';
+import VerifierEmail from './Pages/VerifierEmail/VerifierEmail';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppLayout from './components/AppLayout/AppLayout';
 import Landing from './Pages/Landing/Landing';
@@ -27,6 +27,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/inscription" element={<Inscription />} />
+        <Route path="/verifier-email" element={<VerifierEmail />} />
         {/* Pages de l'espace Admin, avec sidebar/navbar */}
         <Route
           element={
