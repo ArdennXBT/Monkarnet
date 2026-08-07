@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { useCommercant } from '../../context/CommercantContext';
 import './Profil.css';
@@ -16,9 +15,22 @@ function Profil() {
   const [uploadEnCours, setUploadEnCours] = useState(false);
   const fileInputRef = useRef(null);
 
+  // --- Changement d'email ---
+  const [etapeEmail, setEtapeEmail] = useState(1); // 1 = formulaire, 2 = code de confirmation
+  const [emailData, setEmailData] = useState({ nouvelEmail: '', motDePasse: '' });
+  const [codeEmail, setCodeEmail] = useState('');
+  const [erreurEmail, setErreurEmail] = useState('');
+  const [succesEmail, setSuccesEmail] = useState('');
+  const [chargementEmail, setChargementEmail] = useState(false);
+
+  // --- Changement de mot de passe ---
+  const [passwordData, setPasswordData] = useState({ ancienMotDePasse: '', nouveauMotDePasse: '', confirmation: '' });
+  const [erreurPassword, setErreurPassword] = useState('');
+  const [succesPassword, setSuccesPassword] = useState('');
+  const [chargementPassword, setChargementPassword] = useState(false);
+
   const token = localStorage.getItem('token');
 
-  // Si les données du contexte arrivent après le premier rendu, on synchronise le formulaire
   useEffect(() => {
     if (commercant) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -30,6 +42,7 @@ function Profil() {
       });
     }
   }, [commercant]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -84,7 +97,7 @@ function Profil() {
 
       const data = await response.json();
 
-      if (!response.ok) throw new Error(data.message || 'Erreur lors de l\'upload.');
+      if (!response.ok) throw new Error(data.message || "Erreur lors de l'upload.");
 
       setCommercant(data);
       setSucces('Photo mise à jour.');
@@ -92,6 +105,114 @@ function Profil() {
       setErreur(err.message);
     } finally {
       setUploadEnCours(false);
+    }
+  };
+
+  // --- Changement d'email ---
+  const handleEmailChange = (e) => {
+    setEmailData({ ...emailData, [e.target.name]: e.target.value });
+  };
+
+  const handleDemanderChangementEmail = async (e) => {
+    e.preventDefault();
+    setErreurEmail('');
+    setSuccesEmail('');
+    setChargementEmail(true);
+
+    try {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/profil/demander-changement-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(emailData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message || 'Erreur lors de la demande.');
+
+      setSuccesEmail(data.message);
+      setEtapeEmail(2);
+    } catch (err) {
+      setErreurEmail(err.message);
+    } finally {
+      setChargementEmail(false);
+    }
+  };
+
+  const handleConfirmerChangementEmail = async (e) => {
+    e.preventDefault();
+    setErreurEmail('');
+    setSuccesEmail('');
+    setChargementEmail(true);
+
+    try {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/profil/confirmer-changement-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ code: codeEmail }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message || 'Code incorrect.');
+
+      setCommercant(data);
+      setSuccesEmail('Adresse email mise à jour avec succès.');
+      setEtapeEmail(1);
+      setEmailData({ nouvelEmail: '', motDePasse: '' });
+      setCodeEmail('');
+    } catch (err) {
+      setErreurEmail(err.message);
+    } finally {
+      setChargementEmail(false);
+    }
+  };
+
+  // --- Changement de mot de passe ---
+  const handlePasswordChange = (e) => {
+    setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+  };
+
+  const handleChangerMotDePasse = async (e) => {
+    e.preventDefault();
+    setErreurPassword('');
+    setSuccesPassword('');
+
+    if (passwordData.nouveauMotDePasse !== passwordData.confirmation) {
+      setErreurPassword('Les mots de passe ne correspondent pas.');
+      return;
+    }
+
+    setChargementPassword(true);
+    try {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/profil/mot-de-passe', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ancienMotDePasse: passwordData.ancienMotDePasse,
+          nouveauMotDePasse: passwordData.nouveauMotDePasse,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message || 'Erreur lors du changement.');
+
+      setSuccesPassword('Mot de passe modifié avec succès.');
+      setPasswordData({ ancienMotDePasse: '', nouveauMotDePasse: '', confirmation: '' });
+    } catch (err) {
+      setErreurPassword(err.message);
+    } finally {
+      setChargementPassword(false);
     }
   };
 
@@ -149,6 +270,115 @@ function Profil() {
             <input type="tel" name="telephone" value={formData.telephone} onChange={handleChange} />
           </label>
           <button type="submit" className="profil-save-btn">Enregistrer</button>
+        </form>
+      </div>
+
+      <div className="profil-section">
+        <h2 className="profil-section-title">Adresse email</h2>
+        <p className="profil-email-actuel">Email actuel : <strong>{commercant.email}</strong></p>
+
+        {erreurEmail && <p className="profil-error">{erreurEmail}</p>}
+        {succesEmail && <p className="profil-success">{succesEmail}</p>}
+
+        {etapeEmail === 1 ? (
+          <form className="profil-form" onSubmit={handleDemanderChangementEmail}>
+            <label>
+              Nouvelle adresse email
+              <input
+                type="email"
+                name="nouvelEmail"
+                value={emailData.nouvelEmail}
+                onChange={handleEmailChange}
+                required
+              />
+            </label>
+            <label>
+              Mot de passe actuel
+              <input
+                type="password"
+                name="motDePasse"
+                value={emailData.motDePasse}
+                onChange={handleEmailChange}
+                required
+              />
+            </label>
+            <button type="submit" className="profil-save-btn" disabled={chargementEmail}>
+              {chargementEmail ? 'Envoi...' : 'Recevoir un code de confirmation'}
+            </button>
+          </form>
+        ) : (
+          <form className="profil-form" onSubmit={handleConfirmerChangementEmail}>
+            <label>
+              Code reçu à {emailData.nouvelEmail}
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                value={codeEmail}
+                onChange={(e) => setCodeEmail(e.target.value.replace(/\D/g, ''))}
+                required
+              />
+            </label>
+            <button type="submit" className="profil-save-btn" disabled={chargementEmail}>
+              {chargementEmail ? 'Vérification...' : 'Confirmer le changement'}
+            </button>
+            <button
+              type="button"
+              className="profil-cancel-btn"
+              onClick={() => {
+                setEtapeEmail(1);
+                setErreurEmail('');
+                setSuccesEmail('');
+              }}
+            >
+              Annuler
+            </button>
+          </form>
+        )}
+      </div>
+
+      <div className="profil-section">
+        <h2 className="profil-section-title">Mot de passe</h2>
+
+        {erreurPassword && <p className="profil-error">{erreurPassword}</p>}
+        {succesPassword && <p className="profil-success">{succesPassword}</p>}
+
+        <form className="profil-form" onSubmit={handleChangerMotDePasse}>
+          <label>
+            Mot de passe actuel
+            <input
+              type="password"
+              name="ancienMotDePasse"
+              value={passwordData.ancienMotDePasse}
+              onChange={handlePasswordChange}
+              required
+            />
+          </label>
+          <label>
+            Nouveau mot de passe
+            <input
+              type="password"
+              name="nouveauMotDePasse"
+              value={passwordData.nouveauMotDePasse}
+              onChange={handlePasswordChange}
+              required
+              minLength={6}
+            />
+          </label>
+          <label>
+            Confirmer le nouveau mot de passe
+            <input
+              type="password"
+              name="confirmation"
+              value={passwordData.confirmation}
+              onChange={handlePasswordChange}
+              required
+              minLength={6}
+            />
+          </label>
+          <button type="submit" className="profil-save-btn" disabled={chargementPassword}>
+            {chargementPassword ? 'Modification...' : 'Changer le mot de passe'}
+          </button>
         </form>
       </div>
 

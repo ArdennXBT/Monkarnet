@@ -1,0 +1,111 @@
+.mdp-oublie {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F6F8;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.mdp-oublie-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 420px;
+  max-width: 100%;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.mdp-oublie-logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-navy);
+  display: block;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.mdp-oublie-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.mdp-oublie-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-lg);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.mdp-oublie-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.mdp-oublie-success {
+  background-color: #E6F4EA;
+  color: #1E7E34;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.mdp-oublie-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.mdp-oublie-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mdp-oublie-form input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: var(--font-main);
+}
+
+.mdp-oublie-form input:focus {
+  outline: none;
+  border-color: var(--color-navy);
+}
+
+.mdp-oublie-submit {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.mdp-oublie-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mdp-oublie-footer {
+  font-size: 13px;
+  text-align: center;
+  margin: var(--spacing-lg) 0 0;
+}

@@ -249,3 +249,30 @@
 .profil-avatar-btn:hover .profil-avatar-overlay {
   opacity: 1;
 }
+
+.profil-email-actuel {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-md);
+}
+
+.profil-email-actuel strong {
+  color: var(--color-text);
+}
+
+.profil-cancel-btn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin-top: -4px;
+}
+
+.profil-cancel-btn:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}

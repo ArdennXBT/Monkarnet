@@ -128,6 +128,9 @@ function Login() {
               </button>
             </div>
           </label>
+
+          <Link to="/mot-de-passe-oublie" className="login-forgot-link">Mot de passe oublié ?</Link>
+
           <button type="submit" className="login-submit" disabled={chargement}>
             {chargement ? 'Connexion...' : 'Se connecter'}
           </button>

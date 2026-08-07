@@ -1,0 +1,132 @@
+.reset-mdp {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F6F8;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.reset-mdp-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 420px;
+  max-width: 100%;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.reset-mdp-logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-navy);
+  display: block;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.reset-mdp-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.reset-mdp-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-lg);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.reset-mdp-subtitle strong {
+  color: var(--color-text);
+}
+
+.reset-mdp-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.reset-mdp-success {
+  background-color: #E6F4EA;
+  color: #1E7E34;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.reset-mdp-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.reset-mdp-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reset-mdp-form input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: var(--font-main);
+  width: 100%;
+}
+
+.reset-mdp-form input:focus {
+  outline: none;
+  border-color: var(--color-navy);
+}
+
+.reset-mdp-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.reset-mdp-password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+}
+
+.reset-mdp-submit {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.reset-mdp-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reset-mdp-footer {
+  font-size: 13px;
+  text-align: center;
+  margin: var(--spacing-lg) 0 0;
+}

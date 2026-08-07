@@ -173,3 +173,11 @@
   display: flex;
   justify-content: center;
 }
+
+
+.login-forgot-link {
+  font-size: 13px;
+  color: var(--color-blue);
+  text-align: right;
+  margin-top: -8px;
+}
