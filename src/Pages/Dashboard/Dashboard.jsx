@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from 'react';
-import { TrendingUp, ShoppingCart, Truck, AlertCircle } from 'lucide-react';
+import { TrendingUp, ShoppingCart, Package } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import './Dashboard.css';
 
@@ -61,6 +60,7 @@ function Dashboard() {
   }, [periode]);
 
   const donneesPeriode = stats ? stats[periodeCles[periode]] : null;
+  const topProduit = stats?.topProduit;
 
   return (
     <div className="dashboard">
@@ -102,16 +102,29 @@ function Dashboard() {
               <p className="dashboard-card-value">{donneesPeriode.nombreCommandes}</p>
             </div>
 
-            <div className="dashboard-card dashboard-card-white">
-              <Truck size={22} />
-              <p className="dashboard-card-label">Livraisons en cours</p>
-              <p className="dashboard-card-value">{stats.livraisonsEnCours}</p>
-            </div>
-
-            <div className="dashboard-card dashboard-card-white">
-              <AlertCircle size={22} />
-              <p className="dashboard-card-label">Litiges ouverts</p>
-              <p className="dashboard-card-value">{stats.litigesOuverts}</p>
+            <div className="dashboard-card dashboard-card-white dashboard-card-top-produit">
+              {topProduit ? (
+                <>
+                  {topProduit.image ? (
+                    <img src={topProduit.image} alt={topProduit.nom} className="dashboard-top-produit-img" />
+                  ) : (
+                    <div className="dashboard-top-produit-icon">
+                      <Package size={20} />
+                    </div>
+                  )}
+                  <div className="dashboard-top-produit-info">
+                    <p className="dashboard-card-label">Top produit du mois</p>
+                    <p className="dashboard-top-produit-nom">{topProduit.nom}</p>
+                    <p className="dashboard-top-produit-quantite">{topProduit.quantiteVendue} vendu{topProduit.quantiteVendue > 1 ? 's' : ''}</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Package size={22} />
+                  <p className="dashboard-card-label">Top produit du mois</p>
+                  <p className="dashboard-card-value-small">Aucune vente ce mois</p>
+                </>
+              )}
             </div>
           </div>
 
