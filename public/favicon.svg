@@ -1,7 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect x="0" y="0" width="512" height="512" rx="120" ry="120" fill="#F5C518"/>
-  <polyline points="120,340 210,260 270,310 370,180"
-            fill="none" stroke="#003D91" stroke-width="34"
-            stroke-linecap="round" stroke-linejoin="round"/>
-  <polygon points="387.07,157.81 400.36,215.97 327.44,159.88" fill="#003D91"/>
+  <defs>
+    <clipPath id="round">
+      <rect x="0" y="0" width="512" height="512" rx="120" ry="120"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect x="0" y="0" width="512" height="512" fill="#003D91"/>
+    <polygon points="512,0 512,512 0,512" fill="#F5C518"/>
+  </g>
+  <g fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="256,148.5 386,218.5 256,288.5 126,218.5 256,148.5"/>
+    <line x1="126" y1="218.5" x2="126" y2="313.5"/>
+    <line x1="386" y1="218.5" x2="386" y2="313.5"/>
+    <line x1="256" y1="288.5" x2="256" y2="383.5"/>
+    <line x1="126" y1="313.5" x2="256" y2="383.5"/>
+    <line x1="386" y1="313.5" x2="256" y2="383.5"/>
+  </g>
 </svg>
