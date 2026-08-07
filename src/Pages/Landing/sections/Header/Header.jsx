@@ -1,16 +1,15 @@
-
 import { Link } from 'react-router-dom';
-import { NotebookText } from 'lucide-react';
 import './Header.css';
 
 function Header() {
   return (
     <header className="landing-header">
       <Link to="/" className="landing-logo">
-        <span className="landing-logo-icon">
-          <NotebookText size={18} />
-        </span>
-        Orbizo
+        <img
+          src="/logo-orbizo-full.svg"
+          alt="Orbizo"
+          className="landing-logo-full"
+        />
       </Link>
       <nav className="landing-nav">
         <a href="#fonctionnalites" className="landing-nav-link"></a>
