@@ -1,75 +1,92 @@
+import { useState } from "react";
+import "./FAQ.css";
+import { Plus } from "lucide-react";
 
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import Reveal from '../../../../components/Reveal/Reveal';
-import './Faq.css';
-
-const questions = [
+const faqs = [
   {
-    q: "Est-ce vraiment gratuit ?",
-    r: "Oui, toutes les fonctionnalités actuelles sont gratuites, sans limite de temps et sans carte bancaire requise."
+    question: "Est-ce que je peux utiliser Orbizo depuis mon téléphone ?",
+    answer:
+      "Oui. Orbizo fonctionne directement dans votre navigateur mobile, sans installation. Vous pouvez gérer votre commerce depuis votre téléphone, où que vous soyez.",
   },
   {
-    q: "Mes données sont-elles en sécurité ?",
-    r: "Vos données vous appartiennent et ne sont partagées avec personne. Nous mettons tout en œuvre pour les protéger."
+    question: "Combien de temps faut-il pour commencer ?",
+    answer:
+      "Quelques minutes suffisent. Créez votre compte, ajoutez vos premiers produits, et votre tableau de bord commence à se remplir dès votre première vente.",
   },
   {
-    q: "Puis-je utiliser Orbizo pour n'importe quel commerce ?",
-    r: "Oui, que vous soyez restaurant, boutique, ou tout autre commerce en ligne avec livraison, Monkarnet s'adapte à votre activité."
+    question: "Puis-je ajouter mes vendeurs ou ma comptable ?",
+    answer:
+      "Oui, avec les sous-comptes. Vous invitez votre équipe, vous attribuez un rôle à chacun, et vous décidez qui a accès à quoi.",
   },
   {
-    q: "Ai-je besoin de compétences techniques pour l'utiliser ?",
-    r: "Non, l'interface est pensée pour être simple et intuitive, même si vous n'avez jamais utilisé de logiciel de gestion auparavant."
+    question: "Mes données sont-elles en sécurité ?",
+    answer:
+      "Vos ventes, vos produits et vos clients sont sauvegardés automatiquement en ligne. Contrairement à un cahier, rien ne se perd, ne se mouille ou ne s'égare.",
   },
   {
-    q: "Combien de temps prend l'inscription ?",
-    r: "Moins de 2 minutes. Il vous suffit de renseigner vos informations et celles de votre commerce pour commencer."
+    question: "Ça fonctionne même si j'ai beaucoup de produits ?",
+    answer:
+      "Oui. Que vous ayez 10 ou 1000 produits, la recherche, les catégories et le calcul des marges restent instantanés.",
   },
   {
-    q: "Puis-je ajouter des employés à mon compte ?",
-    r: "Oui, via les sous-comptes, vous pouvez créer des accès pour votre équipe avec des permissions spécifiques."
+    question: "Comment puis-je payer mon abonnement ?",
+    answer:
+      "Depuis votre page Profil, vous pouvez vous abonner et payer par Mobile Money ou par carte bancaire, en toute sécurité, en quelques clics.",
   },
   {
-    q: "Que se passe-t-il si j'ai un litige avec un client ?",
-    r: "Chaque commande en litige est clairement identifiée dans votre liste de commandes, pour un suivi et une résolution facile."
-  },
-  {
-    q: "Y aura-t-il des fonctionnalités payantes plus tard ?",
-    r: "Le cœur de l'outil restera gratuit. Des fonctionnalités avancées optionnelles pourront être proposées plus tard, sans obligation."
+    question: "Puis-je essayer avant de m'engager ?",
+    answer:
+      "Bien sûr. Créez votre compte gratuitement et testez Orbizo avec vos vrais produits et vos vraies commandes, sans engagement.",
   },
 ];
 
-function Faq() {
-  const [ouverte, setOuverte] = useState(null);
+export default function FAQ() {
+  const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (index) => {
-    setOuverte(ouverte === index ? null : index);
+    setOpenIndex((prev) => (prev === index ? null : index));
   };
 
   return (
-    <section className="landing-faq">
-      <Reveal>
-        <h2 className="landing-faq-title">Questions fréquentes</h2>
-      </Reveal>
+    <section className="faq-section">
+      <div className="faq-container">
+        <span className="faq-badge">
+          <span className="faq-badge-dot" />
+          Questions fréquentes
+        </span>
 
-      <div className="landing-faq-list">
-        {questions.map((item, index) => {
-          const estOuverte = ouverte === index;
-          return (
-            <Reveal key={item.q} delay={(index % 4) * 80} className={`landing-faq-item ${estOuverte ? 'landing-faq-item-active' : ''}`}>
-              <button className="landing-faq-question" onClick={() => toggle(index)}>
-                {item.q}
-                <ChevronDown size={18} className={estOuverte ? 'landing-faq-icon-open' : ''} />
-              </button>
-              <div className={`landing-faq-reponse-wrapper ${estOuverte ? 'landing-faq-reponse-open' : ''}`}>
-                <p className="landing-faq-reponse">{item.r}</p>
+        <h3 className="faq-title">
+          Tout ce que vous vous demandez
+          <br />
+          <span>avant de commencer.</span>
+        </h3>
+
+        <div className="faq-list">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <div className="faq-item" key={index}>
+                <button
+                  className="faq-question"
+                  onClick={() => toggle(index)}
+                  aria-expanded={isOpen}
+                >
+                  <span>{faq.question}</span>
+                  <span className={`faq-icon-wrapper ${isOpen ? "faq-icon-wrapper-open" : ""}`}>
+                    <Plus className="faq-icon" size={18} strokeWidth={2.5} />
+                  </span>
+                </button>
+
+                {isOpen && (
+                  <div className="faq-answer-box">
+                    <p className="faq-answer">{faq.answer}</p>
+                  </div>
+                )}
               </div>
-            </Reveal>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
-
-export default Faq;
