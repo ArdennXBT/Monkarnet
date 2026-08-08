@@ -135,3 +135,29 @@
     padding: 15px 24px;
   }
 }
+
+/* --- Panel bleu marine léger derrière le CTA --- */
+.final-cta-panel {
+  background-color: rgba(0, 61, 145, 0.1);
+  border: 1px solid rgba(0, 61, 145, 0.12);
+  border-radius: 28px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 56px 40px;
+}
+
+/* Tablette */
+@media (max-width: 700px) {
+  .final-cta-panel {
+    border-radius: 20px;
+    padding: 44px 28px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .final-cta-panel {
+    border-radius: 16px;
+    padding: 36px 18px;
+  }
+}
