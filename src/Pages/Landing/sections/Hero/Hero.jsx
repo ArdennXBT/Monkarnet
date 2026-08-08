@@ -5,31 +5,47 @@ import './Hero.css';
 
 function Hero() {
   return (
-    <section className="landing-hero-wrapper">
-      <div className="landing-hero-blob landing-hero-blob-green" aria-hidden="true" />
-      <div className="landing-hero-blob landing-hero-blob-blue" aria-hidden="true" />
+    <section className="hero-wrapper">
+      <div className="hero-blob hero-blob-gold" aria-hidden="true" />
+      <div className="hero-blob hero-blob-cobalt" aria-hidden="true" />
 
-      <div className="landing-hero">
+      <div className="hero-inner">
         <Reveal>
-          <span className="landing-badge">Gratuit pour les commerçants</span>
-          <h1 className="landing-title">
-            Vos ventes et vos livraisons,<br />
-            enfin sous contrôle
-          </h1>
+          <div className="hero-col-text">
+            <span className="hero-badge">
+              <span className="hero-badge-dot" aria-hidden="true" />
+              Fait pour les commerçants africains
+            </span>
 
-          <div className="landing-hero-image-frame">
-            <img
-              src={heroMockup}
-              alt="Aperçu du tableau de bord Monkarnet"
-              className="landing-hero-image"
-              width="1895"
-              height="871"
-              loading="eager"
-              fetchpriority="high"
-            />
+            <h1 className="hero-title">
+              <span className="hero-title-black">Votre chiffre d&rsquo;affaires,</span><br />
+              <span className="hero-title-gold">en temps réel.</span>
+            </h1>
+
+            <p className="hero-lede">
+              Fini les commandes copiées à la main et la caisse recomptée en fin de
+              journée. Orbizo calcule tout pour vous, pendant que vos concurrents
+              perdent encore du temps.
+            </p>
+
+            <Link to="/login" className="hero-cta">
+              Essai gratuit 14 jours
+            </Link>
+            <p className="hero-cta-note">Sans carte bancaire</p>
           </div>
+        </Reveal>
 
-          <Link to="/login" className="landing-cta">Commencer gratuitement</Link>
+        <Reveal>
+          <div className="hero-col-visual">
+            <div className="hero-visual-glow" aria-hidden="true" />
+            <div className="hero-visual-frame">
+              <img
+                src={heroMockup}
+                alt="Aperçu du tableau de bord Orbizo"
+                className="hero-visual-image"
+              />
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>
