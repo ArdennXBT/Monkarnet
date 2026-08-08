@@ -1,39 +1,72 @@
-
-import { Zap, Users, Infinity as InfinityIcon, BookX } from 'lucide-react';
 import Reveal from '../../../../components/Reveal/Reveal';
 import './Highlight.css';
+import { Zap, TrendingUp, UserCheck, ShieldCheck } from "lucide-react";
 
-const stats = [
-  { icon: Zap, valeur: 'En temps réel', label: 'Votre CA mis à jour à chaque commande' },
-  { icon: Users, valeur: 'Multi-employés', label: 'Créez des accès pour toute votre équipe' },
-  { icon: InfinityIcon, valeur: 'Sans limite', label: 'Enregistrez autant de commandes que vous voulez' },
-  { icon: BookX, valeur: 'Fini les cahiers', label: "Passez au digital, l'air professionnel dès le premier jour" },
+const highlights = [
+  {
+    icon: Zap,
+    title: "Zéro calcul",
+    text: "Chiffre d'affaires, commandes, meilleur produit du mois — Orbizo met tout à jour pour vous, en temps réel.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Marges automatiques",
+    text: "Chaque produit affiche sa marge en francs et en pourcentage. Plus jamais de calculette ni d'erreur.",
+  },
+  {
+    icon: UserCheck,
+    title: "Fini les clients anonymes",
+    text: "Chaque vente construit le profil de votre client. Retrouvez qui a acheté quoi, en une recherche.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Une équipe, sous contrôle",
+    text: "Ajoutez votre équipe sans perdre le contrôle. Chacun a un rôle, un accès, des limites que vous fixez.",
+  },
 ];
 
-function Highlight() {
+export default function Highlight() {
   return (
-    <section className="landing-highlight">
-      <Reveal>
-        <h2 className="landing-highlight-title">
-            L'outil pensé pour les commerçants qui se retrouvent perdus après avoir noté toutes leurs ventes dans un cahier.
-        </h2>
-      </Reveal>
+    <section className="highlight-section">
+      <div className="highlight-container">
+        <Reveal>
+          <span className="highlight-badge">
+            <span className="highlight-badge-dot" />
+            Bienvenue sur Orbizo
+          </span>
+        </Reveal>
 
-      <div className="landing-highlight-grid">
-        {stats.map((s, index) => (
-          <Reveal key={s.valeur} delay={index * 100} className="landing-highlight-card">
-            <div className="landing-highlight-icon">
-              <s.icon size={20} />
-            </div>
-            <div>
-              <p className="landing-highlight-value">{s.valeur}</p>
-              <p className="landing-highlight-label">{s.label}</p>
-            </div>
-          </Reveal>
-        ))}
+        <Reveal delay={100}>
+          <h3 className="highlight-title">
+            Fini le cahier.
+            <br />
+            <span>Votre commerce mérite mieux.</span>
+          </h3>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <p className="highlight-subtitle">
+            Voici ce qui change concrètement, dès le premier jour avec Orbizo.
+          </p>
+        </Reveal>
+
+        <div className="highlight-grid">
+          {highlights.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <Reveal delay={300 + index * 100} key={index}>
+                <div className="highlight-card">
+                  <div className="highlight-icon-wrapper">
+                    <Icon className="highlight-icon" size={20} strokeWidth={2} />
+                  </div>
+                  <h4 className="highlight-card-title">{item.title}</h4>
+                  <p className="highlight-card-text">{item.text}</p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
-
-export default Highlight;
