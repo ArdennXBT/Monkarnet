@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./FAQ.css";
+import "./Faq.css";
 import { Plus } from "lucide-react";
 
 const faqs = [
@@ -40,7 +40,7 @@ const faqs = [
   },
 ];
 
-export default function FAQ() {
+export default function Faq() {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (index) => {

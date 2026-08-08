@@ -2,9 +2,7 @@ import Hero from './sections/Hero/Hero';
 import Highlight from './sections/Highlight/Highlight';
 import Features from './sections/Features/Features';
 import Pricing from './sections/Pricing/Pricing';
-import FAQ from './sections/FAQ/FAQ';
-
-
+import Faq from './sections/Faq/Faq';
 
 function Landing() {
   return (
@@ -13,7 +11,7 @@ function Landing() {
       <Highlight />
       <Features />
       <Pricing />
-      <FAQ />
+      <Faq />
     </div>
   );
 }
