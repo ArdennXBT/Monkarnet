@@ -62,7 +62,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="features-section">
+    <section id="fonctionnalites" className="features-section">
       <div className="features-container">
         <Reveal>
           <span className="features-badge">

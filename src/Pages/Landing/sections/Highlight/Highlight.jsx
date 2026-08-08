@@ -27,7 +27,7 @@ const highlights = [
 
 export default function Highlight() {
   return (
-    <section className="highlight-section">
+    <section id="avantages" className="highlight-section">
       <div className="highlight-container">
         <Reveal>
           <span className="highlight-badge">

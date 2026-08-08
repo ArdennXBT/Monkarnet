@@ -48,7 +48,7 @@ export default function Faq() {
   };
 
   return (
-    <section className="faq-section">
+    <section id="faq" className="faq-section">
       <div className="faq-container">
         <span className="faq-badge">
           <span className="faq-badge-dot" />

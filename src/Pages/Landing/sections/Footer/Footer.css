@@ -1,0 +1,148 @@
+.footer-section {
+  background-color: rgba(0, 61, 145, 0.1);
+  padding: 56px 24px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-brand {
+  max-width: 340px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #ffc93c 50%, #003d91 50%);
+  flex-shrink: 0;
+}
+
+.footer-logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #003d91;
+}
+
+.footer-col-title {
+  color: #003d91;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.footer-legal-title {
+  margin-top: 28px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  color: #4a5568;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #003d91;
+}
+
+.footer-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #4a5568;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-social-link svg {
+  flex-shrink: 0;
+}
+
+.footer-social-link:hover {
+  color: #003d91;
+  transform: translateX(2px);
+}
+
+/* Tablette */
+@media (max-width: 900px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  .footer-section {
+    padding: 40px 20px;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
+
+  .footer-col-title {
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+
+  .footer-legal-title {
+    margin-top: 22px;
+  }
+
+  .footer-links,
+  .footer-socials {
+    gap: 10px;
+  }
+
+  .footer-links a,
+  .footer-social-link {
+    font-size: 13px;
+  }
+}

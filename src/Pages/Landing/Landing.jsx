@@ -4,6 +4,7 @@ import Features from './sections/Features/Features';
 import Pricing from './sections/Pricing/Pricing';
 import Faq from './sections/Faq/Faq';
 import FinalCta from './sections/FinalCta/FinalCta';
+import Footer from './sections/Footer/Footer'
 
 
 function Landing() {
@@ -15,6 +16,7 @@ function Landing() {
       <Pricing />
       <Faq />
       <FinalCta />
+      <Footer />
     </div>
   );
 }

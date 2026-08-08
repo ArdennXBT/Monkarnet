@@ -40,7 +40,7 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section className="pricing-section">
+    <section id="tarifs" className="pricing-section">
       <div className="pricing-container">
         <Reveal>
           <span className="pricing-badge">
