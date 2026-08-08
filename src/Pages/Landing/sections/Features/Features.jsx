@@ -1,72 +1,114 @@
-
-import { ClipboardList, Users, TrendingUp, Package } from 'lucide-react';
 import Reveal from '../../../../components/Reveal/Reveal';
 import './Features.css';
+import { CheckCircle2 } from "lucide-react";
 
 const features = [
   {
-    icon: ClipboardList,
-    tag: 'COMMANDES',
-    titre: 'Vos commandes, toujours à jour',
-    stat: '< 10 sec',
-    statLabel: 'pour enregistrer une commande',
-    desc: "Enregistrez chaque commande en quelques secondes et changez son statut en un clic. Fini le cahier illisible.",
+    number: "01",
+    tag: "Tableau de bord",
+    title: "Votre activité, comprise en un coup d'œil.",
+    text: "Le chiffre d'affaires du jour, le nombre de commandes et votre produit qui se vend le mieux, réunis sur un seul écran, actualisés en continu.",
+    points: [
+      "Vue Jour, Semaine, Mois ou Année en un clic",
+      "Graphique d'évolution des ventes heure par heure",
+      "Produit star du mois mis en avant automatiquement",
+    ],
   },
   {
-    icon: Users,
-    tag: 'ÉQUIPE',
-    titre: 'Votre équipe, sous contrôle',
-    stat: 'Illimité',
-    statLabel: "nombre d'employés ajoutables",
-    desc: "Donnez à chaque employé l'accès qu'il faut, jamais plus. Suivez l'activité de toute votre équipe.",
+    number: "02",
+    tag: "Commandes",
+    title: "Chaque commande, à sa place.",
+    text: "Créez, suivez et retrouvez chaque commande sans fouiller dans un carnet. Un statut clair, à chaque étape.",
+    points: [
+      "Nouvelle commande en un clic",
+      "Recherche par nom ou téléphone du client",
+      "Filtrage par statut : en attente, en cours, livrée",
+    ],
   },
   {
-    icon: TrendingUp,
-    tag: 'STATISTIQUES',
-    titre: "Votre chiffre d'affaires, en un coup d'œil",
-    stat: '0 calcul',
-    statLabel: 'à faire vous-même',
-    desc: "Jour, semaine, mois, année : toutes vos statistiques mises à jour automatiquement à chaque commande.",
+    number: "03",
+    tag: "Produits",
+    title: "Votre catalogue sait ce qui vous rapporte.",
+    text: "Prix de vente, prix d'achat, stock et marge : tout est calculé automatiquement pour chaque article, en montant et en pourcentage.",
+    points: [
+      "Marge calculée en temps réel pour chaque produit",
+      "Suivi du stock disponible",
+      "Organisation par catégories",
+    ],
   },
   {
-    icon: Package,
-    tag: 'PRODUITS',
-    titre: 'Vos produits, sans prise de tête',
-    stat: 'En 1 clic',
-    statLabel: 'pour ajouter un produit',
-    desc: "Gérez vos produits, vos prix, et repérez facilement ce qui se vend le mieux avec la marge calculée automatiquement.",
+    number: "04",
+    tag: "Clients",
+    title: "Chaque client, avec son historique.",
+    text: "Fini les numéros griffonnés sur un bout de papier. Vos clients sont enregistrés, classés et prêts à être recontactés.",
+    points: [
+      "Recherche par nom ou numéro de téléphone",
+      "Classement automatique des meilleurs clients",
+      "Filtres par période d'achat",
+    ],
+  },
+  {
+    number: "05",
+    tag: "Sous-comptes",
+    title: "Votre équipe, avec les bons accès.",
+    text: "Invitez votre comptable ou vos vendeurs, attribuez-leur un rôle, et gardez le contrôle total sur qui voit quoi.",
+    points: [
+      "Jusqu'à 5 sous-comptes par commerce",
+      "Rôles personnalisés (vendeur, comptable...)",
+      "Modification ou suppression d'un accès à tout moment",
+    ],
   },
 ];
 
-function Features() {
+export default function Features() {
   return (
-    <section className="ft-section" id="fonctionnalites">
-      <div className="ft-intro">
-        <h2 className="ft-intro-title">
-  <span className="ft-intro-badge">Tout ce qu'il vous faut</span>{' '}
-  au même endroit
-</h2>
-        <p className="ft-intro-subtitle">Fini le cahier, fini les messages perdus dans WhatsApp.</p>
-      </div>
+    <section className="features-section">
+      <div className="features-container">
+        <Reveal>
+          <span className="features-badge">
+            <span className="features-badge-dot" />
+            Fonctionnalités
+          </span>
+        </Reveal>
 
-      <div className="ft-grid">
-        {features.map((f, index) => (
-          <Reveal key={f.titre} delay={index * 80} className="ft-card">
-            <div className="ft-card-icon">
-              <f.icon size={22} />
-            </div>
-            <p className="ft-card-tag">{f.tag}</p>
-            <h3 className="ft-card-title">{f.titre}</h3>
-            <p className="ft-card-stat">
-              <span className="ft-card-stat-value">{f.stat}</span> {f.statLabel}
-            </p>
-            <p className="ft-card-desc">{f.desc}</p>
-            
-          </Reveal>
-        ))}
+        <Reveal delay={100}>
+          <h3 className="features-title">
+            Une page pour chaque partie de votre activité.
+          </h3>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <p className="features-subtitle">
+            Rien de superflu. Chaque page fait le travail que vous faites dans
+            votre cahier — en plus rapide.
+          </p>
+        </Reveal>
+
+        <div className="features-list">
+          {features.map((feature, index) => (
+            <Reveal delay={100 * index} key={feature.number}>
+              <div className="feature-block">
+                <span className="feature-mini-badge">
+                  {feature.number} — {feature.tag}
+                </span>
+
+                <h4 className="feature-block-title">{feature.title}</h4>
+
+                <p className="feature-block-text">{feature.text}</p>
+
+                <ul className="feature-points">
+                  {feature.points.map((point, i) => (
+                    <li className="feature-point" key={i}>
+                      <CheckCircle2 className="feature-point-icon" size={18} strokeWidth={2} />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
-
-export default Features;
