@@ -18,10 +18,10 @@ function Header() {
   return (
     <header className="header-section">
       <div className="header-container">
-        <div className="header-logo">
+        <Link to="/" className="header-logo">
           <span className="header-logo-icon" aria-hidden="true"></span>
           <span className="header-logo-text">Orbizo</span>
-        </div>
+        </Link>
 
         {/* Navigation desktop */}
         <nav className="header-nav-desktop">
@@ -51,10 +51,10 @@ function Header() {
       <div className={`header-mobile-overlay ${isMenuOpen ? 'header-mobile-overlay-open' : ''}`}>
         <div className="header-mobile-panel">
           <div className="header-mobile-top">
-            <div className="header-logo">
+            <Link to="/" className="header-logo" onClick={closeMenu}>
               <span className="header-logo-icon" aria-hidden="true"></span>
               <span className="header-logo-text">Orbizo</span>
-            </div>
+            </Link>
             <button
               className="header-close-btn"
               onClick={closeMenu}

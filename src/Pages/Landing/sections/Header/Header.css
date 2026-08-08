@@ -201,3 +201,7 @@
     font-size: 18px;
   }
 }
+
+.header-logo {
+  text-decoration: none;
+}
