@@ -1,0 +1,44 @@
+.dashboard-preview-section {
+  background-color: #ffffff;
+  padding: 0 24px 80px;
+  width: 100%;
+}
+
+.dashboard-preview-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.dashboard-preview-frame {
+  position: relative;
+  animation: dashboard-float 5s ease-in-out infinite;
+}
+
+@keyframes dashboard-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.dashboard-preview-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Tablette */
+@media (max-width: 700px) {
+  .dashboard-preview-section {
+    padding: 0 20px 56px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .dashboard-preview-section {
+    padding: 0 16px 44px;
+  }
+}
