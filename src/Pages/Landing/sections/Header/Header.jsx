@@ -32,7 +32,7 @@ function Header() {
         </nav>
 
         <div className="header-actions-desktop">
-          <Link to="/connexion" className="header-login-btn">
+          <Link to="/login" className="header-login-btn">
             Se connecter
           </Link>
         </div>
@@ -72,7 +72,7 @@ function Header() {
           </nav>
 
           <div className="header-mobile-actions">
-            <Link to="/connexion" className="header-login-link-mobile" onClick={closeMenu}>
+            <Link to="/login" className="header-login-link-mobile" onClick={closeMenu}>
               Se connecter
             </Link>
           </div>
