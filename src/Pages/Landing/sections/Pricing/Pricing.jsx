@@ -6,7 +6,7 @@ const plans = [
   {
     name: "Mensuel",
     text: "Facturé chaque mois. Idéal pour tester Orbizo à votre rythme.",
-    price: "1 300",
+    price: "4 200",
     period: "/ mois",
     oldPrice: null,
     note: null,
@@ -22,10 +22,10 @@ const plans = [
   {
     name: "Annuel",
     text: "Payez une fois par an et oubliez la facturation mensuelle.",
-    price: "9 000",
+    price: "30 240",
     period: "/ an",
-    oldPrice: "15 600 F",
-    note: "soit 4 mois offerts",
+    oldPrice: "50 400 F",
+    note: "soit 40% d'économie",
     button: "Choisir l'abonnement annuel",
     highlighted: true,
     badge: "- 40%",
@@ -33,7 +33,7 @@ const plans = [
       "Essai gratuit de 14 jours inclus",
       "Dashboard, commandes, produits et clients",
       "Jusqu'à 5 sous-comptes",
-      "6 600 F d'économie sur l'année",
+      "20 160 F d'économie sur l'année",
     ],
   },
 ];
