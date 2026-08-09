@@ -22,15 +22,15 @@
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 .header-logo-icon {
   display: block;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, #ffc93c 50%, #003d91 50%);
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
+  object-fit: contain;
 }
 
 .header-logo-text {
@@ -140,7 +140,6 @@
 .header-mobile-top .header-logo-icon {
   width: 22px;
   height: 22px;
-  border-radius: 6px;
 }
 
 .header-close-btn {
@@ -200,8 +199,4 @@
   .header-logo-text {
     font-size: 18px;
   }
-}
-
-.header-logo {
-  text-decoration: none;
 }

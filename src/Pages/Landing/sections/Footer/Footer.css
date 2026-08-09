@@ -26,11 +26,10 @@
 
 .footer-logo-icon {
   display: block;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, #ffc93c 50%, #003d91 50%);
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
+  object-fit: contain;
 }
 
 .footer-logo-text {

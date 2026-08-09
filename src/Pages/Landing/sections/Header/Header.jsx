@@ -19,7 +19,7 @@ function Header() {
     <header className="header-section">
       <div className="header-container">
         <Link to="/" className="header-logo">
-          <span className="header-logo-icon" aria-hidden="true"></span>
+          <img src="/logo-orbizo-icon.svg" alt="Orbizo" className="header-logo-icon" />
           <span className="header-logo-text">Orbizo</span>
         </Link>
 
@@ -52,7 +52,7 @@ function Header() {
         <div className="header-mobile-panel">
           <div className="header-mobile-top">
             <Link to="/" className="header-logo" onClick={closeMenu}>
-              <span className="header-logo-icon" aria-hidden="true"></span>
+              <img src="/logo-orbizo-icon.svg" alt="Orbizo" className="header-logo-icon" />
               <span className="header-logo-text">Orbizo</span>
             </Link>
             <button

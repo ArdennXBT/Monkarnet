@@ -1,0 +1,29 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <rect x="40" y="40" width="320" height="320" rx="90" fill="#003d91"/>
+
+  <!-- Antenne -->
+  <line x1="200" y1="95" x2="200" y2="115" stroke="#ffc93c" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="200" cy="95" r="9" fill="#ffc93c"/>
+
+  <!-- Tête -->
+  <rect x="135" y="115" width="130" height="95" rx="28" fill="#ffffff"/>
+  <circle cx="182" cy="157" r="11" fill="#003d91"/>
+  <circle cx="218" cy="157" r="11" fill="#003d91"/>
+  <path d="M174 163 Q200 183 226 163" fill="none" stroke="#003d91" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Corps -->
+  <rect x="125" y="218" width="150" height="90" rx="22" fill="#ffffff"/>
+
+  <!-- Bras -->
+  <rect x="111" y="236" width="20" height="20" rx="10" fill="#ffffff"/>
+  <rect x="269" y="236" width="20" height="20" rx="10" fill="#ffffff"/>
+
+  <!-- Sac de vente -->
+  <path d="M167 236 a33 33 0 0 1 66 0" fill="none" stroke="#ffc93c" stroke-width="7"/>
+  <rect x="167" y="236" width="66" height="54" rx="8" fill="#ffc93c"/>
+
+  <!-- Symbole monétaire sur le sac -->
+  <line x1="200" y1="248" x2="200" y2="280" stroke="#003d91" stroke-width="5" stroke-linecap="round"/>
+  <path d="M192 253 a12 10 0 0 1 12 -8" fill="none" stroke="#003d91" stroke-width="5" stroke-linecap="round"/>
+  <path d="M192 275 a12 10 0 0 0 12 8" fill="none" stroke="#003d91" stroke-width="5" stroke-linecap="round"/>
+</svg>

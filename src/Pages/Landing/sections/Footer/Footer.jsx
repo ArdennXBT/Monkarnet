@@ -8,7 +8,11 @@ function Footer() {
         <div className="footer-top">
           <div className="footer-brand">
             <div className="footer-logo">
-              <span className="footer-logo-icon" aria-hidden="true"></span>
+              <img
+                src="/logo-orbizo-icon.svg"
+                alt="Orbizo"
+                className="footer-logo-icon"
+              />
               <span className="footer-logo-text">Orbizo</span>
             </div>
           </div>

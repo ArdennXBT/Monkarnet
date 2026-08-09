@@ -41,13 +41,10 @@
   color: var(--color-navy);
 }
 
-.login-logo::before {
-  content: '';
-  display: block;
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #ffc93c 50%, var(--color-navy) 50%);
+.login-logo-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .login-title {
