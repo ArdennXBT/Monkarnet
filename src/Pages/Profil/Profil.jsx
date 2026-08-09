@@ -381,17 +381,6 @@ function Profil() {
           </button>
         </form>
       </div>
-
-      <div className="profil-section">
-        <h2 className="profil-section-title">Abonnement</h2>
-        <div className="profil-plan-card">
-          <div>
-            <p className="profil-plan-nom">Plan Gratuit</p>
-            <p className="profil-plan-desc">Toutes les fonctionnalités de base, sans limite de temps.</p>
-          </div>
-          <span className="profil-plan-badge">Actif</span>
-        </div>
-      </div>
     </div>
   );
 }

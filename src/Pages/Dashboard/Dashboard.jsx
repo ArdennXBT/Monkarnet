@@ -121,7 +121,7 @@ function Dashboard() {
               ) : (
                 <>
                   <Package size={22} />
-                  <p className="dashboard-card-label">Top produit du mois</p>
+                  <p className="dashboard-card-label">Top produit</p>
                   <p className="dashboard-card-value-small">Aucune vente ce mois</p>
                 </>
               )}

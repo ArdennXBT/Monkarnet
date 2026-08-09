@@ -1,0 +1,246 @@
+.abonnement {
+  background-color: var(--color-bg-page);
+  min-height: 100%;
+}
+
+.abonnement-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
+
+.abonnement-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0 0 24px;
+}
+
+.abonnement-loading {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  text-align: center;
+  padding: 24px 0;
+}
+
+.abonnement-statut-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: 0 4px 20px rgba(0, 61, 145, 0.06);
+}
+
+.abonnement-statut-nom {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
+
+.abonnement-statut-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.abonnement-statut-badge {
+  flex-shrink: 0;
+  background-color: rgba(245, 197, 24, 0.25);
+  color: #8a6400;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.abonnement-error {
+  background-color: #FDECEA;
+  color: #B3261E;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.abonnement-intro {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 16px;
+}
+
+.abonnement-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.abonnement-card {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+}
+
+.abonnement-card-highlighted {
+  border-color: var(--color-navy);
+  box-shadow: 0 8px 28px rgba(0, 61, 145, 0.15);
+}
+
+.abonnement-discount {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background-color: var(--color-navy);
+  color: var(--app-accent);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.abonnement-nom {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
+
+.abonnement-texte {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0 0 16px;
+}
+
+.abonnement-prix-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.abonnement-prix {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.abonnement-periode {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.abonnement-old-prix {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0 0 16px;
+}
+
+.abonnement-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.abonnement-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.abonnement-points svg {
+  flex-shrink: 0;
+  color: var(--color-navy);
+  margin-top: 1px;
+}
+
+.abonnement-btn {
+  border-radius: var(--radius-pill);
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.abonnement-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.abonnement-btn-outline {
+  background-color: var(--color-white);
+  color: var(--color-navy);
+  border: 1px solid var(--color-navy);
+}
+
+.abonnement-btn-outline:hover:not(:disabled) {
+  background-color: var(--color-navy-light);
+}
+
+.abonnement-btn-filled {
+  background-color: var(--color-navy);
+  color: var(--app-accent);
+  border: none;
+  box-shadow: 0 4px 14px rgba(0, 61, 145, 0.3);
+}
+
+.abonnement-btn-filled:hover:not(:disabled) {
+  background-color: var(--color-navy-dark);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .abonnement-title {
+    font-size: 20px;
+  }
+
+  .abonnement-statut-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: var(--spacing-md);
+  }
+
+  .abonnement-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .abonnement-card {
+    padding: var(--spacing-md);
+  }
+
+  .abonnement-prix {
+    font-size: 21px;
+  }
+
+  .abonnement-discount {
+    top: -9px;
+    right: 14px;
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+
+  .abonnement-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

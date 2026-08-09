@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, X, LogOut, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, CreditCard, X, LogOut, ShieldCheck } from 'lucide-react';
 import { useCommercant } from '../../context/CommercantContext';
 import './Sidebar.css';
 
@@ -10,6 +10,7 @@ const menuItems = [
   { label: 'Clients', icon: Users, path: '/clients' },
   { label: 'Sous-comptes', icon: UserCog, path: '/sous-comptes' },
   { label: 'Profil', icon: User, path: '/profil' },
+  { label: 'Abonnement', icon: CreditCard, path: '/abonnement' },
 ];
 
 function Sidebar({ ouverte, onFermer }) {

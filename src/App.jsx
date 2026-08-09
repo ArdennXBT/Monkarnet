@@ -4,6 +4,7 @@ import Commerces from './Pages/SuperAdmin/Commerces/Commerces';
 import DashboardGlobal from './Pages/SuperAdmin/DashboardGlobal/DashboardGlobal';
 import SuperAdminLayout from './components/SuperAdminLayout/SuperAdminLayout';
 import Profil from './Pages/Profil/Profil';
+import Abonnement from './Pages/Abonnement/Abonnement';
 import SousComptes from './Pages/SousComptes/SousComptes';
 import Clients from './Pages/Clients/Clients';
 import Produits from './Pages/Produits/Produits';
@@ -48,6 +49,7 @@ function App() {
           <Route path="/clients" element={<Clients />} />
           <Route path="/sous-comptes" element={<SousComptes />} />
           <Route path="/profil" element={<Profil />} />
+          <Route path="/abonnement" element={<Abonnement />} />
         </Route>
         <Route
           element={

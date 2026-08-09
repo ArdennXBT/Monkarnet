@@ -64,31 +64,31 @@
 }
 
 .dashboard-card-gradient-1 {
-  background: linear-gradient(135deg, var(--color-blue) 0%, #123A6B 100%);
+  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-dark) 100%);
   color: rgba(255,255,255,0.8);
-  box-shadow: 0 12px 28px rgba(47, 95, 234, 0.25);
+  box-shadow: 0 12px 28px rgba(0, 61, 145, 0.3);
 }
 
 .dashboard-card-gradient-2 {
-  background: linear-gradient(135deg, #4C7BF0 0%, var(--color-blue) 100%);
+  background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-navy) 100%);
   color: rgba(255,255,255,0.8);
-  box-shadow: 0 12px 28px rgba(47, 95, 234, 0.2);
+  box-shadow: 0 12px 28px rgba(30, 58, 138, 0.25);
 }
 
 .dashboard-card-gradient-3 {
-  background: linear-gradient(135deg, #F59E0B 0%, #C2410C 100%);
-  color: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.25);
+  background: linear-gradient(135deg, var(--app-accent) 0%, #C99A00 100%);
+  color: rgba(18, 32, 61, 0.85);
+  box-shadow: 0 12px 28px rgba(245, 197, 24, 0.3);
 }
 
 .dashboard-card-gradient-3 .dashboard-top-produit-nom,
 .dashboard-card-gradient-3 .dashboard-card-value-small {
-  color: var(--color-white);
+  color: var(--app-accent-text);
 }
 
 .dashboard-card-gradient-3 .dashboard-top-produit-icon {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: var(--color-white);
+  background-color: rgba(18, 32, 61, 0.15);
+  color: var(--app-accent-text);
 }
 
 .dashboard-card-label {

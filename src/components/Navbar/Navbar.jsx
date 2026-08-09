@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Search, Bell, X } from 'lucide-react';
 import { useCommercant } from '../../context/CommercantContext';
 import './Navbar.css';
@@ -7,15 +7,9 @@ import './Navbar.css';
 function Navbar({ menuOuvert, onToggleMenu }) {
   const [notifOuvert, setNotifOuvert] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [rechercheGlobale, setRechercheGlobale] = useState('');
-  const [resultats, setResultats] = useState({ commandes: [], produits: [] });
-  const [rechercheOuverte, setRechercheOuverte] = useState(false);
-  const [rechercheEnCours, setRechercheEnCours] = useState(false);
 
   const location = useLocation();
-  const navigate = useNavigate();
   const { commercant } = useCommercant();
-  const debounceRef = useRef(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -23,8 +17,6 @@ function Navbar({ menuOuvert, onToggleMenu }) {
   const estSurProduits = location.pathname === '/produits';
   const estSurCommandes = location.pathname === '/commandes';
   const estSurClients = location.pathname === '/clients';
-  const estSurProfil = location.pathname === '/profil';
-  const estSurSousComptes = location.pathname === '/sous-comptes';
 
   // Valeur pour les pages avec recherche locale via URL ?q= (Produits / Commandes / Clients)
   const rechercheLocale = searchParams.get('q') || '';
@@ -65,52 +57,6 @@ function Navbar({ menuOuvert, onToggleMenu }) {
     }
   };
 
-  // === Recherche globale (autres pages) ===
-  const handleChangeRechercheGlobale = (e) => {
-    const valeur = e.target.value;
-    setRechercheGlobale(valeur);
-
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-
-    if (valeur.trim().length < 2) {
-      setResultats({ commandes: [], produits: [] });
-      setRechercheOuverte(false);
-      return;
-    }
-
-    debounceRef.current = setTimeout(async () => {
-      setRechercheEnCours(true);
-      try {
-        const response = await fetch(
-          `https://monkarnet-backend.onrender.com/api/recherche?q=${encodeURIComponent(valeur.trim())}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        const data = await response.json();
-        if (response.ok) {
-          setResultats(data);
-          setRechercheOuverte(true);
-        }
-      } catch (err) {
-        // silencieux
-      } finally {
-        setRechercheEnCours(false);
-      }
-    }, 400);
-  };
-
-  const handleClicResultat = (type) => {
-    setRechercheOuverte(false);
-    setRechercheGlobale('');
-    setResultats({ commandes: [], produits: [] });
-    navigate(type === 'commande' ? '/commandes' : '/produits');
-  };
-
-  const effacerRechercheGlobale = () => {
-    setRechercheGlobale('');
-    setResultats({ commandes: [], produits: [] });
-    setRechercheOuverte(false);
-  };
-
   // === Recherche locale Produits / Commandes / Clients (via URL ?q=) ===
   const handleRechercheLocale = (e) => {
     const valeur = e.target.value;
@@ -137,11 +83,6 @@ function Navbar({ menuOuvert, onToggleMenu }) {
 
   const nombreNonLues = notifications.filter((n) => !n.lu).length;
   const initiale = commercant?.nomComplet?.charAt(0) || 'C';
-  const aucunResultat =
-    rechercheGlobale.trim().length >= 2 &&
-    !rechercheEnCours &&
-    resultats.commandes.length === 0 &&
-    resultats.produits.length === 0;
 
   return (
     <header className="navbar">
@@ -195,107 +136,45 @@ function Navbar({ menuOuvert, onToggleMenu }) {
             )}
           </div>
         </div>
-      ) : estSurProfil || estSurSousComptes ? (
-        <div className="navbar-spacer" />
       ) : (
-        <div className="navbar-search-wrapper">
-          <div className="navbar-search">
-            <Search size={18} />
-            <input
-              type="text"
-              placeholder="Rechercher une commande, un client, un produit..."
-              value={rechercheGlobale}
-              onChange={handleChangeRechercheGlobale}
-              onFocus={() => rechercheGlobale.trim().length >= 2 && setRechercheOuverte(true)}
-            />
-            {rechercheGlobale && (
-              <button className="navbar-search-clear" onClick={effacerRechercheGlobale}>
-                <X size={14} />
-              </button>
-            )}
-          </div>
-
-          {rechercheOuverte && (
-            <div className="navbar-search-dropdown">
-              {rechercheEnCours && <p className="navbar-search-empty">Recherche...</p>}
-
-              {!rechercheEnCours && aucunResultat && (
-                <p className="navbar-search-empty">Aucun résultat pour « {rechercheGlobale} ».</p>
-              )}
-
-              {!rechercheEnCours && resultats.commandes.length > 0 && (
-                <div className="navbar-search-section">
-                  <p className="navbar-search-section-title">Commandes</p>
-                  {resultats.commandes.map((c) => (
-                    <button
-                      key={c._id}
-                      className="navbar-search-item"
-                      onClick={() => handleClicResultat('commande')}
-                    >
-                      <span className="navbar-search-item-titre">{c.client?.nom}</span>
-                      <span className="navbar-search-item-sub">
-                        {c.total?.toLocaleString('fr-FR')} F · {c.statut}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {!rechercheEnCours && resultats.produits.length > 0 && (
-                <div className="navbar-search-section">
-                  <p className="navbar-search-section-title">Produits</p>
-                  {resultats.produits.map((p) => (
-                    <button
-                      key={p._id}
-                      className="navbar-search-item"
-                      onClick={() => handleClicResultat('produit')}
-                    >
-                      <span className="navbar-search-item-titre">{p.nom}</span>
-                      <span className="navbar-search-item-sub">
-                        {p.prix?.toLocaleString('fr-FR')} F
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        <div className="navbar-spacer" />
       )}
 
-      <div className="navbar-actions">
-        <div className="navbar-notif-wrapper">
-          <button className="navbar-icon-btn" onClick={() => setNotifOuvert(!notifOuvert)}>
-            <Bell size={20} />
-            {nombreNonLues > 0 && <span className="navbar-notif-badge">{nombreNonLues}</span>}
-          </button>
-          {notifOuvert && (
-            <div className="navbar-notif-dropdown">
-              <p className="navbar-notif-title">Notifications</p>
-              {notifications.length === 0 ? (
-                <p className="navbar-notif-empty">Aucune notification pour l'instant.</p>
-              ) : (
-                notifications.map((n) => (
-                  <button
-                    key={n._id}
-                    className={`navbar-notif-item ${n.lu ? '' : 'navbar-notif-item-non-lue'}`}
-                    onClick={() => handleClicNotification(n)}
-                  >
-                    <div className="navbar-notif-item-header">
-                      {!n.lu && <span className="navbar-notif-dot"></span>}
-                      <p className="navbar-notif-item-titre">{n.titre}</p>
-                    </div>
-                    <p className="navbar-notif-item-message">{n.message}</p>
-                    <span className="navbar-notif-item-date">
-                      {new Date(n.createdAt).toLocaleDateString('fr-FR')}
-                    </span>
-                  </button>
-                ))
-              )}
-            </div>
-          )}
+      {estSurDashboard && (
+        <div className="navbar-actions">
+          <div className="navbar-notif-wrapper">
+            <button className="navbar-icon-btn" onClick={() => setNotifOuvert(!notifOuvert)}>
+              <Bell size={20} />
+              {nombreNonLues > 0 && <span className="navbar-notif-badge">{nombreNonLues}</span>}
+            </button>
+            {notifOuvert && (
+              <div className="navbar-notif-dropdown">
+                <p className="navbar-notif-title">Notifications</p>
+                {notifications.length === 0 ? (
+                  <p className="navbar-notif-empty">Aucune notification pour l'instant.</p>
+                ) : (
+                  notifications.map((n) => (
+                    <button
+                      key={n._id}
+                      className={`navbar-notif-item ${n.lu ? '' : 'navbar-notif-item-non-lue'}`}
+                      onClick={() => handleClicNotification(n)}
+                    >
+                      <div className="navbar-notif-item-header">
+                        {!n.lu && <span className="navbar-notif-dot"></span>}
+                        <p className="navbar-notif-item-titre">{n.titre}</p>
+                      </div>
+                      <p className="navbar-notif-item-message">{n.message}</p>
+                      <span className="navbar-notif-item-date">
+                        {new Date(n.createdAt).toLocaleDateString('fr-FR')}
+                      </span>
+                    </button>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }
