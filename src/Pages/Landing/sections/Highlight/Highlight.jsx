@@ -6,7 +6,7 @@ const highlights = [
   {
     icon: Zap,
     title: "Zéro calcul",
-    text: "Chiffre d'affaires, commandes, meilleur produit du mois — Orbizo met tout à jour pour vous, en temps réel.",
+    text: "Chiffre d'affaires, commandes, meilleur produit du mois. Orbizo met tout à jour pour vous, en temps réel.",
   },
   {
     icon: TrendingUp,

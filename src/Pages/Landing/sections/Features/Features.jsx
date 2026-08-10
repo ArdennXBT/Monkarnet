@@ -80,7 +80,7 @@ export default function Features() {
         <Reveal delay={200}>
           <p className="features-subtitle">
             Rien de superflu. Chaque page fait le travail que vous faites dans
-            votre cahier — en plus rapide.
+            votre cahier en plus rapide.
           </p>
         </Reveal>
 
