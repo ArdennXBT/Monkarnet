@@ -25,45 +25,48 @@ import './App.css';
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Pages publiques, sans sidebar/navbar */}
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/inscription" element={<Inscription />} />
-        <Route path="/verifier-email" element={<VerifierEmail />} />
-        <Route path="/mot-de-passe-oublie" element={<MotDePasseOublie />} />
-        <Route path="/reinitialiser-mot-de-passe" element={<ReinitialiserMotDePasse />} />
-        {/* Pages de l'espace Admin, avec sidebar/navbar */}
-        <Route
-          element={
-            <RouteProtegee>
-              <CommercantProvider>
+      <CommercantProvider>
+        <Routes>
+          {/* Pages publiques, sans sidebar/navbar */}
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/inscription" element={<Inscription />} />
+          <Route path="/verifier-email" element={<VerifierEmail />} />
+          <Route path="/mot-de-passe-oublie" element={<MotDePasseOublie />} />
+          <Route path="/reinitialiser-mot-de-passe" element={<ReinitialiserMotDePasse />} />
+
+          {/* Pages de l'espace commerçant, avec sidebar/navbar */}
+          <Route
+            element={
+              <RouteProtegee>
                 <AppLayout />
-              </CommercantProvider>
-            </RouteProtegee>
-          }
-        >
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/commandes" element={<Commandes />} />
-          <Route path="/produits" element={<Produits />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route path="/sous-comptes" element={<SousComptes />} />
-          <Route path="/profil" element={<Profil />} />
-          <Route path="/abonnement" element={<Abonnement />} />
-        </Route>
-        <Route
-          element={
-            <RouteProtegee>
-              <SuperAdminLayout />
-            </RouteProtegee>
-          }
-        >
-          <Route path="/admin/dashboard" element={<DashboardGlobal />} />
-          <Route path="/admin/commerces" element={<Commerces />} />
-          <Route path="/admin/paiements" element={<Paiements />} />
-          <Route path="/admin/notifications" element={<Notifications />} />
-        </Route>
-      </Routes>
+              </RouteProtegee>
+            }
+          >
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/commandes" element={<Commandes />} />
+            <Route path="/produits" element={<Produits />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/sous-comptes" element={<SousComptes />} />
+            <Route path="/profil" element={<Profil />} />
+            <Route path="/abonnement" element={<Abonnement />} />
+          </Route>
+
+          {/* Pages Super Admin */}
+          <Route
+            element={
+              <RouteProtegee>
+                <SuperAdminLayout />
+              </RouteProtegee>
+            }
+          >
+            <Route path="/admin/dashboard" element={<DashboardGlobal />} />
+            <Route path="/admin/commerces" element={<Commerces />} />
+            <Route path="/admin/paiements" element={<Paiements />} />
+            <Route path="/admin/notifications" element={<Notifications />} />
+          </Route>
+        </Routes>
+      </CommercantProvider>
     </BrowserRouter>
   );
 }
