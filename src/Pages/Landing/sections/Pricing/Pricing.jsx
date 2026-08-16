@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Reveal from '../../../../components/Reveal/Reveal';
 import './Pricing.css';
 import { CheckCircle2 } from "lucide-react";
@@ -11,6 +12,7 @@ const plans = [
     oldPrice: null,
     note: null,
     button: "Commencer l'essai gratuit",
+    link: "/inscription",
     highlighted: false,
     points: [
       "Essai gratuit de 14 jours inclus",
@@ -27,6 +29,7 @@ const plans = [
     oldPrice: "50 400 F",
     note: "soit 40% d'économie",
     button: "Choisir l'abonnement annuel",
+    link: "/inscription?plan=annuel",
     highlighted: true,
     badge: "- 40%",
     points: [
@@ -90,7 +93,8 @@ export default function Pricing() {
                   </p>
                 )}
 
-                <button
+                <Link
+                  to={plan.link}
                   className={`pricing-button ${
                     plan.highlighted
                       ? "pricing-button-filled"
@@ -98,7 +102,7 @@ export default function Pricing() {
                   }`}
                 >
                   {plan.button}
-                </button>
+                </Link>
 
                 <ul className="pricing-points">
                   {plan.points.map((point, i) => (

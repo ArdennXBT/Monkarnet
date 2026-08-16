@@ -88,13 +88,15 @@ export default function Features() {
           {features.map((feature, index) => (
             <Reveal delay={100 * index} key={feature.number}>
               <div className="feature-block">
-                <span className="feature-mini-badge">
-                  {feature.number} — {feature.tag}
-                </span>
+                <div className="feature-block-content">
+                  <span className="feature-mini-badge">
+                    {feature.number} — {feature.tag}
+                  </span>
 
-                <h4 className="feature-block-title">{feature.title}</h4>
+                  <h4 className="feature-block-title">{feature.title}</h4>
 
-                <p className="feature-block-text">{feature.text}</p>
+                  <p className="feature-block-text">{feature.text}</p>
+                </div>
 
                 <ul className="feature-points">
                   {feature.points.map((point, i) => (
