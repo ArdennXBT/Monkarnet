@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Plus, X, Pencil, Trash2, ImagePlus, Package, Search, Settings2, Check } from 'lucide-react';
 import './Produits.css';
+import AccesAbonnementRequis from '../../components/AccesAbonnementRequis/AccesAbonnementRequis';
 
 const CLOUDINARY_CLOUD_NAME = 'pfmip5ll';
 const CLOUDINARY_UPLOAD_PRESET = 'comerza_produits';
@@ -379,7 +380,8 @@ function Produits() {
     ? categories.map((c) => c.nom)
     : [...categories.map((c) => c.nom), 'Autre'];
 
-  return (
+ return (
+    <AccesAbonnementRequis>
     <div className="produits">
       <div className="produits-header">
         <div>
@@ -694,6 +696,7 @@ function Produits() {
         </div>
       )}
     </div>
+    </AccesAbonnementRequis>
   );
 }
 

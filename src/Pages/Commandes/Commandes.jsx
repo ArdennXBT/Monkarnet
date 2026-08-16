@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, Fragment } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Plus, X, Trash2, Calendar, ChevronDown, Pencil, Printer } from 'lucide-react';
 import './Commandes.css';
+import AccesAbonnementRequis from '../../components/AccesAbonnementRequis/AccesAbonnementRequis';
 
 const filtres = ['Toutes', 'en_attente', 'en_cours', 'livree', 'litige'];
 const filtreLabels = {
@@ -456,6 +457,7 @@ function Commandes() {
   );
 
   return (
+    <AccesAbonnementRequis>
     <div className="commandes">
       {/* ========== HEADER ========== */}
       <div className="commandes-header">
@@ -842,6 +844,7 @@ function Commandes() {
         </div>
       )}
     </div>
+    </AccesAbonnementRequis>
   );
 }
 

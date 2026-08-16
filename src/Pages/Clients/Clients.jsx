@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Phone, MapPin, MessageCircle, Trophy, ChevronDown, ChevronUp } from 'lucide-react';
 import './Clients.css';
+import AccesAbonnementRequis from '../../components/AccesAbonnementRequis/AccesAbonnementRequis';
 
 // Indicatif pays utilisé pour construire les liens WhatsApp à partir des numéros locaux.
 // À adapter si tu gères plusieurs pays / si les numéros sont déjà stockés avec indicatif.
@@ -185,6 +186,7 @@ function Clients() {
   };
 
   return (
+    <AccesAbonnementRequis>
     <div className="clients">
       <h1 className="clients-title">Clients</h1>
       <p className="clients-subtitle">Retrouvez vos clients et leur historique.</p>
@@ -397,6 +399,7 @@ function Clients() {
         </div>
       )}
     </div>
+    </AccesAbonnementRequis>
   );
 }
 
