@@ -20,12 +20,14 @@ import Login from './Pages/Login/Login';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import RouteProtegee from './components/RouteProtegee/RouteProtegee';
 import { CommercantProvider } from './context/CommercantContext';
+import InstallBanner from './components/InstallBanner';
 import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
       <CommercantProvider>
+        <InstallBanner />
         <Routes>
           {/* Pages publiques, sans sidebar/navbar */}
           <Route path="/" element={<Landing />} />
