@@ -1,0 +1,64 @@
+.verrou-payant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 24px;
+}
+
+.verrou-payant-contenu {
+  text-align: center;
+  max-width: 380px;
+}
+
+.verrou-payant-icone {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(0, 61, 145, 0.08);
+  color: var(--color-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.verrou-payant-contenu h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.verrou-payant-contenu p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.verrou-payant-btn {
+  background-color: var(--color-navy);
+  color: var(--app-accent);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 61, 145, 0.3);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.verrou-payant-btn:hover {
+  background-color: var(--color-navy-dark);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .verrou-payant {
+    min-height: 50vh;
+    padding: 16px;
+  }
+}

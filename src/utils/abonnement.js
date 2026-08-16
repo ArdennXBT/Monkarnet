@@ -15,3 +15,19 @@ export function estAbonnementBloque(commercant) {
 
   return false;
 }
+
+// Fonctionnalités réservées aux abonnés payants uniquement (essai gratuit non suffisant)
+export function necessiteAbonnementPayant(commercant) {
+  if (!commercant) return true;
+  if (commercant.role === 'superadmin') return false;
+
+  const planActuel = commercant.plan || 'gratuit';
+  const maintenant = new Date();
+
+  const abonnementPayantActif =
+    ['mensuel', 'annuel'].includes(planActuel) &&
+    commercant.dateFinAbonnement &&
+    maintenant <= new Date(commercant.dateFinAbonnement);
+
+  return !abonnementPayantActif;
+}
