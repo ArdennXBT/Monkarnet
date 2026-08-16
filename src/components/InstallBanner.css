@@ -1,0 +1,165 @@
+.install-banner {
+  position: fixed;
+  top: 460px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #ffffff;
+  border: 1px solid #e5e9f0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  max-width: 320px;
+  box-shadow: 0 10px 26px rgba(0, 61, 145, 0.1);
+  animation: install-banner-in 0.35s ease;
+}
+
+.install-banner-closing {
+  animation: install-banner-out 0.3s ease forwards;
+}
+
+@keyframes install-banner-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes install-banner-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+.install-banner-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #b0b6c2;
+  font-size: 13px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+.install-banner-close:hover {
+  color: #4a5568;
+}
+
+.install-banner-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  background-color: #f0f5ff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.install-banner-text {
+  flex: 1;
+  min-width: 0;
+  color: #0a0a0a;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.install-banner-btn {
+  flex-shrink: 0;
+  background-color: #003d91;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.install-banner-btn:hover {
+  background-color: #002a68;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 61, 145, 0.25);
+}
+
+/* Tablette : on garde à droite mais on réduit la largeur */
+@media (max-width: 900px) {
+  .install-banner {
+    max-width: 280px;
+    top: 420px;
+  }
+}
+
+/* Mobile : repositionné en bas, pleine largeur avec marges */
+@media (max-width: 640px) {
+  .install-banner {
+    top: auto;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    max-width: none;
+    padding: 14px;
+  }
+
+  @keyframes install-banner-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes install-banner-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+}
+
+/* Très petits écrans : on passe en colonne pour éviter que ça déborde */
+@media (max-width: 380px) {
+  .install-banner {
+    flex-wrap: wrap;
+    padding: 16px 14px;
+  }
+
+  .install-banner-text {
+    font-size: 13px;
+    flex-basis: 100%;
+  }
+
+  .install-banner-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .install-banner-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
