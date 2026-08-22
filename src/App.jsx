@@ -23,6 +23,9 @@ import { CommercantProvider } from './context/CommercantContext';
 import InstallBanner from './components/InstallBanner';
 import './App.css';
 
+import Confidentialite from './Pages/legal/Confidentialite';
+import Conditions from './Pages/legal/Conditions';
+
 function App() {
   return (
     <BrowserRouter>
@@ -36,6 +39,9 @@ function App() {
           <Route path="/verifier-email" element={<VerifierEmail />} />
           <Route path="/mot-de-passe-oublie" element={<MotDePasseOublie />} />
           <Route path="/reinitialiser-mot-de-passe" element={<ReinitialiserMotDePasse />} />
+
+          <Route path="/confidentialite" element={<Confidentialite />} />
+          <Route path="/conditions" element={<Conditions />} />
 
           {/* Pages de l'espace commerçant, avec sidebar/navbar */}
           <Route
