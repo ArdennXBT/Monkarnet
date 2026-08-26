@@ -8,13 +8,27 @@ function AccesAbonnementRequis({ children }) {
   const { commercant, chargement } = useCommercant();
   const navigate = useNavigate();
 
-  // Pendant le chargement → on affiche un loader au lieu de null
-  if (chargement || !commercant) {
+  // On affiche le loader seulement si on charge ET qu'on n'a encore aucune donnée
+  if (chargement && !commercant) {
     return (
-      <div className="verrou-abonnement" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p>Chargement...</p>
+      <div
+        style={{
+          minHeight: '60vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#666',
+        }}
+      >
+        Chargement...
       </div>
     );
+  }
+
+  // Si après chargement on n'a toujours pas de commercant, on laisse passer
+  // (RouteProtegee s'occupe déjà de la redirection si pas de token)
+  if (!commercant) {
+    return children;
   }
 
   const bloque = estAbonnementBloque(commercant);

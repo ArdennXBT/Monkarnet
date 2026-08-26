@@ -29,7 +29,6 @@ function statutClass(statut) {
   return 'commandes-badge-gray';
 }
 
-// Récupère un nom de produit lisible, que ce soit un produit du catalogue ou un produit libre
 function nomProduit(ligne) {
   if (ligne.nomLibre) return ligne.nomLibre;
   if (ligne.produit && typeof ligne.produit === 'object') return ligne.produit.nom || 'Produit';
@@ -45,27 +44,19 @@ function Commandes() {
   const [erreur, setErreur] = useState('');
   const [filtreActif, setFiltreActif] = useState('Toutes');
 
-  // Recherche (nom client, téléphone, numéro de commande) — pilotée par la barre
-  // de la Navbar via l'URL (?q=...), comme sur la page Produits.
   const [searchParams] = useSearchParams();
   const recherche = searchParams.get('q') || '';
 
-  // Modal création / modification (même modal, deux modes)
   const [modalOuvert, setModalOuvert] = useState(false);
-  const [modeModal, setModeModal] = useState('creer'); // 'creer' | 'modifier'
+  const [modeModal, setModeModal] = useState('creer');
   const [commandeEnEditionId, setCommandeEnEditionId] = useState(null);
 
-  // Confirmation de suppression
   const [commandeASupprimer, setCommandeASupprimer] = useState(null);
   const [suppressionEnCours, setSuppressionEnCours] = useState(false);
 
-  // Reçu imprimable
   const [commandeRecu, setCommandeRecu] = useState(null);
-
-  // Détail de commande déplié (une seule commande ouverte à la fois)
   const [detailOuvert, setDetailOuvert] = useState(null);
 
-  // Période
   const [periode, setPeriode] = useState('aujourdhui');
   const [dateCustom, setDateCustom] = useState(() => new Date().toISOString().split('T')[0]);
   const [menuPeriodeOuvert, setMenuPeriodeOuvert] = useState(false);
@@ -75,8 +66,6 @@ function Commandes() {
   const [clientTelephone, setClientTelephone] = useState('');
   const [clientAdresse, setClientAdresse] = useState('');
   const [lignesProduits, setLignesProduits] = useState([{ ...ligneVide }]);
-
-  const token = localStorage.getItem('token');
 
   // Fermer le menu si on clique dehors
   useEffect(() => {
@@ -90,6 +79,15 @@ function Commandes() {
   }, []);
 
   const chargerDonnees = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setChargement(false);
+      return;
+    }
+
+    setChargement(true);
+    setErreur('');
+
     try {
       const [resCommandes, resProduits] = await Promise.all([
         fetch('https://monkarnet-backend.onrender.com/api/commandes', {
@@ -153,7 +151,6 @@ function Commandes() {
       return { start, end };
     }
 
-    // custom
     const start = new Date(dateCustom);
     start.setHours(0, 0, 0, 0);
     const end = new Date(dateCustom);
@@ -172,10 +169,6 @@ function Commandes() {
       ? commandesParPeriode
       : commandesParPeriode.filter((c) => c.statut === filtreActif);
 
-  // Recherche : nom client, téléphone, numéro de commande
-  // Note : la recherche s'applique sur les commandes déjà filtrées par période + statut.
-  // Si tu veux que la recherche ignore la période (chercher dans TOUTES les commandes),
-  // remplace "commandesFiltreesParStatut" par "commandes" ci-dessous.
   const commandesFiltrees = commandesFiltreesParStatut.filter((c) => {
     if (!recherche.trim()) return true;
     const q = recherche.trim().toLowerCase();
@@ -204,7 +197,6 @@ function Commandes() {
     setLignesProduits(nouvellesLignes);
   };
 
-  // Ouvre/ferme le détail d'une commande (une seule à la fois)
   const toggleDetail = (commandeId) => {
     setDetailOuvert((prev) => (prev === commandeId ? null : commandeId));
   };
@@ -213,6 +205,8 @@ function Commandes() {
     setCommandes((prev) =>
       prev.map((c) => (c._id === commandeId ? { ...c, statut: nouveauStatut } : c))
     );
+
+    const token = localStorage.getItem('token');
 
     try {
       const response = await fetch(`https://monkarnet-backend.onrender.com/api/commandes/${commandeId}`, {
@@ -232,8 +226,6 @@ function Commandes() {
       chargerDonnees();
     }
   };
-
-  // ===== Ouverture des modals =====
 
   const ouvrirCreation = () => {
     setModeModal('creer');
@@ -277,6 +269,8 @@ function Commandes() {
   const confirmerSuppression = async () => {
     if (!commandeASupprimer) return;
     setSuppressionEnCours(true);
+    const token = localStorage.getItem('token');
+
     try {
       const response = await fetch(
         `https://monkarnet-backend.onrender.com/api/commandes/${commandeASupprimer._id}`,
@@ -345,6 +339,8 @@ function Commandes() {
           produits: produitsFormates,
           statut: 'en_attente',
         };
+
+    const token = localStorage.getItem('token');
 
     try {
       const response = await fetch(url, {
@@ -458,392 +454,391 @@ function Commandes() {
 
   return (
     <AccesAbonnementRequis>
-    <div className="commandes">
-      {/* ========== HEADER ========== */}
-      <div className="commandes-header">
-        <div className="commandes-header-top">
-          <h1 className="commandes-title">Commandes</h1>
+      <div className="commandes">
+        {/* ========== HEADER ========== */}
+        <div className="commandes-header">
+          <div className="commandes-header-top">
+            <h1 className="commandes-title">Commandes</h1>
 
-          {/* Sélecteur de période - coin droit sur la même ligne que le titre */}
-          <div className="commandes-periode" ref={periodeRef}>
-            <button
-              className="commandes-periode-btn"
-              onClick={() => setMenuPeriodeOuvert(!menuPeriodeOuvert)}
-            >
-              <Calendar size={14} />
-              <span>{labelPeriodeAffiche}</span>
-              <ChevronDown size={14} className={menuPeriodeOuvert ? 'rotate' : ''} />
-            </button>
+            <div className="commandes-periode" ref={periodeRef}>
+              <button
+                className="commandes-periode-btn"
+                onClick={() => setMenuPeriodeOuvert(!menuPeriodeOuvert)}
+              >
+                <Calendar size={14} />
+                <span>{labelPeriodeAffiche}</span>
+                <ChevronDown size={14} className={menuPeriodeOuvert ? 'rotate' : ''} />
+              </button>
 
-            {menuPeriodeOuvert && (
-              <div className="commandes-periode-menu">
-                {Object.entries(periodeLabels).map(([key, label]) => (
-                  <button
-                    key={key}
-                    className={periode === key ? 'actif' : ''}
-                    onClick={() => {
-                      setPeriode(key);
-                      setMenuPeriodeOuvert(false);
-                    }}
-                  >
-                    {label}
-                  </button>
-                ))}
+              {menuPeriodeOuvert && (
+                <div className="commandes-periode-menu">
+                  {Object.entries(periodeLabels).map(([key, label]) => (
+                    <button
+                      key={key}
+                      className={periode === key ? 'actif' : ''}
+                      onClick={() => {
+                        setPeriode(key);
+                        setMenuPeriodeOuvert(false);
+                      }}
+                    >
+                      {label}
+                    </button>
+                  ))}
 
-                <div className="commandes-periode-custom">
-                  <span>Choisir une date</span>
-                  <input
-                    type="date"
-                    value={dateCustom}
-                    onChange={(e) => {
-                      setDateCustom(e.target.value);
-                      setPeriode('custom');
-                      setMenuPeriodeOuvert(false);
-                    }}
-                  />
+                  <div className="commandes-periode-custom">
+                    <span>Choisir une date</span>
+                    <input
+                      type="date"
+                      value={dateCustom}
+                      onChange={(e) => {
+                        setDateCustom(e.target.value);
+                        setPeriode('custom');
+                        setMenuPeriodeOuvert(false);
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
+
+          <p className="commandes-subtitle">Suivez et gérez toutes vos commandes.</p>
+
+          <button className="commandes-add-btn" onClick={ouvrirCreation}>
+            <Plus size={18} />
+            Nouvelle commande
+          </button>
         </div>
 
-        <p className="commandes-subtitle">Suivez et gérez toutes vos commandes.</p>
+        {erreur && <p className="commandes-error">{erreur}</p>}
 
-        <button className="commandes-add-btn" onClick={ouvrirCreation}>
-          <Plus size={18} />
-          Nouvelle commande
-        </button>
-      </div>
+        {/* ========== FILTRES STATUT ========== */}
+        <div className="commandes-filtres">
+          {filtres.map((f) => (
+            <button
+              key={f}
+              className={`commandes-filtre-btn ${filtreActif === f ? 'commandes-filtre-actif' : ''}`}
+              onClick={() => setFiltreActif(f)}
+            >
+              {filtreLabels[f]}
+            </button>
+          ))}
+        </div>
 
-      {erreur && <p className="commandes-error">{erreur}</p>}
+        {chargement ? (
+          <p className="commandes-loading">Chargement...</p>
+        ) : commandesFiltrees.length === 0 ? (
+          <p className="commandes-loading">
+            {recherche.trim()
+              ? `Aucune commande ne correspond à "${recherche}".`
+              : `Aucune commande pour ${labelPeriodeAffiche.toLowerCase()}.`}
+          </p>
+        ) : (
+          <>
+            {/* TABLEAU Desktop */}
+            <div className="commandes-table-wrapper">
+              <table className="commandes-table">
+                <thead>
+                  <tr>
+                    <th>Client</th>
+                    <th>Montant</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {commandesFiltrees.map((c) => {
+                    const estOuvert = detailOuvert === c._id;
+                    return (
+                      <Fragment key={c._id}>
+                        <tr className="commandes-row" onClick={() => toggleDetail(c._id)}>
+                          <td className="commandes-cell-client">
+                            <span className="commandes-numero-mobile">{c.numero || '—'}</span>
+                            <span className="commandes-nom-client">{c.client?.nom}</span>
+                          </td>
+                          <td className="commandes-montant">{c.total.toLocaleString('fr-FR')} F</td>
+                          <td onClick={(e) => e.stopPropagation()}>
+                            <select
+                              className={`commandes-statut-select ${statutClass(c.statut)}`}
+                              value={c.statut}
+                              onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                            >
+                              {statutsPossibles.map((s) => (
+                                <option key={s} value={s}>
+                                  {filtreLabels[s]}
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className="commandes-date">
+                            {new Date(c.createdAt).toLocaleDateString('fr-FR')}
+                          </td>
+                          <td className="commandes-chevron-cell">
+                            <ChevronDown size={16} className={`commandes-chevron ${estOuvert ? 'open' : ''}`} />
+                          </td>
+                        </tr>
 
-      {/* ========== FILTRES STATUT ========== */}
-      <div className="commandes-filtres">
-        {filtres.map((f) => (
-          <button
-            key={f}
-            className={`commandes-filtre-btn ${filtreActif === f ? 'commandes-filtre-actif' : ''}`}
-            onClick={() => setFiltreActif(f)}
-          >
-            {filtreLabels[f]}
-          </button>
-        ))}
-      </div>
-
-      {chargement ? (
-        <p className="commandes-loading">Chargement...</p>
-      ) : commandesFiltrees.length === 0 ? (
-        <p className="commandes-loading">
-          {recherche.trim()
-            ? `Aucune commande ne correspond à "${recherche}".`
-            : `Aucune commande pour ${labelPeriodeAffiche.toLowerCase()}.`}
-        </p>
-      ) : (
-        <>
-          {/* TABLEAU Desktop */}
-          <div className="commandes-table-wrapper">
-            <table className="commandes-table">
-              <thead>
-                <tr>
-                  <th>Client</th>
-                  <th>Montant</th>
-                  <th>Statut</th>
-                  <th>Date</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {commandesFiltrees.map((c) => {
-                  const estOuvert = detailOuvert === c._id;
-                  return (
-                    <Fragment key={c._id}>
-                      <tr className="commandes-row" onClick={() => toggleDetail(c._id)}>
-                        <td className="commandes-cell-client">
-                          <span className="commandes-numero-mobile">{c.numero || '—'}</span>
-                          <span className="commandes-nom-client">{c.client?.nom}</span>
-                        </td>
-                        <td className="commandes-montant">{c.total.toLocaleString('fr-FR')} F</td>
-                        <td onClick={(e) => e.stopPropagation()}>
-                          <select
-                            className={`commandes-statut-select ${statutClass(c.statut)}`}
-                            value={c.statut}
-                            onChange={(e) => handleChangerStatut(c._id, e.target.value)}
-                          >
-                            {statutsPossibles.map((s) => (
-                              <option key={s} value={s}>
-                                {filtreLabels[s]}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
-                        <td className="commandes-date">
-                          {new Date(c.createdAt).toLocaleDateString('fr-FR')}
-                        </td>
-                        <td className="commandes-chevron-cell">
-                          <ChevronDown size={16} className={`commandes-chevron ${estOuvert ? 'open' : ''}`} />
-                        </td>
-                      </tr>
-
-                      <tr className={`commandes-details-row ${estOuvert ? 'open' : ''}`}>
-                        <td colSpan={5}>
-                          <div className="commandes-details-inner">
-                            <div className="commandes-details-content">{renderDetails(c)}</div>
-                          </div>
-                        </td>
-                      </tr>
-                    </Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {/* CARTES Mobile */}
-          <div className="commandes-cards">
-            {commandesFiltrees.map((c) => {
-              const estOuvert = detailOuvert === c._id;
-              return (
-                <div key={c._id} className={`commandes-card ${estOuvert ? 'open' : ''}`}>
-                  <div className="commandes-card-top" onClick={() => toggleDetail(c._id)}>
-                    <div className="commandes-card-client">
-                      <span className="commandes-numero-mobile">{c.numero || '—'}</span>
-                      <span className="commandes-nom-client">{c.client?.nom}</span>
-                    </div>
-                    <div className="commandes-card-montant-wrap">
-                      <span className="commandes-card-montant">
-                        {c.total.toLocaleString('fr-FR')} F
-                      </span>
-                      <ChevronDown size={16} className={`commandes-chevron ${estOuvert ? 'open' : ''}`} />
-                    </div>
-                  </div>
-
-                  <div className="commandes-card-bottom">
-                    <select
-                      className={`commandes-statut-select ${statutClass(c.statut)}`}
-                      value={c.statut}
-                      onChange={(e) => handleChangerStatut(c._id, e.target.value)}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {statutsPossibles.map((s) => (
-                        <option key={s} value={s}>
-                          {filtreLabels[s]}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="commandes-card-date">
-                      {new Date(c.createdAt).toLocaleDateString('fr-FR')}
-                    </span>
-                  </div>
-
-                  <div className="commandes-card-details">
-                    <div className="commandes-card-details-inner">
-                      <div className="commandes-card-details-box">{renderDetails(c)}</div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </>
-      )}
-
-      {/* ========== MODAL CRÉATION / MODIFICATION ========== */}
-      {modalOuvert && (
-        <div className="commandes-modal-overlay" onClick={fermerModal}>
-          <div className="commandes-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="commandes-modal-header">
-              <h2>{modeModal === 'modifier' ? 'Modifier la commande' : 'Nouvelle commande'}</h2>
-              <button className="commandes-modal-close" onClick={fermerModal}>
-                <X size={20} />
-              </button>
+                        <tr className={`commandes-details-row ${estOuvert ? 'open' : ''}`}>
+                          <td colSpan={5}>
+                            <div className="commandes-details-inner">
+                              <div className="commandes-details-content">{renderDetails(c)}</div>
+                            </div>
+                          </td>
+                        </tr>
+                      </Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
-            <form className="commandes-modal-form" onSubmit={handleSubmit}>
-              <label>
-                Nom du client
-                <input
-                  type="text"
-                  value={clientNom}
-                  onChange={(e) => setClientNom(e.target.value)}
-                  required
-                />
-              </label>
-              <label>
-                Téléphone
-                <input
-                  type="tel"
-                  value={clientTelephone}
-                  onChange={(e) => setClientTelephone(e.target.value)}
-                />
-              </label>
-              <label>
-                Adresse
-                <input
-                  type="text"
-                  value={clientAdresse}
-                  onChange={(e) => setClientAdresse(e.target.value)}
-                />
-              </label>
 
-              <div className="commandes-modal-produits-label">Produits</div>
-              {lignesProduits.map((ligne, index) => (
-                <div key={index} className="commandes-modal-bloc-produit">
-                  <div className="commandes-modal-ligne">
-                    <select
-                      value={ligne.produit}
-                      onChange={(e) => modifierLigne(index, 'produit', e.target.value)}
-                    >
-                      <option value="">Produit du catalogue...</option>
-                      {produits.map((p) => (
-                        <option key={p._id} value={p._id}>
-                          {p.nom} — {p.prix.toLocaleString('fr-FR')} F
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="number"
-                      min="1"
-                      value={ligne.quantite}
-                      onChange={(e) => modifierLigne(index, 'quantite', e.target.value)}
-                      className="commandes-modal-qte"
-                    />
-                    {lignesProduits.length > 1 && (
-                      <button
-                        type="button"
-                        className="commandes-modal-remove"
-                        onClick={() => supprimerLigne(index)}
+            {/* CARTES Mobile */}
+            <div className="commandes-cards">
+              {commandesFiltrees.map((c) => {
+                const estOuvert = detailOuvert === c._id;
+                return (
+                  <div key={c._id} className={`commandes-card ${estOuvert ? 'open' : ''}`}>
+                    <div className="commandes-card-top" onClick={() => toggleDetail(c._id)}>
+                      <div className="commandes-card-client">
+                        <span className="commandes-numero-mobile">{c.numero || '—'}</span>
+                        <span className="commandes-nom-client">{c.client?.nom}</span>
+                      </div>
+                      <div className="commandes-card-montant-wrap">
+                        <span className="commandes-card-montant">
+                          {c.total.toLocaleString('fr-FR')} F
+                        </span>
+                        <ChevronDown size={16} className={`commandes-chevron ${estOuvert ? 'open' : ''}`} />
+                      </div>
+                    </div>
+
+                    <div className="commandes-card-bottom">
+                      <select
+                        className={`commandes-statut-select ${statutClass(c.statut)}`}
+                        value={c.statut}
+                        onChange={(e) => handleChangerStatut(c._id, e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        <Trash2 size={16} />
-                      </button>
-                    )}
-                  </div>
+                        {statutsPossibles.map((s) => (
+                          <option key={s} value={s}>
+                            {filtreLabels[s]}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="commandes-card-date">
+                        {new Date(c.createdAt).toLocaleDateString('fr-FR')}
+                      </span>
+                    </div>
 
-                  {!ligne.produit && (
-                    <div className="commandes-modal-ligne-libre">
-                      <span className="commandes-modal-ou">ou saisir librement :</span>
-                      <input
-                        type="text"
-                        placeholder="Nom du produit"
-                        value={ligne.nomLibre}
-                        onChange={(e) => modifierLigne(index, 'nomLibre', e.target.value)}
-                        className="commandes-modal-nom-libre"
-                      />
+                    <div className="commandes-card-details">
+                      <div className="commandes-card-details-inner">
+                        <div className="commandes-card-details-box">{renderDetails(c)}</div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+
+        {/* ========== MODAL CRÉATION / MODIFICATION ========== */}
+        {modalOuvert && (
+          <div className="commandes-modal-overlay" onClick={fermerModal}>
+            <div className="commandes-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="commandes-modal-header">
+                <h2>{modeModal === 'modifier' ? 'Modifier la commande' : 'Nouvelle commande'}</h2>
+                <button className="commandes-modal-close" onClick={fermerModal}>
+                  <X size={20} />
+                </button>
+              </div>
+              <form className="commandes-modal-form" onSubmit={handleSubmit}>
+                <label>
+                  Nom du client
+                  <input
+                    type="text"
+                    value={clientNom}
+                    onChange={(e) => setClientNom(e.target.value)}
+                    required
+                  />
+                </label>
+                <label>
+                  Téléphone
+                  <input
+                    type="tel"
+                    value={clientTelephone}
+                    onChange={(e) => setClientTelephone(e.target.value)}
+                  />
+                </label>
+                <label>
+                  Adresse
+                  <input
+                    type="text"
+                    value={clientAdresse}
+                    onChange={(e) => setClientAdresse(e.target.value)}
+                  />
+                </label>
+
+                <div className="commandes-modal-produits-label">Produits</div>
+                {lignesProduits.map((ligne, index) => (
+                  <div key={index} className="commandes-modal-bloc-produit">
+                    <div className="commandes-modal-ligne">
+                      <select
+                        value={ligne.produit}
+                        onChange={(e) => modifierLigne(index, 'produit', e.target.value)}
+                      >
+                        <option value="">Produit du catalogue...</option>
+                        {produits.map((p) => (
+                          <option key={p._id} value={p._id}>
+                            {p.nom} — {p.prix.toLocaleString('fr-FR')} F
+                          </option>
+                        ))}
+                      </select>
                       <input
                         type="number"
-                        min="0"
-                        placeholder="Prix"
-                        value={ligne.prixLibre}
-                        onChange={(e) => modifierLigne(index, 'prixLibre', e.target.value)}
-                        className="commandes-modal-prix-libre"
+                        min="1"
+                        value={ligne.quantite}
+                        onChange={(e) => modifierLigne(index, 'quantite', e.target.value)}
+                        className="commandes-modal-qte"
                       />
+                      {lignesProduits.length > 1 && (
+                        <button
+                          type="button"
+                          className="commandes-modal-remove"
+                          onClick={() => supprimerLigne(index)}
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      )}
                     </div>
-                  )}
+
+                    {!ligne.produit && (
+                      <div className="commandes-modal-ligne-libre">
+                        <span className="commandes-modal-ou">ou saisir librement :</span>
+                        <input
+                          type="text"
+                          placeholder="Nom du produit"
+                          value={ligne.nomLibre}
+                          onChange={(e) => modifierLigne(index, 'nomLibre', e.target.value)}
+                          className="commandes-modal-nom-libre"
+                        />
+                        <input
+                          type="number"
+                          min="0"
+                          placeholder="Prix"
+                          value={ligne.prixLibre}
+                          onChange={(e) => modifierLigne(index, 'prixLibre', e.target.value)}
+                          className="commandes-modal-prix-libre"
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <button type="button" className="commandes-modal-add-ligne" onClick={ajouterLigne}>
+                  + Ajouter un produit
+                </button>
+
+                <button type="submit" className="commandes-modal-submit">
+                  {modeModal === 'modifier' ? 'Enregistrer les modifications' : 'Créer la commande'}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* ========== CONFIRMATION SUPPRESSION ========== */}
+        {commandeASupprimer && (
+          <div className="commandes-modal-overlay" onClick={annulerSuppression}>
+            <div className="commandes-confirm-box" onClick={(e) => e.stopPropagation()}>
+              <h3>Supprimer la commande {commandeASupprimer.numero} ?</h3>
+              <p>
+                Cette action est définitive et ne peut pas être annulée. La commande de{' '}
+                <strong>{commandeASupprimer.client?.nom}</strong> sera supprimée.
+              </p>
+              <div className="commandes-confirm-actions">
+                <button className="commandes-confirm-cancel" onClick={annulerSuppression}>
+                  Annuler
+                </button>
+                <button
+                  className="commandes-confirm-delete"
+                  onClick={confirmerSuppression}
+                  disabled={suppressionEnCours}
+                >
+                  {suppressionEnCours ? 'Suppression...' : 'Supprimer définitivement'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========== REÇU IMPRIMABLE ========== */}
+        {commandeRecu && (
+          <div className="commandes-modal-overlay" onClick={fermerRecu}>
+            <div className="commandes-recu-box" onClick={(e) => e.stopPropagation()}>
+              <div className="commandes-recu-header no-print">
+                <h2>Reçu — {commandeRecu.numero}</h2>
+                <button className="commandes-modal-close" onClick={fermerRecu}>
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="commandes-recu-print-zone">
+                <div className="commandes-recu-titre">Comerza</div>
+                <div className="commandes-recu-sous-titre">
+                  Reçu de commande {commandeRecu.numero}
                 </div>
-              ))}
-              <button type="button" className="commandes-modal-add-ligne" onClick={ajouterLigne}>
-                + Ajouter un produit
-              </button>
-
-              <button type="submit" className="commandes-modal-submit">
-                {modeModal === 'modifier' ? 'Enregistrer les modifications' : 'Créer la commande'}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ========== CONFIRMATION SUPPRESSION ========== */}
-      {commandeASupprimer && (
-        <div className="commandes-modal-overlay" onClick={annulerSuppression}>
-          <div className="commandes-confirm-box" onClick={(e) => e.stopPropagation()}>
-            <h3>Supprimer la commande {commandeASupprimer.numero} ?</h3>
-            <p>
-              Cette action est définitive et ne peut pas être annulée. La commande de{' '}
-              <strong>{commandeASupprimer.client?.nom}</strong> sera supprimée.
-            </p>
-            <div className="commandes-confirm-actions">
-              <button className="commandes-confirm-cancel" onClick={annulerSuppression}>
-                Annuler
-              </button>
-              <button
-                className="commandes-confirm-delete"
-                onClick={confirmerSuppression}
-                disabled={suppressionEnCours}
-              >
-                {suppressionEnCours ? 'Suppression...' : 'Supprimer définitivement'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========== REÇU IMPRIMABLE ========== */}
-      {commandeRecu && (
-        <div className="commandes-modal-overlay" onClick={fermerRecu}>
-          <div className="commandes-recu-box" onClick={(e) => e.stopPropagation()}>
-            <div className="commandes-recu-header no-print">
-              <h2>Reçu — {commandeRecu.numero}</h2>
-              <button className="commandes-modal-close" onClick={fermerRecu}>
-                <X size={20} />
-              </button>
-            </div>
-
-            <div className="commandes-recu-print-zone">
-              <div className="commandes-recu-titre">Comerza</div>
-              <div className="commandes-recu-sous-titre">
-                Reçu de commande {commandeRecu.numero}
-              </div>
-              <div className="commandes-recu-date">
-                {new Date(commandeRecu.createdAt).toLocaleDateString('fr-FR', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </div>
-
-              <div className="commandes-recu-separateur" />
-
-              <div className="commandes-recu-champ">
-                <span>Client</span>
-                <span>{commandeRecu.client?.nom || '—'}</span>
-              </div>
-              <div className="commandes-recu-champ">
-                <span>Téléphone</span>
-                <span>{commandeRecu.client?.telephone || '—'}</span>
-              </div>
-              <div className="commandes-recu-champ">
-                <span>Adresse</span>
-                <span>{commandeRecu.client?.adresse || '—'}</span>
-              </div>
-
-              <div className="commandes-recu-separateur" />
-
-              {(commandeRecu.produits || []).map((p, i) => (
-                <div key={i} className="commandes-recu-ligne">
-                  <span>
-                    {nomProduit(p)} × {p.quantite}
-                  </span>
-                  <span>{(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F</span>
+                <div className="commandes-recu-date">
+                  {new Date(commandeRecu.createdAt).toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
                 </div>
-              ))}
 
-              <div className="commandes-recu-separateur" />
+                <div className="commandes-recu-separateur" />
 
-              <div className="commandes-recu-total">
-                <span>Total</span>
-                <span>{commandeRecu.total.toLocaleString('fr-FR')} F</span>
+                <div className="commandes-recu-champ">
+                  <span>Client</span>
+                  <span>{commandeRecu.client?.nom || '—'}</span>
+                </div>
+                <div className="commandes-recu-champ">
+                  <span>Téléphone</span>
+                  <span>{commandeRecu.client?.telephone || '—'}</span>
+                </div>
+                <div className="commandes-recu-champ">
+                  <span>Adresse</span>
+                  <span>{commandeRecu.client?.adresse || '—'}</span>
+                </div>
+
+                <div className="commandes-recu-separateur" />
+
+                {(commandeRecu.produits || []).map((p, i) => (
+                  <div key={i} className="commandes-recu-ligne">
+                    <span>
+                      {nomProduit(p)} × {p.quantite}
+                    </span>
+                    <span>{(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F</span>
+                  </div>
+                ))}
+
+                <div className="commandes-recu-separateur" />
+
+                <div className="commandes-recu-total">
+                  <span>Total</span>
+                  <span>{commandeRecu.total.toLocaleString('fr-FR')} F</span>
+                </div>
+
+                <div className="commandes-recu-merci">Merci pour votre commande !</div>
               </div>
 
-              <div className="commandes-recu-merci">Merci pour votre commande !</div>
+              <button className="commandes-modal-submit no-print" onClick={() => window.print()}>
+                <Printer size={16} style={{ marginRight: 6, verticalAlign: 'middle' }} />
+                Imprimer le reçu
+              </button>
             </div>
-
-            <button className="commandes-modal-submit no-print" onClick={() => window.print()}>
-              <Printer size={16} style={{ marginRight: 6, verticalAlign: 'middle' }} />
-              Imprimer le reçu
-            </button>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </AccesAbonnementRequis>
   );
 }
