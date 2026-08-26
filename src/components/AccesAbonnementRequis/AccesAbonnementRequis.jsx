@@ -8,7 +8,14 @@ function AccesAbonnementRequis({ children }) {
   const { commercant, chargement } = useCommercant();
   const navigate = useNavigate();
 
-  if (chargement || !commercant) return null;
+  // Pendant le chargement → on affiche un loader au lieu de null
+  if (chargement || !commercant) {
+    return (
+      <div className="verrou-abonnement" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p>Chargement...</p>
+      </div>
+    );
+  }
 
   const bloque = estAbonnementBloque(commercant);
 
