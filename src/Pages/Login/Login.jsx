@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { GOOGLE_CLIENT_ID } from '../../config';
+import { useCommercant } from '../../context/CommercantContext';
 import './Login.css';
 
 function Login() {
@@ -12,6 +13,7 @@ function Login() {
   const [chargement, setChargement] = useState(false);
   const navigate = useNavigate();
   const googleBtnRef = useRef(null);
+  const { rechargerCommercant } = useCommercant();
 
   const handleGoogleResponse = async (response) => {
     setErreur('');
@@ -28,6 +30,7 @@ function Login() {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('commercant', JSON.stringify(data));
+      await rechargerCommercant();
       navigate('/dashboard');
     } catch (err) {
       setErreur(err.message);
@@ -75,6 +78,7 @@ function Login() {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('commercant', JSON.stringify(data));
+      await rechargerCommercant();
 
       navigate('/dashboard');
     } catch (err) {
