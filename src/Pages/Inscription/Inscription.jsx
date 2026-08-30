@@ -111,7 +111,7 @@ function Inscription() {
             <input
               type="text"
               name="nomComplet"
-              placeholder="Votre nom"
+              placeholder=""
               value={formData.nomComplet}
               onChange={handleChange}
               required
@@ -122,7 +122,7 @@ function Inscription() {
             <input
               type="email"
               name="email"
-              placeholder="vous@exemple.com"
+              placeholder=""
               value={formData.email}
               onChange={handleChange}
               required
@@ -134,7 +134,7 @@ function Inscription() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="motDePasse"
-                placeholder="••••••••"
+                placeholder=""
                 value={formData.motDePasse}
                 onChange={handleChange}
                 required
@@ -156,7 +156,7 @@ function Inscription() {
             <input
               type="text"
               name="nomCommerce"
-              placeholder="Ex: Chez Rosine"
+              placeholder=""
               value={formData.nomCommerce}
               onChange={handleChange}
               required
@@ -167,7 +167,7 @@ function Inscription() {
             <input
               type="text"
               name="typeCommerce"
-              placeholder="Ex: Restaurant, Boutique..."
+              placeholder=""
               value={formData.typeCommerce}
               onChange={handleChange}
             />
@@ -177,7 +177,7 @@ function Inscription() {
             <input
               type="text"
               name="adresse"
-              placeholder="Adresse du commerce"
+              placeholder=""
               value={formData.adresse}
               onChange={handleChange}
             />
@@ -187,7 +187,7 @@ function Inscription() {
             <input
               type="tel"
               name="telephone"
-              placeholder="+229 ..."
+              placeholder=""
               value={formData.telephone}
               onChange={handleChange}
             />

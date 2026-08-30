@@ -10,7 +10,7 @@ function Hero() {
           <div className="hero-col-text">
             <span className="hero-badge">
               <span className="hero-badge-dot" aria-hidden="true" />
-              Fait pour les commerçants africains
+              Simplifie le quotidien des commerçants
             </span>
 
             <h1 className="hero-title">
