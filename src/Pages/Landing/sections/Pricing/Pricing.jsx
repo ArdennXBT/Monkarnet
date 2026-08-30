@@ -7,7 +7,7 @@ const plans = [
   {
     name: "Mensuel",
     text: "Facturé chaque mois. Idéal pour tester Orbizo à votre rythme.",
-    price: "4 200",
+    price: "6,99 $",
     period: "/ mois",
     oldPrice: null,
     note: null,
@@ -24,9 +24,9 @@ const plans = [
   {
     name: "Annuel",
     text: "Payez une fois par an et oubliez la facturation mensuelle.",
-    price: "30 240",
+    price: "49,99 $",
     period: "/ an",
-    oldPrice: "50 400 F",
+    oldPrice: "84 $",
     note: "soit 40% d'économie",
     button: "Choisir l'abonnement annuel",
     link: "/inscription?plan=annuel",
@@ -36,7 +36,7 @@ const plans = [
       "Essai gratuit de 14 jours inclus",
       "Dashboard, commandes, produits et clients",
       "Jusqu'à 5 sous-comptes",
-      "20 160 F d'économie sur l'année",
+      "34 $ d'économie sur l'année",
     ],
   },
 ];
@@ -83,7 +83,7 @@ export default function Pricing() {
                 <p className="pricing-plan-text">{plan.text}</p>
 
                 <div className="pricing-price-row">
-                  <span className="pricing-price">{plan.price} F</span>
+                  <span className="pricing-price">{plan.price}</span>
                   <span className="pricing-period">{plan.period}</span>
                 </div>
 
