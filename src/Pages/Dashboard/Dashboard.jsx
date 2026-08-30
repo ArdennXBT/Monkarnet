@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp, ShoppingCart, Package } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { TrendingUp, ShoppingCart, Package, Wallet, Plus } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import './Dashboard.css';
 
@@ -20,6 +21,7 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [periode, setPeriode] = useState('Jour');
   const [stats, setStats] = useState(null);
   const [chartData, setChartData] = useState([]);
@@ -83,6 +85,17 @@ function Dashboard() {
         </div>
       </div>
 
+      <div className="dashboard-quick-actions">
+        <button className="dashboard-quick-btn" onClick={() => navigate('/produits')}>
+          <Plus size={16} />
+          Ajouter un produit
+        </button>
+        <button className="dashboard-quick-btn dashboard-quick-btn-outline" onClick={() => navigate('/commandes')}>
+          <Plus size={16} />
+          Créer une commande
+        </button>
+      </div>
+
       {erreur && <p className="dashboard-error">{erreur}</p>}
 
       {chargement || !stats ? (
@@ -94,6 +107,12 @@ function Dashboard() {
               <TrendingUp size={22} />
               <p className="dashboard-card-label">CA {periode.toLowerCase()}</p>
               <p className="dashboard-card-value">{donneesPeriode.totalCA.toLocaleString('fr-FR')} F</p>
+            </div>
+
+            <div className="dashboard-card dashboard-card-gradient-4">
+              <Wallet size={22} />
+              <p className="dashboard-card-label">Bénéfice {periode.toLowerCase()}</p>
+              <p className="dashboard-card-value">{(donneesPeriode.totalBenefice || 0).toLocaleString('fr-FR')} F</p>
             </div>
 
             <div className="dashboard-card dashboard-card-gradient-2">

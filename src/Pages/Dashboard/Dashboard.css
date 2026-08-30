@@ -48,8 +48,41 @@
 
 .dashboard-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--spacing-md);
+}
+
+.dashboard-quick-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.dashboard-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.dashboard-quick-btn:hover {
+  opacity: 0.9;
+}
+
+.dashboard-quick-btn-outline {
+  background-color: var(--color-white);
+  color: var(--color-navy);
+  border: 1px solid var(--color-border);
 }
 
 .dashboard-card {
@@ -89,6 +122,16 @@
 .dashboard-card-gradient-3 .dashboard-top-produit-icon {
   background-color: rgba(18, 32, 61, 0.15);
   color: var(--app-accent-text);
+}
+
+.dashboard-card-gradient-4 {
+  background: linear-gradient(135deg, #16A34A 0%, #0F7A38 100%);
+  color: rgba(255,255,255,0.85);
+  box-shadow: 0 12px 28px rgba(22, 163, 74, 0.3);
+}
+
+.dashboard-card-gradient-4 .dashboard-card-value {
+  color: var(--color-white);
 }
 
 .dashboard-card-label {
@@ -297,8 +340,17 @@
   }
 
   .dashboard-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px;
+  }
+
+  .dashboard-quick-actions {
+    flex-direction: column;
+  }
+
+  .dashboard-quick-btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .dashboard-card {
