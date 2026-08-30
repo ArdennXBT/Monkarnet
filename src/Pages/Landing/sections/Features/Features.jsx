@@ -53,7 +53,7 @@ const features = [
     title: "Votre équipe, avec les bons accès.",
     text: "Invitez votre comptable ou vos vendeurs, attribuez-leur un rôle, et gardez le contrôle total sur qui voit quoi.",
     points: [
-      "Jusqu'à 5 sous-comptes par commerce",
+      "Jusqu'à 3 sous-comptes par commerce",
       "Rôles personnalisés (vendeur, comptable...)",
       "Modification ou suppression d'un accès à tout moment",
     ],

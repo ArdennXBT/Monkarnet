@@ -173,7 +173,7 @@ function Abonnement() {
             </li>
             <li>
               <CheckCircle2 size={16} strokeWidth={2} />
-              <span>Jusqu'à 5 sous-comptes</span>
+              <span>Jusqu'à 3 sous-comptes</span>
             </li>
             <li>
               <CheckCircle2 size={16} strokeWidth={2} />
@@ -211,7 +211,7 @@ function Abonnement() {
             </li>
             <li>
               <CheckCircle2 size={16} strokeWidth={2} />
-              <span>Jusqu'à 5 sous-comptes</span>
+              <span>Jusqu'à 3 sous-comptes</span>
             </li>
             <li>
               <CheckCircle2 size={16} strokeWidth={2} />

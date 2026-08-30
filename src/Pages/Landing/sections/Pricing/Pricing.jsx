@@ -17,7 +17,7 @@ const plans = [
     points: [
       "Essai gratuit de 14 jours inclus",
       "Dashboard, commandes, produits et clients",
-      "Jusqu'à 5 sous-comptes",
+      "Jusqu'à 3 sous-comptes",
       "Résiliation possible à tout moment",
     ],
   },
@@ -35,7 +35,7 @@ const plans = [
     points: [
       "Essai gratuit de 14 jours inclus",
       "Dashboard, commandes, produits et clients",
-      "Jusqu'à 5 sous-comptes",
+      "Jusqu'à 3 sous-comptes",
       "34 $ d'économie sur l'année",
     ],
   },
