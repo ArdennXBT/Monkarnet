@@ -4,18 +4,33 @@ import { useCommercant } from '../../context/CommercantContext';
 import './Sidebar.css';
 
 const menuItems = [
-  { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-  { label: 'Commandes', icon: ShoppingCart, path: '/commandes' },
-  { label: 'Produits', icon: Package, path: '/produits' },
-  { label: 'Clients', icon: Users, path: '/clients' },
-  { label: 'Sous-comptes', icon: UserCog, path: '/sous-comptes' },
-  { label: 'Profil', icon: User, path: '/profil' },
-  { label: 'Abonnement', icon: CreditCard, path: '/abonnement' },
+  { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard', pageKey: 'dashboard' },
+  { label: 'Commandes', icon: ShoppingCart, path: '/commandes', pageKey: 'commandes' },
+  { label: 'Produits', icon: Package, path: '/produits', pageKey: 'produits' },
+  { label: 'Clients', icon: Users, path: '/clients', pageKey: 'clients' },
+  { label: 'Sous-comptes', icon: UserCog, path: '/sous-comptes', pageKey: null },
+  { label: 'Profil', icon: User, path: '/profil', pageKey: null },
+  { label: 'Abonnement', icon: CreditCard, path: '/abonnement', pageKey: null },
 ];
+
+// Liens réservés au compte principal (jamais affichés à un sous-compte)
+const LIENS_RESERVES_AU_PRINCIPAL = ['/sous-comptes', '/abonnement'];
 
 function Sidebar({ ouverte, onFermer }) {
   const navigate = useNavigate();
   const { commercant } = useCommercant();
+
+  const estSousCompte = commercant?.role === 'sous-compte';
+
+  const liensVisibles = menuItems.filter((item) => {
+    if (estSousCompte) {
+      if (LIENS_RESERVES_AU_PRINCIPAL.includes(item.path)) return false;
+      // Le Profil reste toujours accessible ; les autres pages dépendent des permissions
+      if (item.pageKey === null) return true;
+      return commercant?.pagesAutorisees?.includes(item.pageKey);
+    }
+    return true;
+  });
 
   const handleDeconnexion = () => {
     localStorage.removeItem('token');
@@ -38,7 +53,7 @@ function Sidebar({ ouverte, onFermer }) {
         </button>
       </div>
       <nav className="sidebar-nav">
-        {menuItems.map((item) => {
+        {liensVisibles.map((item) => {
           const Icon = item.icon;
           return (
             <Link key={item.path} to={item.path} className="sidebar-link" onClick={onFermer}>

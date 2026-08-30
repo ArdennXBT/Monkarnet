@@ -13,8 +13,16 @@ const ROLES = {
   livreur: { label: 'Livreur', className: 'role-livreur' },
 };
 
-// Nombre max de sous-comptes selon le plan (à brancher sur le plan réel plus tard)
-const MAX_SOUS_COMPTES = 5;
+// Pages disponibles pour un sous-compte — facile à étendre plus tard
+const PAGES = {
+  dashboard: 'Dashboard',
+  commandes: 'Commandes',
+  produits: 'Produits',
+  clients: 'Clients',
+};
+
+// Nombre max de sous-comptes selon le plan
+const MAX_SOUS_COMPTES = 3;
 
 function formatDate(dateStr) {
   if (!dateStr) return 'Jamais connecté';
@@ -35,6 +43,7 @@ function SousComptes() {
     email: '',
     motDePasse: '',
     roleSousCompte: 'vendeur',
+    pagesAutorisees: ['dashboard'],
   });
 
   const token = localStorage.getItem('token');
@@ -65,10 +74,22 @@ function SousComptes() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const togglePage = (pageKey) => {
+    setFormData((prev) => {
+      const dejaCoche = prev.pagesAutorisees.includes(pageKey);
+      return {
+        ...prev,
+        pagesAutorisees: dejaCoche
+          ? prev.pagesAutorisees.filter((p) => p !== pageKey)
+          : [...prev.pagesAutorisees, pageKey],
+      };
+    });
+  };
+
   const ouvrirModalCreation = () => {
     setModeEdition(false);
     setCompteEnEdition(null);
-    setFormData({ nomComplet: '', email: '', motDePasse: '', roleSousCompte: 'vendeur' });
+    setFormData({ nomComplet: '', email: '', motDePasse: '', roleSousCompte: 'vendeur', pagesAutorisees: ['dashboard'] });
     setModalOuvert(true);
   };
 
@@ -80,6 +101,9 @@ function SousComptes() {
       email: compte.email,
       motDePasse: '',
       roleSousCompte: compte.roleSousCompte || 'vendeur',
+      pagesAutorisees: compte.pagesAutorisees && compte.pagesAutorisees.length > 0
+        ? compte.pagesAutorisees
+        : ['dashboard'],
     });
     setModalOuvert(true);
   };
@@ -115,7 +139,7 @@ function SousComptes() {
       }
 
       setModalOuvert(false);
-      setFormData({ nomComplet: '', email: '', motDePasse: '', roleSousCompte: 'vendeur' });
+      setFormData({ nomComplet: '', email: '', motDePasse: '', roleSousCompte: 'vendeur', pagesAutorisees: ['dashboard'] });
     } catch (err) {
       setErreur(err.message);
     }
@@ -311,6 +335,21 @@ function SousComptes() {
                     placeholder={modeEdition ? 'Laisser vide pour ne pas changer' : ''}
                   />
                 </label>
+                <div className="souscomptes-pages-field">
+                  <span>Pages visibles pour ce compte</span>
+                  <div className="souscomptes-pages-checkboxes">
+                    {Object.entries(PAGES).map(([key, label]) => (
+                      <label key={key} className="souscomptes-page-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={formData.pagesAutorisees.includes(key)}
+                          onChange={() => togglePage(key)}
+                        />
+                        {label}
+                      </label>
+                    ))}
+                  </div>
+                </div>
                 <button type="submit" className="souscomptes-modal-submit">
                   {modeEdition ? 'Enregistrer les modifications' : 'Créer le sous-compte'}
                 </button>
