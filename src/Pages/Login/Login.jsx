@@ -109,7 +109,7 @@ function Login() {
             Email
             <input
               type="email"
-              placeholder="vous@exemple.com"
+              placeholder=""
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -120,7 +120,7 @@ function Login() {
             <div className="login-password-wrapper">
               <input
                 type={showPassword ? 'text' : 'password'}
-                placeholder="••••••••"
+                placeholder=""
                 value={motDePasse}
                 onChange={(e) => setMotDePasse(e.target.value)}
                 required
