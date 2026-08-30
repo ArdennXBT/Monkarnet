@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TrendingUp, ShoppingCart, Package, Wallet, Plus } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { TrendingUp, ShoppingCart, Wallet, ChevronDown } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import './Dashboard.css';
 
-const periodes = ['Jour', 'Semaine', 'Mois', 'Année'];
-const periodeCles = { Jour: 'jour', Semaine: 'semaine', Mois: 'mois', Année: 'annee' };
+const periodeCles = {
+  Jour: 'jour',
+  Semaine: 'semaine',
+  Mois: 'mois',
+  Année: 'annee',
+};
 
 function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
@@ -21,22 +24,35 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 function Dashboard() {
-  const navigate = useNavigate();
-  const [periode, setPeriode] = useState('Jour');
+  const [periode, setPeriode] = useState('jour');
+  const [periodeLabel, setPeriodeLabel] = useState('Jour');
+  const [showPeriodeMenu, setShowPeriodeMenu] = useState(false);
   const [stats, setStats] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
+  const menuRef = useRef(null);
 
   const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setShowPeriodeMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const chargerStats = async () => {
     try {
+      setChargement(true);
       const [resStats, resChart] = await Promise.all([
         fetch('https://monkarnet-backend.onrender.com/api/stats', {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`https://monkarnet-backend.onrender.com/api/stats/chart?periode=${periodeCles[periode]}`, {
+        fetch(`https://monkarnet-backend.onrender.com/api/stats/chart?periode=${periode}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -58,42 +74,46 @@ function Dashboard() {
 
   useEffect(() => {
     chargerStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [periode]);
 
-  const donneesPeriode = stats ? stats[periodeCles[periode]] : null;
-  const topProduit = stats?.topProduit;
+  const donneesPeriode = stats ? stats[periode] : null;
 
   return (
     <div className="dashboard">
+      {/* HEADER */}
       <div className="dashboard-header">
         <div>
           <h1 className="dashboard-title">Tableau de bord</h1>
           <p className="dashboard-subtitle">Vue d'ensemble de votre activité.</p>
         </div>
 
-        <div className="dashboard-periode-switch">
-          {periodes.map((p) => (
-            <button
-              key={p}
-              className={`dashboard-periode-btn ${periode === p ? 'dashboard-periode-active' : ''}`}
-              onClick={() => setPeriode(p)}
-            >
-              {p}
-            </button>
-          ))}
-        </div>
-      </div>
+        <div className="dashboard-periode-dropdown" ref={menuRef}>
+          <button
+            className="dashboard-periode-trigger"
+            onClick={() => setShowPeriodeMenu(!showPeriodeMenu)}
+          >
+            <span>{periodeLabel}</span>
+            <ChevronDown size={14} className={showPeriodeMenu ? 'rotated' : ''} />
+          </button>
 
-      <div className="dashboard-quick-actions">
-        <button className="dashboard-quick-btn" onClick={() => navigate('/produits')}>
-          <Plus size={16} />
-          Ajouter un produit
-        </button>
-        <button className="dashboard-quick-btn dashboard-quick-btn-outline" onClick={() => navigate('/commandes')}>
-          <Plus size={16} />
-          Créer une commande
-        </button>
+          {showPeriodeMenu && (
+            <div className="dashboard-periode-menu">
+              {['Jour', 'Semaine', 'Mois', 'Année'].map((p) => (
+                <button
+                  key={p}
+                  className={`dashboard-periode-option ${periodeLabel === p ? 'active' : ''}`}
+                  onClick={() => {
+                    setPeriodeLabel(p);
+                    setPeriode(periodeCles[p]);
+                    setShowPeriodeMenu(false);
+                  }}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {erreur && <p className="dashboard-error">{erreur}</p>}
@@ -102,57 +122,52 @@ function Dashboard() {
         <p className="dashboard-loading">Chargement...</p>
       ) : (
         <>
+          {/* 3 CARTES */}
           <div className="dashboard-stats">
             <div className="dashboard-card dashboard-card-gradient-1">
-              <TrendingUp size={22} />
-              <p className="dashboard-card-label">CA {periode.toLowerCase()}</p>
-              <p className="dashboard-card-value">{donneesPeriode.totalCA.toLocaleString('fr-FR')} F</p>
+              <div className="dashboard-card-icon">
+                <TrendingUp size={18} />
+              </div>
+              <p className="dashboard-card-label">CA {periodeLabel.toLowerCase()}</p>
+              <p className="dashboard-card-value">
+                {(donneesPeriode?.totalCA || 0).toLocaleString('fr-FR')} F
+              </p>
             </div>
 
             <div className="dashboard-card dashboard-card-gradient-4">
-              <Wallet size={22} />
-              <p className="dashboard-card-label">Bénéfice {periode.toLowerCase()}</p>
-              <p className="dashboard-card-value">{(donneesPeriode.totalBenefice || 0).toLocaleString('fr-FR')} F</p>
+              <div className="dashboard-card-icon">
+                <Wallet size={18} />
+              </div>
+              <p className="dashboard-card-label">Bénéfice</p>
+              <p className="dashboard-card-value">
+                {(donneesPeriode?.totalBenefice || 0).toLocaleString('fr-FR')} F
+              </p>
             </div>
 
             <div className="dashboard-card dashboard-card-gradient-2">
-              <ShoppingCart size={22} />
+              <div className="dashboard-card-icon">
+                <ShoppingCart size={18} />
+              </div>
               <p className="dashboard-card-label">Commandes</p>
-              <p className="dashboard-card-value">{donneesPeriode.nombreCommandes}</p>
-            </div>
-
-            <div className="dashboard-card dashboard-card-gradient-3 dashboard-card-top-produit">
-              {topProduit ? (
-                <>
-                  {topProduit.image ? (
-                    <img src={topProduit.image} alt={topProduit.nom} className="dashboard-top-produit-img" />
-                  ) : (
-                    <div className="dashboard-top-produit-icon">
-                      <Package size={20} />
-                    </div>
-                  )}
-                  <div className="dashboard-top-produit-info">
-                    <p className="dashboard-card-label">Top produit du mois</p>
-                    <p className="dashboard-top-produit-nom">{topProduit.nom}</p>
-                    <p className="dashboard-top-produit-quantite">{topProduit.quantiteVendue} vendu{topProduit.quantiteVendue > 1 ? 's' : ''}</p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Package size={22} />
-                  <p className="dashboard-card-label">Top produit</p>
-                  <p className="dashboard-card-value-small">Aucune vente ce mois</p>
-                </>
-              )}
+              <p className="dashboard-card-value">
+                {donneesPeriode?.nombreCommandes || 0}
+              </p>
             </div>
           </div>
 
+          {/* GRAPHIQUE */}
           <div className="dashboard-chart-card">
             <div className="dashboard-chart-header">
-              <p className="dashboard-chart-title">Évolution — {periode}</p>
+              <p className="dashboard-chart-title">Évolution — {periodeLabel}</p>
               <div className="dashboard-chart-legend">
-                <span className="dashboard-legend-item"><span className="dashboard-legend-dot dashboard-legend-dot-ca"></span> Chiffre d'affaires</span>
-                <span className="dashboard-legend-item"><span className="dashboard-legend-dot dashboard-legend-dot-commandes"></span> Commandes</span>
+                <span className="dashboard-legend-item">
+                  <span className="dashboard-legend-dot dashboard-legend-dot-ca"></span>
+                  Chiffre d'affaires
+                </span>
+                <span className="dashboard-legend-item">
+                  <span className="dashboard-legend-dot dashboard-legend-dot-commandes"></span>
+                  Commandes
+                </span>
               </div>
             </div>
 
@@ -160,17 +175,26 @@ function Dashboard() {
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorCa" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2F5FEA" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#2F5FEA" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#2F5FEA" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#2F5FEA" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorCommandes" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#16A34A" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#16A34A" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#16A34A" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#16A34A" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E9E7DF" vertical={false} />
-                <XAxis dataKey="label" tick={{ fontSize: 12, fill: '#5F5E5A' }} axisLine={{ stroke: '#E9E7DF' }} tickLine={false} />
-                <YAxis tick={{ fontSize: 12, fill: '#5F5E5A' }} axisLine={false} tickLine={false} />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 12, fill: '#5F5E5A' }}
+                  axisLine={{ stroke: '#E9E7DF' }}
+                  tickLine={false}
+                />
+                <YAxis
+                  tick={{ fontSize: 12, fill: '#5F5E5A' }}
+                  axisLine={false}
+                  tickLine={false}
+                />
                 <Tooltip content={<CustomTooltip />} />
                 <Area type="monotone" dataKey="ca" stroke="#2F5FEA" strokeWidth={2.5} fill="url(#colorCa)" />
                 <Area type="monotone" dataKey="commandes" stroke="#16A34A" strokeWidth={2.5} fill="url(#colorCommandes)" />
