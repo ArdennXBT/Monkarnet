@@ -47,12 +47,12 @@
 }
 
 .clients-tab:hover {
-  border-color: var(--color-blue);
+  border-color: var(--color-text);
 }
 
 .clients-tab.active {
-  background-color: var(--color-blue);
-  border-color: var(--color-blue);
+  background-color: var(--color-text);
+  border-color: var(--color-text);
   color: var(--color-white);
 }
 
@@ -208,7 +208,7 @@
 }
 
 .clients-card.ouverte {
-  border-color: var(--color-blue);
+  border-color: var(--color-text);
 }
 
 /* Le header est un <button> qui déplie/replie la carte */
@@ -230,7 +230,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: var(--color-blue);
+  background-color: var(--color-text);
   color: var(--color-white);
   display: flex;
   align-items: center;
@@ -328,7 +328,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-blue);
+  background-color: var(--color-text);
   color: var(--color-white);
   flex-shrink: 0;
   transition: opacity 0.15s ease;

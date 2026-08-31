@@ -1,8 +1,8 @@
 .sidebar {
   width: 220px;
   height: 100vh;
-  background-color: var(--color-white);
-  border-right: 1px solid var(--color-border);
+  background-color: var(--color-text);
+  border-right: none;
   display: flex;
   flex-direction: column;
   padding: var(--spacing-lg) var(--spacing-md);
@@ -22,6 +22,9 @@
   align-items: center;
   text-decoration: none;
   line-height: 0;
+  background-color: var(--color-white);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
 }
 
 .sidebar-logo-full {
@@ -36,7 +39,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .sidebar-nav {
@@ -54,15 +57,26 @@
   gap: var(--spacing-sm);
   padding: 10px 12px;
   border-radius: var(--radius-sm);
-  color: var(--color-blue);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 600;
   text-decoration: none;
   font-size: 14px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-link svg {
+  color: currentColor;
+  flex-shrink: 0;
 }
 
 .sidebar-link:hover {
-  background-color: var(--color-green-light);
-  color: var(--color-green);
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.sidebar-link-actif {
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 @media (max-width: 768px) {
@@ -90,30 +104,30 @@
   border: none;
   width: 100%;
   cursor: pointer;
-  color: #B3261E;
+  color: #FF6B5E;
   font-family: var(--font-main);
   margin-top: var(--spacing-sm);
   padding-top: 10px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 0;
 }
 
 .sidebar-logout-btn:hover {
-  background-color: #FDECEA;
-  color: #B3261E;
+  background-color: rgba(255, 107, 94, 0.15);
+  color: #FF6B5E;
 }
 
 .sidebar-superadmin-link {
-  color: var(--app-accent-text, #7A5B00);
-  background-color: rgba(245, 197, 24, 0.12);
+  color: var(--color-accent);
+  background-color: rgba(166, 255, 77, 0.12);
   margin-top: 4px;
 }
 
 .sidebar-superadmin-link svg {
-  color: #C9960C;
+  color: var(--color-accent);
 }
 
 .sidebar-superadmin-link:hover {
-  background-color: rgba(245, 197, 24, 0.2);
-  color: var(--app-accent-text, #7A5B00);
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
 }

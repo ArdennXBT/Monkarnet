@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, ShoppingCart, Package, Users, UserCog, User, CreditCard, X, LogOut, ShieldCheck } from 'lucide-react';
 import { useCommercant } from '../../context/CommercantContext';
 import './Sidebar.css';
@@ -56,18 +56,27 @@ function Sidebar({ ouverte, onFermer }) {
         {liensVisibles.map((item) => {
           const Icon = item.icon;
           return (
-            <Link key={item.path} to={item.path} className="sidebar-link" onClick={onFermer}>
-              <Icon size={20} color="var(--color-blue)" />
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) => `sidebar-link${isActive ? ' sidebar-link-actif' : ''}`}
+              onClick={onFermer}
+            >
+              <Icon size={20} />
               <span>{item.label}</span>
-            </Link>
+            </NavLink>
           );
         })}
 
         {commercant?.role === 'superadmin' && (
-          <Link to="/admin/dashboard" className="sidebar-link sidebar-superadmin-link" onClick={onFermer}>
+          <NavLink
+            to="/admin/dashboard"
+            className={({ isActive }) => `sidebar-link sidebar-superadmin-link${isActive ? ' sidebar-link-actif' : ''}`}
+            onClick={onFermer}
+          >
             <ShieldCheck size={20} />
             <span>Espace SuperAdmin</span>
-          </Link>
+          </NavLink>
         )}
 
         <button className="sidebar-link sidebar-logout-btn" onClick={handleDeconnexion}>

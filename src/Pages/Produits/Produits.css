@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: var(--color-blue);
+  background-color: var(--color-text);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
@@ -135,12 +135,12 @@
 }
 
 .produits-categorie-chip:hover {
-  border-color: var(--color-navy);
+  border-color: var(--color-text);
 }
 
 .produits-categorie-chip.active {
-  background-color: var(--color-navy);
-  border-color: var(--color-navy);
+  background-color: var(--color-text);
+  border-color: var(--color-text);
   color: var(--color-white);
 }
 
@@ -165,8 +165,8 @@
 }
 
 .produits-categorie-manage-btn:hover {
-  border-color: var(--color-navy);
-  color: var(--color-navy);
+  border-color: var(--color-text);
+  color: var(--color-text);
   background-color: rgba(0, 0, 0, 0.02);
 }
 
@@ -324,7 +324,7 @@
 }
 
 .produits-card-row.prix-vente strong {
-  color: var(--color-navy);
+  color: var(--color-text);
   font-size: 14px;
 }
 
@@ -416,8 +416,8 @@
 }
 
 .produits-reset-btn:hover {
-  border-color: var(--color-navy);
-  color: var(--color-navy);
+  border-color: var(--color-text);
+  color: var(--color-text);
 }
 
 /* --- Modal ajout / édition --- */
@@ -496,11 +496,11 @@
 .produits-modal-form textarea:focus,
 .produits-modal-form select:focus {
   outline: none;
-  border-color: var(--color-navy);
+  border-color: var(--color-text);
 }
 
 .produits-modal-submit {
-  background-color: var(--color-navy);
+  background-color: var(--color-text);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
@@ -705,8 +705,8 @@
 }
 
 .produits-categorie-checkbox-box.checked {
-  background-color: var(--color-navy);
-  border-color: var(--color-navy);
+  background-color: var(--color-text);
+  border-color: var(--color-text);
 }
 
 .produits-categorie-supprimer-btn {
@@ -746,7 +746,7 @@
 
 .produits-categorie-form input:focus {
   outline: none;
-  border-color: var(--color-navy);
+  border-color: var(--color-text);
 }
 
 .produits-categorie-form button {
@@ -755,7 +755,7 @@
   height: 40px;
   border-radius: var(--radius-sm);
   border: none;
-  background-color: var(--color-navy);
+  background-color: var(--color-text);
   color: var(--color-white);
   display: flex;
   align-items: center;

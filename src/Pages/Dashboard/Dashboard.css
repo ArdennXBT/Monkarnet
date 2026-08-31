@@ -76,8 +76,8 @@
 }
 
 .dashboard-periode-option.active {
-  background: var(--app-accent);
-  color: var(--app-accent-text);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 500;
 }
 
@@ -92,7 +92,7 @@
 .dashboard-card {
   border-radius: 12px;
   padding: 16px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-accent-text);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -101,34 +101,35 @@
 
 .dashboard-card-icon {
   margin-bottom: 8px;
-  opacity: 0.9;
+  opacity: 1;
+  color: var(--color-accent-text);
 }
 
 .dashboard-card-label {
   font-size: 13px;
   margin: 0 0 4px;
-  opacity: 0.9;
+  opacity: 0.7;
 }
 
 .dashboard-card-value {
   font-size: 20px;
   font-weight: 600;
   margin: 0;
-  color: white;
+  color: var(--color-accent-text);
 }
 
 /* Même couleur pour les 3 cartes */
 .dashboard-card-gradient-1,
 .dashboard-card-gradient-2,
 .dashboard-card-gradient-4 {
-  background: linear-gradient(135deg, #003d91 0%, #002a66 100%);
-  box-shadow: 0 6px 16px rgba(0, 61, 145, 0.25);
+  background: var(--color-accent);
+  box-shadow: 0 6px 16px rgba(166, 255, 77, 0.35);
 }
 
 /* ========== GRAPHIQUE ========== */
 .dashboard-chart-card {
-  background: white;
-  border: 1px solid var(--color-border);
+  background: var(--color-bg-page);
+  border: none;
   border-radius: 12px;
   padding: 20px;
 }

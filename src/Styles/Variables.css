@@ -1,4 +1,3 @@
-
 :root {
   /* Couleurs principales */
   --color-green: #1A3A2A;
@@ -12,10 +11,15 @@
 
   /* Neutres */
   --color-white: #FFFFFF;
-  --color-bg-page: #F7F9FE;
-  --color-text: #1A1A18;
-  --color-text-secondary: #5F5E5A;
-  --color-border: #E9E7DF;
+  --color-bg-page: #F1F0EC;
+  --color-text: #141310;
+  --color-text-secondary: #5A5A55;
+  --color-border: #E2E0D8;
+
+  /* Accent (nouvelle charte) */
+  --color-accent: #A6FF4D;
+  --color-accent-text: #141310;
+  --color-accent-soft: rgba(166, 255, 77, 0.25);
 
   /* Rayons de bordure */
   --radius-sm: 8px;
