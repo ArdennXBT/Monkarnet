@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F5F6F8;
+  background-color: var(--color-bg-page);
   padding: var(--spacing-lg) var(--spacing-md);
 }
 
@@ -13,13 +13,13 @@
   padding: var(--spacing-lg);
   width: 420px;
   max-width: 100%;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 24px rgba(20, 19, 16, 0.08);
 }
 
 .reset-mdp-logo {
   font-size: 22px;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-text);
   display: block;
   margin-bottom: var(--spacing-md);
   text-align: center;
@@ -55,7 +55,7 @@
 }
 
 .reset-mdp-success {
-  background-color: #E6F4EA;
+  background-color: var(--color-accent-soft);
   color: #1E7E34;
   font-size: 13px;
   padding: 10px 12px;
@@ -89,7 +89,7 @@
 
 .reset-mdp-form input:focus {
   outline: none;
-  border-color: var(--color-navy);
+  border-color: var(--color-accent);
 }
 
 .reset-mdp-password-wrapper {
@@ -109,7 +109,7 @@
 }
 
 .reset-mdp-submit {
-  background-color: var(--color-navy);
+  background-color: var(--color-text);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
@@ -118,6 +118,12 @@
   font-weight: 600;
   font-family: var(--font-main);
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.reset-mdp-submit:hover:not(:disabled) {
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .reset-mdp-submit:disabled {

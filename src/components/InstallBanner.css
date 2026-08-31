@@ -6,12 +6,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: #ffffff;
-  border: 1px solid #e5e9f0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 14px 16px;
   max-width: 320px;
-  box-shadow: 0 10px 26px rgba(0, 61, 145, 0.1);
+  box-shadow: 0 10px 26px rgba(20, 19, 16, 0.12);
   animation: install-banner-in 0.35s ease;
 }
 
@@ -47,7 +47,7 @@
   right: 10px;
   background: none;
   border: none;
-  color: #b0b6c2;
+  color: var(--color-text-secondary);
   font-size: 13px;
   cursor: pointer;
   line-height: 1;
@@ -55,14 +55,14 @@
 }
 
 .install-banner-close:hover {
-  color: #4a5568;
+  color: var(--color-text);
 }
 
 .install-banner-icon {
   flex-shrink: 0;
   width: 38px;
   height: 38px;
-  background-color: #f0f5ff;
+  background-color: var(--color-accent-soft);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -72,7 +72,7 @@
 .install-banner-text {
   flex: 1;
   min-width: 0;
-  color: #0a0a0a;
+  color: var(--color-text);
   font-size: 13.5px;
   font-weight: 600;
   line-height: 1.4;
@@ -81,22 +81,23 @@
 
 .install-banner-btn {
   flex-shrink: 0;
-  background-color: #003d91;
-  color: #ffffff;
+  background-color: var(--color-text);
+  color: var(--color-white);
   font-size: 13px;
   font-weight: 700;
   border: none;
   border-radius: 999px;
   padding: 9px 16px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   white-space: nowrap;
 }
 
 .install-banner-btn:hover {
-  background-color: #002a68;
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0, 61, 145, 0.25);
+  box-shadow: 0 8px 18px rgba(166, 255, 77, 0.35);
 }
 
 /* Tablette : on garde à droite mais on réduit la largeur */

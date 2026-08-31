@@ -58,9 +58,10 @@ function InstallBanner() {
         ✕
       </button>
       <div className="install-banner-icon">
+        
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"
-            stroke="#003d91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"
+          stroke="#141310" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
       <p className="install-banner-text">
