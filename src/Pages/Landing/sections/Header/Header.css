@@ -1,9 +1,16 @@
 .header-section {
+  --hd-black: #141310;
+  --hd-green: #A6FF4D;
+  --hd-white: #FFFFFF;
+  --hd-bg: #F1F0EC;
+  --hd-border: #E2E0D8;
+  --hd-ash: #5A5A55;
+
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(0, 61, 145, 0.008);
-  border-bottom: 1px solid rgba(0, 61, 145, 0.02);
+  background-color: var(--hd-bg);
+  border-bottom: 1px solid var(--hd-border);
 }
 
 .header-container {
@@ -36,7 +43,7 @@
 .header-logo-text {
   font-size: 20px;
   font-weight: 700;
-  color: #003d91;
+  color: var(--hd-black);
 }
 
 /* Nav desktop */
@@ -47,7 +54,7 @@
 }
 
 .header-nav-desktop a {
-  color: #1a2b4a;
+  color: var(--hd-ash);
   font-size: 15px;
   font-weight: 500;
   text-decoration: none;
@@ -55,7 +62,7 @@
 }
 
 .header-nav-desktop a:hover {
-  color: #003d91;
+  color: var(--hd-black);
 }
 
 /* Actions desktop */
@@ -66,7 +73,7 @@
 }
 
 .header-login-btn {
-  color: #003d91;
+  color: var(--hd-black);
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
@@ -83,7 +90,7 @@
   display: none;
   background: none;
   border: none;
-  color: #003d91;
+  color: var(--hd-black);
   cursor: pointer;
   padding: 4px;
 }
@@ -93,7 +100,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(0, 20, 50, 0.4);
+  background: rgba(20, 19, 16, 0.45);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -109,14 +116,14 @@
   top: 0;
   right: 0;
   width: min(240px, 75vw);
-  background-color: #ffffff;
+  background-color: var(--hd-white);
   padding: 14px 18px 20px;
   display: flex;
   flex-direction: column;
   border-radius: 0 0 0 16px;
   transform: translateX(100%);
   transition: transform 0.3s ease;
-  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.12);
+  box-shadow: -8px 0 30px rgba(20, 19, 16, 0.15);
 }
 
 .header-mobile-overlay-open .header-mobile-panel {
@@ -129,7 +136,7 @@
   justify-content: space-between;
   margin-bottom: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #f0f2f6;
+  border-bottom: 1px solid var(--hd-border);
 }
 
 .header-mobile-top .header-logo-text {
@@ -145,7 +152,7 @@
 .header-close-btn {
   background: none;
   border: none;
-  color: #4a5568;
+  color: var(--hd-black);
   cursor: pointer;
   padding: 2px;
 }
@@ -157,7 +164,7 @@
 }
 
 .header-nav-mobile a {
-  color: #4a5568;
+  color: var(--hd-ash);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
@@ -167,14 +174,14 @@
 .header-mobile-actions {
   margin-top: 16px;
   padding-top: 12px;
-  border-top: 1px solid #f0f2f6;
+  border-top: 1px solid var(--hd-border);
 }
 
 .header-login-link-mobile {
   display: block;
-  color: #4a5568;
+  color: var(--hd-black);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   padding: 10px 2px;
 }

@@ -24,7 +24,7 @@ function FinalCta() {
 
           <Reveal delay={200}>
             <p className="final-cta-subtitle">
-              Essai gratuit de 14 jours, sans carte bancaire. Aucun engagement.
+              Essai gratuit de 7 jours, sans carte bancaire. Aucun engagement.
             </p>
           </Reveal>
 
