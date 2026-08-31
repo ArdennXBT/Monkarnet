@@ -6,7 +6,7 @@
   --pr-border: #E2E0D8;
   --pr-ash: #5A5A55;
 
-  background-color: var(--pr-white);
+  background-color: var(--pr-bg);
   padding: 64px 24px;
   width: 100%;
   overflow: hidden;
@@ -63,10 +63,6 @@
 
 .pricing-title span {
   color: var(--pr-black);
-  background: var(--pr-green);
-  padding: 0 10px;
-  border-radius: 6px;
-  display: inline-block;
 }
 
 .pricing-subtitle {

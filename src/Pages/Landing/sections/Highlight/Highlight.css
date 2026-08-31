@@ -65,10 +65,6 @@
 
 .highlight-title span {
   color: var(--hl-black);
-  background: var(--hl-green);
-  padding: 0 10px;
-  border-radius: 6px;
-  display: inline-block;
 }
 
 .highlight-subtitle {
