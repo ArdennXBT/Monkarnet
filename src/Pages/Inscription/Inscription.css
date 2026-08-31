@@ -1,11 +1,19 @@
 .inscription {
+  --color-navy: #141310;
+  --color-white: #FFFFFF;
+  --color-bg-page: #F1F0EC;
+  --color-text: #141310;
+  --color-text-secondary: #5A5A55;
+  --color-border: #E2E0D8;
+  --color-green: #A6FF4D;
+
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
   background-size: 24px 24px;
-  background-color: rgba(0, 61, 145, 0.03);
+  background-color: var(--color-bg-page);
   padding: var(--spacing-lg) 0;
 }
 
@@ -17,7 +25,7 @@
   padding: 40px var(--spacing-lg);
   width: 420px;
   text-align: center;
-  box-shadow: 0 20px 50px -20px rgba(0, 61, 145, 0.18);
+  box-shadow: 0 20px 50px -20px rgba(20, 19, 16, 0.18);
 }
 
 .inscription-card::before {
@@ -29,7 +37,7 @@
   width: 64px;
   height: 4px;
   border-radius: 0 0 6px 6px;
-  background: linear-gradient(90deg, #ffc93c, var(--color-navy));
+  background: linear-gradient(90deg, var(--color-green), var(--color-navy));
 }
 
 .inscription-logo {
@@ -137,7 +145,7 @@
 .inscription-form input:focus {
   outline: none;
   border-color: var(--color-navy);
-  box-shadow: 0 0 0 3px rgba(0, 61, 145, 0.1);
+  box-shadow: 0 0 0 3px rgba(20, 19, 16, 0.1);
 }
 
 .inscription-password-wrapper {
@@ -182,7 +190,7 @@
 
 .inscription-submit:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px -10px rgba(0, 61, 145, 0.5);
+  box-shadow: 0 12px 24px -10px rgba(20, 19, 16, 0.5);
 }
 
 .inscription-submit:disabled {
