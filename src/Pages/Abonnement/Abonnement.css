@@ -33,7 +33,6 @@
   justify-content: space-between;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
-  box-shadow: 0 4px 20px rgba(0, 61, 145, 0.06);
 }
 
 .abonnement-statut-nom {
@@ -51,8 +50,8 @@
 
 .abonnement-statut-badge {
   flex-shrink: 0;
-  background-color: rgba(245, 197, 24, 0.25);
-  color: #8a6400;
+  background-color: var(--color-accent-soft);
+  color: var(--color-text);
   font-size: 12px;
   font-weight: 600;
   padding: 4px 12px;
@@ -92,16 +91,16 @@
 }
 
 .abonnement-card-highlighted {
-  border-color: var(--color-navy);
-  box-shadow: 0 8px 28px rgba(0, 61, 145, 0.15);
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 20px rgba(166, 255, 77, 0.18);
 }
 
 .abonnement-discount {
   position: absolute;
   top: -10px;
   right: 20px;
-  background-color: var(--color-navy);
-  color: var(--app-accent);
+  background-color: var(--color-accent);
+  color: var(--color-text);
   font-size: 11px;
   font-weight: 700;
   padding: 3px 10px;
@@ -131,7 +130,7 @@
 .abonnement-prix {
   font-size: 24px;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-text);
 }
 
 .abonnement-periode {
@@ -165,7 +164,7 @@
 
 .abonnement-points svg {
   flex-shrink: 0;
-  color: var(--color-navy);
+  color: #141310;
   margin-top: 1px;
 }
 
@@ -176,7 +175,7 @@
   font-weight: 600;
   font-family: var(--font-main);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .abonnement-btn:disabled {
@@ -186,27 +185,24 @@
 
 .abonnement-btn-outline {
   background-color: var(--color-white);
-  color: var(--color-navy);
-  border: 1px solid var(--color-navy);
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
 }
 
 .abonnement-btn-outline:hover:not(:disabled) {
-  background-color: var(--color-navy-light);
+  background-color: var(--color-bg-page);
 }
 
 .abonnement-btn-filled {
-  background-color: var(--color-navy);
-  color: var(--app-accent);
+  background-color: var(--color-text);
+  color: var(--color-white);
   border: none;
-  box-shadow: 0 4px 14px rgba(0, 61, 145, 0.3);
 }
 
 .abonnement-btn-filled:hover:not(:disabled) {
-  background-color: var(--color-navy-dark);
+  opacity: 0.9;
   transform: translateY(-1px);
 }
-
-/* --- Écrans attente / succès (paiement Sebpay) --- */
 
 .abonnement-attente,
 .abonnement-succes {
@@ -234,7 +230,7 @@
 
 .abonnement-spinner {
   animation: abonnement-spin 1s linear infinite;
-  color: var(--color-navy);
+  color: var(--color-text);
 }
 
 @keyframes abonnement-spin {
@@ -243,66 +239,7 @@
 }
 
 .abonnement-succes svg {
-  color: #22c55e;
-}
-
-/* --- Formulaire téléphone / opérateur --- */
-
-.abonnement-form-paiement {
-  max-width: 480px;
-  margin: 24px auto 0;
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  box-shadow: 0 4px 20px rgba(0, 61, 145, 0.06);
-}
-
-.abonnement-form-paiement h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-text);
-  margin: 0 0 4px;
-}
-
-.abonnement-form-paiement label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text);
-}
-
-.abonnement-form-paiement input,
-.abonnement-form-paiement select {
-  padding: 10px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-size: 14px;
-  font-family: var(--font-main);
-  color: var(--color-text);
-  background-color: var(--color-white);
-}
-
-.abonnement-form-paiement input:focus,
-.abonnement-form-paiement select:focus {
-  outline: none;
-  border-color: var(--color-navy);
-}
-
-.abonnement-form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.abonnement-form-actions .abonnement-btn {
-  flex: 1;
-  text-align: center;
+  color: var(--color-accent);
 }
 
 @media (max-width: 768px) {
@@ -319,10 +256,6 @@
 
   .abonnement-grid {
     grid-template-columns: 1fr;
-  }
-
-  .abonnement-form-paiement {
-    padding: var(--spacing-md);
   }
 }
 
@@ -350,9 +283,5 @@
   .abonnement-attente,
   .abonnement-succes {
     padding: 40px 16px;
-  }
-
-  .abonnement-form-actions {
-    flex-direction: column;
   }
 }

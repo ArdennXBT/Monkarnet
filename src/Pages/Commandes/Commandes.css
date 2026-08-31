@@ -48,7 +48,7 @@
 }
 
 .commandes-periode-btn:hover {
-  border-color: var(--color-navy);
+  border-color: var(--color-text);
   color: var(--color-text);
 }
 
@@ -89,8 +89,8 @@
 }
 
 .commandes-periode-menu button.actif {
-  background-color: var(--app-accent);
-  color: var(--app-accent-text);
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 500;
 }
 
@@ -121,7 +121,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background-color: var(--color-navy);
+  background-color: var(--color-text);
   color: var(--color-white);
   border: none;
   border-radius: 999px;
@@ -160,9 +160,9 @@
 }
 
 .commandes-filtre-actif {
-  background-color: var(--app-accent);
-  border-color: var(--app-accent);
-  color: var(--app-accent-text);
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* ========== TABLEAU ========== */
@@ -207,7 +207,7 @@
 }
 
 .commandes-numero-mobile {
-  color: var(--color-blue);
+  color: var(--color-text);
   font-weight: 600;
   font-size: 11px;
 }
@@ -251,7 +251,7 @@
 
 .commandes-chevron.open {
   transform: rotate(180deg);
-  color: var(--color-navy);
+  color: var(--color-text);
 }
 
 /* ========== DÉTAILS COMMANDE (accordéon desktop) ========== */
@@ -340,7 +340,7 @@
   gap: 12px;
   font-size: 14.5px;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-text);
   padding: 8px 0 2px;
   margin-top: 4px;
   border-top: 1px solid var(--color-border);
@@ -547,7 +547,7 @@
 .commandes-modal-form input:focus,
 .commandes-modal-form select:focus {
   outline: none;
-  border-color: var(--color-navy);
+  border-color: var(--color-text);
 }
 
 .commandes-modal-produits-label {
@@ -592,7 +592,7 @@
 }
 
 .commandes-modal-submit {
-  background-color: var(--color-navy);
+  background-color: var(--color-text);
   color: var(--color-white);
   border: none;
   border-radius: 999px;
@@ -732,8 +732,8 @@
 }
 
 .commandes-details-btn:hover {
-  border-color: var(--color-navy);
-  color: var(--color-navy);
+  border-color: var(--color-text);
+  color: var(--color-text);
 }
 
 .commandes-details-btn-danger {
@@ -843,7 +843,7 @@
 .commandes-recu-titre {
   font-size: 20px;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-text);
   text-align: center;
 }
 
@@ -898,7 +898,7 @@
   justify-content: space-between;
   font-size: 16px;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-text);
   padding: 4px 0;
 }
 

@@ -1,8 +1,14 @@
+.souscomptes {
+  background-color: var(--color-bg-page);
+  min-height: 100%;
+}
+
 .souscomptes-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: var(--spacing-sm);
+  gap: 16px;
 }
 
 .souscomptes-title {
@@ -22,7 +28,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background-color: var(--color-blue);
+  background-color: var(--color-text);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
@@ -31,6 +37,11 @@
   font-weight: 500;
   font-family: var(--font-main);
   cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.souscomptes-add-btn:hover:not(:disabled) {
+  opacity: 0.9;
 }
 
 .souscomptes-add-btn:disabled {
@@ -39,7 +50,6 @@
   cursor: not-allowed;
 }
 
-/* Compteur d'utilisation du plan */
 .souscomptes-plan-limit {
   margin-bottom: var(--spacing-lg);
 }
@@ -73,7 +83,7 @@
 
 .souscomptes-plan-bar-fill {
   height: 100%;
-  background-color: var(--color-blue);
+  background-color: var(--color-accent);
   border-radius: var(--radius-pill);
   transition: width 0.3s ease;
 }
@@ -119,7 +129,7 @@
   height: 40px;
   min-width: 40px;
   border-radius: 50%;
-  background-color: var(--color-navy);
+  background-color: var(--color-text);
   color: var(--color-white);
   display: flex;
   align-items: center;
@@ -163,7 +173,6 @@
   margin: 0;
 }
 
-/* Badges de rôle */
 .souscomptes-badge {
   font-size: 11px;
   font-weight: 600;
@@ -178,8 +187,8 @@
 }
 
 .role-vendeur {
-  background-color: var(--color-blue-light);
-  color: var(--color-blue);
+  background-color: var(--color-accent-soft);
+  color: var(--color-text);
 }
 
 .role-comptable {
@@ -192,7 +201,6 @@
   color: #B76E00;
 }
 
-/* Badges de statut */
 .souscomptes-status-badge {
   font-size: 11px;
   font-weight: 600;
@@ -202,8 +210,8 @@
 }
 
 .status-actif {
-  background-color: #E6F4EA;
-  color: #1E7E34;
+  background-color: var(--color-accent-soft);
+  color: var(--color-text);
 }
 
 .status-attente {
@@ -211,7 +219,6 @@
   color: #B76E00;
 }
 
-/* Actions */
 .souscomptes-card-actions {
   display: flex;
   align-items: center;
@@ -219,24 +226,29 @@
 }
 
 .souscomptes-icon-btn {
-  background-color: var(--color-blue-light);
-  border: none;
+  background-color: var(--color-bg-page);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 8px;
-  color: var(--color-blue);
+  color: var(--color-text);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.15s ease;
+}
+
+.souscomptes-icon-btn:hover {
+  background-color: var(--color-border);
 }
 
 .souscomptes-delete-btn {
   background-color: #FDECEA;
   color: #B3261E;
+  border-color: transparent;
 }
 
 .souscomptes-expand-btn {
-  background-color: var(--color-bg, #F5F6F8);
   color: var(--color-text-secondary);
   transition: transform 0.2s ease;
 }
@@ -245,11 +257,10 @@
   transform: rotate(180deg);
 }
 
-/* Panneau d'activité */
 .souscomptes-activity-panel {
   border-top: 1px solid var(--color-border);
   padding: var(--spacing-sm) var(--spacing-md);
-  background-color: #FAFAFB;
+  background-color: var(--color-bg-page);
 }
 
 .souscomptes-activity-title {
@@ -282,6 +293,7 @@
   justify-content: space-between;
   font-size: 13px;
   color: var(--color-text);
+  gap: 12px;
 }
 
 .souscomptes-activity-date {
@@ -290,11 +302,10 @@
   white-space: nowrap;
 }
 
-/* Modal */
 .souscomptes-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(20, 19, 16, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,6 +318,7 @@
   padding: var(--spacing-lg);
   width: 400px;
   max-width: 90vw;
+  border: 1px solid var(--color-border);
 }
 
 .souscomptes-modal-header {
@@ -353,12 +365,13 @@
   font-size: 14px;
   font-family: var(--font-main);
   background-color: var(--color-white);
+  color: var(--color-text);
 }
 
 .souscomptes-modal-form input:focus,
 .souscomptes-modal-form select:focus {
   outline: none;
-  border-color: var(--color-navy);
+  border-color: var(--color-text);
 }
 
 .souscomptes-pages-field {
@@ -393,10 +406,11 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
+  accent-color: var(--color-accent);
 }
 
 .souscomptes-modal-submit {
-  background-color: var(--color-navy);
+  background-color: var(--color-text);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
@@ -406,13 +420,17 @@
   font-family: var(--font-main);
   cursor: pointer;
   margin-top: 4px;
+  transition: opacity 0.15s ease;
+}
+
+.souscomptes-modal-submit:hover {
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
   .souscomptes-header {
     flex-direction: column;
     align-items: stretch;
-    gap: var(--spacing-sm);
   }
 
   .souscomptes-title {

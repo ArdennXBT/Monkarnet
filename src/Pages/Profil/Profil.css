@@ -1,41 +1,38 @@
 .profil {
   background-color: var(--color-bg-page);
   min-height: 100%;
-  padding: 24px;
-  margin: -24px;
 }
 
 .profil-title {
   font-size: 24px;
   font-weight: 600;
-  color: #1a2b4a;
+  color: var(--color-text);
   margin: 0 0 4px;
 }
 
 .profil-subtitle {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0 0 24px;
 }
 
 .profil-card {
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 61, 145, 0.1);
-  border-radius: 16px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 24px;
   display: flex;
   align-items: center;
   gap: 16px;
   margin-bottom: 32px;
-  box-shadow: 0 4px 20px rgba(0, 61, 145, 0.06);
 }
 
 .profil-avatar {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ffc93c, #003d91);
-  color: #ffffff;
+  background-color: var(--color-text);
+  color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,32 +43,31 @@
 .profil-nom {
   font-size: 16px;
   font-weight: 600;
-  color: #1a2b4a;
+  color: var(--color-text);
   margin: 0 0 2px;
 }
 
 .profil-role {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
 .profil-section {
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 61, 145, 0.1);
-  border-radius: 16px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 24px;
   margin-bottom: 24px;
-  box-shadow: 0 4px 20px rgba(0, 61, 145, 0.06);
 }
 
 .profil-section-title {
   font-size: 15px;
   font-weight: 600;
-  color: #1a2b4a;
+  color: var(--color-text);
   margin: 0 0 20px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(0, 61, 145, 0.1);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .profil-form {
@@ -84,56 +80,54 @@
 .profil-form label {
   font-size: 13px;
   font-weight: 500;
-  color: #1a2b4a;
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 .profil-form input {
-  border: 1px solid rgba(0, 61, 145, 0.15);
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   padding: 10px 12px;
   font-size: 14px;
   font-family: inherit;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--color-white);
+  color: var(--color-text);
+  transition: border-color 0.2s ease;
 }
 
 .profil-form input:focus {
   outline: none;
-  border-color: #003d91;
-  box-shadow: 0 0 0 3px rgba(0, 61, 145, 0.1);
+  border-color: var(--color-text);
 }
 
 .profil-save-btn {
   align-self: flex-start;
-  background-color: #003d91;
-  color: #ffffff;
+  background-color: var(--color-text);
+  color: var(--color-white);
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 11px 28px;
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   margin-top: 4px;
-  box-shadow: 0 4px 14px rgba(0, 61, 145, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 
-.profil-save-btn:hover {
-  background-color: #002d6e;
-  box-shadow: 0 6px 18px rgba(0, 61, 145, 0.4);
-  transform: translateY(-1px);
+.profil-save-btn:hover:not(:disabled) {
+  opacity: 0.9;
 }
 
-.profil-save-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 61, 145, 0.3);
+.profil-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .profil-loading {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-size: 14px;
   text-align: center;
   padding: 24px 0;
@@ -144,16 +138,16 @@
   color: #B3261E;
   font-size: 13px;
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   margin-bottom: 16px;
 }
 
 .profil-success {
-  background-color: rgba(0, 61, 145, 0.08);
-  color: #003d91;
+  background-color: var(--color-accent-soft);
+  color: var(--color-text);
   font-size: 13px;
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   margin-bottom: 16px;
 }
 
@@ -179,7 +173,7 @@
 .profil-avatar-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 20, 50, 0.55);
+  background-color: rgba(20, 19, 16, 0.55);
   color: #ffffff;
   font-size: 9px;
   font-weight: 600;
@@ -196,19 +190,19 @@
 
 .profil-email-actuel {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0 0 16px;
 }
 
 .profil-email-actuel strong {
-  color: #1a2b4a;
+  color: var(--color-text);
 }
 
 .profil-cancel-btn {
   align-self: flex-start;
   background: none;
   border: none;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -217,18 +211,11 @@
 }
 
 .profil-cancel-btn:hover {
-  color: #1a2b4a;
+  color: var(--color-text);
   text-decoration: underline;
 }
 
-/* --- Responsive --- */
-
 @media (max-width: 768px) {
-  .profil {
-    padding: 16px;
-    margin: -16px;
-  }
-
   .profil-title {
     font-size: 20px;
   }
@@ -238,9 +225,13 @@
     gap: 12px;
   }
 
-  .profil-avatar {
+  .profil-avatar,
+  .profil-avatar-btn {
     width: 44px;
     height: 44px;
+  }
+
+  .profil-avatar {
     font-size: 17px;
   }
 

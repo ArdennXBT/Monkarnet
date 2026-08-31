@@ -37,7 +37,7 @@ function SousComptes() {
   const [modalOuvert, setModalOuvert] = useState(false);
   const [modeEdition, setModeEdition] = useState(false);
   const [compteEnEdition, setCompteEnEdition] = useState(null);
-  const [ouvert, setOuvert] = useState(null); // id du sous-compte dont l'activité est dépliée
+  const [ouvert, setOuvert] = useState(null);
   const [formData, setFormData] = useState({
     nomComplet: '',
     email: '',
@@ -54,9 +54,7 @@ function SousComptes() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
-
       if (!response.ok) throw new Error(data.message || 'Erreur lors du chargement.');
-
       setSousComptes(data);
     } catch (err) {
       setErreur(err.message);
@@ -67,7 +65,6 @@ function SousComptes() {
 
   useEffect(() => {
     chargerSousComptes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e) => {
@@ -115,7 +112,6 @@ function SousComptes() {
         ? `https://monkarnet-backend.onrender.com/api/sous-comptes/${compteEnEdition}`
         : 'https://monkarnet-backend.onrender.com/api/sous-comptes';
 
-      // En édition, on n'envoie le mot de passe que s'il a été rempli
       const body = { ...formData };
       if (modeEdition && !body.motDePasse) delete body.motDePasse;
 
@@ -129,7 +125,6 @@ function SousComptes() {
       });
 
       const data = await response.json();
-
       if (!response.ok) throw new Error(data.message || 'Erreur lors de l\'enregistrement.');
 
       if (modeEdition) {
@@ -151,11 +146,8 @@ function SousComptes() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
-
       const data = await response.json();
-
       if (!response.ok) throw new Error(data.message || 'Erreur lors de la suppression.');
-
       setSousComptes(sousComptes.filter((s) => s._id !== id));
     } catch (err) {
       setErreur(err.message);
@@ -186,7 +178,6 @@ function SousComptes() {
           </button>
         </div>
 
-        {/* Compteur d'utilisation du plan */}
         <div className="souscomptes-plan-limit">
           <div className="souscomptes-plan-limit-top">
             <span>
@@ -213,7 +204,7 @@ function SousComptes() {
           <div className="souscomptes-list">
             {sousComptes.map((s) => {
               const role = ROLES[s.roleSousCompte] || ROLES.vendeur;
-              const statut = s.statut || 'actif'; // valeur par défaut tant que le backend ne le fournit pas
+              const statut = s.statut || 'actif';
               const activites = s.activites || [];
 
               return (
@@ -237,18 +228,10 @@ function SousComptes() {
                     </div>
 
                     <div className="souscomptes-card-actions">
-                      <button
-                        className="souscomptes-icon-btn"
-                        onClick={() => ouvrirModalEdition(s)}
-                        title="Modifier"
-                      >
+                      <button className="souscomptes-icon-btn" onClick={() => ouvrirModalEdition(s)} title="Modifier">
                         <Pencil size={16} />
                       </button>
-                      <button
-                        className="souscomptes-icon-btn souscomptes-delete-btn"
-                        onClick={() => handleSupprimer(s._id)}
-                        title="Supprimer"
-                      >
+                      <button className="souscomptes-icon-btn souscomptes-delete-btn" onClick={() => handleSupprimer(s._id)} title="Supprimer">
                         <Trash2 size={16} />
                       </button>
                       <button
@@ -298,23 +281,11 @@ function SousComptes() {
               <form className="souscomptes-modal-form" onSubmit={handleSubmit}>
                 <label>
                   Nom complet
-                  <input
-                    type="text"
-                    name="nomComplet"
-                    value={formData.nomComplet}
-                    onChange={handleChange}
-                    required
-                  />
+                  <input type="text" name="nomComplet" value={formData.nomComplet} onChange={handleChange} required />
                 </label>
                 <label>
                   Email
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} required />
                 </label>
                 <label>
                   Rôle
