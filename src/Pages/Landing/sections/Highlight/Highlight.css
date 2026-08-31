@@ -1,5 +1,12 @@
 .highlight-section {
-  background-color: #ffffff;
+  --hl-black: #141310;
+  --hl-green: #A6FF4D;
+  --hl-white: #FFFFFF;
+  --hl-bg: #F1F0EC;
+  --hl-border: #E2E0D8;
+  --hl-ash: #5A5A55;
+
+  background-color: var(--hl-bg);
   padding: 64px 24px;
   width: 100%;
   overflow: hidden;
@@ -8,28 +15,32 @@
 .highlight-container {
   max-width: 1100px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .highlight-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: #ffffff;
-  border: 1px solid #e5e9f0;
-  color: #003d91;
+  background-color: var(--hl-black);
+  border: none;
+  color: var(--hl-white);
   font-weight: 600;
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 999px;
   margin-bottom: 20px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .highlight-badge-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #ffc93c;
+  background-color: var(--hl-green);
+  box-shadow: 0 0 0 4px rgba(166, 255, 77, 0.25);
   animation: highlight-pulse-dot 2s ease-in-out infinite;
 }
 
@@ -48,48 +59,54 @@
   font-size: clamp(24px, 3vw, 30px);
   font-weight: 800;
   line-height: 1.3;
-  color: #003d91;
+  color: var(--hl-black);
   margin-bottom: 14px;
 }
 
 .highlight-title span {
-  color: #ffc93c;
+  color: var(--hl-black);
+  background: var(--hl-green);
+  padding: 0 10px;
+  border-radius: 6px;
+  display: inline-block;
 }
 
 .highlight-subtitle {
-  color: #4a5568;
+  color: var(--hl-ash);
   font-size: 16px;
   line-height: 1.6;
   max-width: 520px;
-  margin-bottom: 36px;
+  margin: 0 auto 36px;
 }
 
 .highlight-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  width: 100%;
+  text-align: left;
 }
 
 .highlight-card {
-  border: 1px solid #e5e9f0;
+  border: 1px solid var(--hl-border);
   border-radius: 14px;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: var(--hl-white);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   cursor: default;
 }
 
 .highlight-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 61, 145, 0.1);
-  border-color: #ffc93c;
+  box-shadow: 0 12px 24px rgba(20, 19, 16, 0.1);
+  border-color: var(--hl-green);
 }
 
 .highlight-icon-wrapper {
   width: 38px;
   height: 38px;
   border-radius: 9px;
-  background-color: #fff8e6;
+  background-color: rgba(166, 255, 77, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,27 +116,27 @@
 
 .highlight-card:hover .highlight-icon-wrapper {
   transform: scale(1.12) rotate(-6deg);
-  background-color: #ffc93c;
+  background-color: var(--hl-green);
 }
 
 .highlight-card:hover .highlight-icon {
-  color: #ffffff;
+  color: var(--hl-black);
 }
 
 .highlight-icon {
-  color: #ffc93c;
+  color: var(--hl-black);
   transition: color 0.3s ease;
 }
 
 .highlight-card-title {
-  color: #0a0a0a;
+  color: var(--hl-black);
   font-size: 15.5px;
   font-weight: 700;
   margin-bottom: 6px;
 }
 
 .highlight-card-text {
-  color: #0a0a0a;
+  color: var(--hl-ash);
   font-size: 14px;
   line-height: 1.55;
 }
@@ -144,5 +161,10 @@
 
   .highlight-subtitle {
     margin-bottom: 28px;
+  }
+
+  .highlight-badge {
+    font-size: 12px;
+    padding: 7px 14px;
   }
 }

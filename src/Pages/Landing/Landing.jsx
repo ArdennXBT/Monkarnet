@@ -1,5 +1,4 @@
 import Hero from './sections/Hero/Hero';
-import DashboardPreview from './sections/DashboardPreview/DashboardPreview';
 import Highlight from './sections/Highlight/Highlight';
 import Features from './sections/Features/Features';
 import Pricing from './sections/Pricing/Pricing';
@@ -13,7 +12,6 @@ function Landing() {
     <div className="landing">
       <Header />
       <Hero />
-      <DashboardPreview />
       <Highlight />
       <Features />
       <Pricing />

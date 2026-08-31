@@ -15,7 +15,7 @@ const plans = [
     link: "/inscription",
     highlighted: false,
     points: [
-      "Essai gratuit de 14 jours inclus",
+      "Essai gratuit de 7 jours inclus",
       "Dashboard, commandes, produits et clients",
       "Jusqu'à 3 sous-comptes",
       "Résiliation possible à tout moment",
@@ -33,7 +33,7 @@ const plans = [
     highlighted: true,
     badge: "- 40%",
     points: [
-      "Essai gratuit de 14 jours inclus",
+      "Essai gratuit de 7 jours inclus",
       "Dashboard, commandes, produits et clients",
       "Jusqu'à 3 sous-comptes",
       "34 $ d'économie sur l'année",
@@ -54,7 +54,7 @@ export default function Pricing() {
 
         <Reveal delay={100}>
           <h3 className="pricing-title">
-            Essayez 14 jours.
+            Essayez 7 jours.
             <br />
             <span>Décidez ensuite en toute confiance.</span>
           </h3>

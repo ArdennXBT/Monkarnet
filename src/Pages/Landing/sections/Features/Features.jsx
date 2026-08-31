@@ -101,7 +101,7 @@ export default function Features() {
                 <ul className="feature-points">
                   {feature.points.map((point, i) => (
                     <li className="feature-point" key={i}>
-                      <CheckCircle2 className="feature-point-icon" size={18} strokeWidth={2} />
+                      <CheckCircle2 className="feature-point-icon" size={19} strokeWidth={2.4} />
                       <span>{point}</span>
                     </li>
                   ))}

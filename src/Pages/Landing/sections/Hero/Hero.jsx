@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../../../../components/Reveal/Reveal';
+import dashboardMockup from '../../../../assets/hero-dashboard-mockup.png';
 import './Hero.css';
 
 function Hero() {
@@ -25,15 +26,20 @@ function Hero() {
             </p>
 
             <Link to="/login" className="hero-cta">
-              Essai gratuit 14 jours
+              Essai gratuit 7 jours
             </Link>
-            <p className="hero-cta-note">
-                <svg className="hero-cta-note-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="2.5" y="5.5" width="19" height="13" rx="2.5" stroke="currentColor" strokeWidth="1.6"/>
-                <line x1="2.5" y1="9.5" x2="21.5" y2="9.5" stroke="currentColor" strokeWidth="1.6"/>
-                </svg>
-                Sans carte bancaire
-                </p>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div className="hero-col-image">
+            <div className="hero-image-frame">
+              <img
+                src={dashboardMockup}
+                alt="Aperçu du tableau de bord Orbizo"
+                className="hero-image"
+              />
+            </div>
           </div>
         </Reveal>
       </div>
