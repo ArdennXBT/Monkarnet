@@ -175,8 +175,7 @@
   }
   .hero-badge-dot{ width: 6px; height: 6px; }
   .hero-cta{
-    width: 100%;
-    padding: 13px 20px;
+    padding: 13px 24px;
     font-size: 14px;
   }
 }
