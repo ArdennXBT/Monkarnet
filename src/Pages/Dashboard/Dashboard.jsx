@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { TrendingUp, ShoppingCart, Wallet, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { TrendingUp, ShoppingCart, Wallet, ChevronDown, Package } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import './Dashboard.css';
 
@@ -153,6 +154,18 @@ function Dashboard() {
                 {donneesPeriode?.nombreCommandes || 0}
               </p>
             </div>
+          </div>
+
+          {/* BOUTONS RAPIDES */}
+          <div className="dashboard-quick-actions">
+            <Link to="/commandes" className="dashboard-quick-btn dashboard-quick-btn-primary">
+              <ShoppingCart size={18} />
+              <span>Voir les commandes</span>
+            </Link>
+            <Link to="/produits" className="dashboard-quick-btn dashboard-quick-btn-secondary">
+              <Package size={18} />
+              <span>Gérer les produits</span>
+            </Link>
           </div>
 
           {/* GRAPHIQUE */}

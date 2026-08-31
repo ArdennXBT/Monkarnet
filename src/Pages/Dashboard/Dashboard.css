@@ -69,6 +69,7 @@
   font-size: 13px;
   border-radius: 6px;
   cursor: pointer;
+  color: var(--color-text);
 }
 
 .dashboard-periode-option:hover {
@@ -86,7 +87,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .dashboard-card {
@@ -126,6 +127,52 @@
   box-shadow: 0 6px 16px rgba(166, 255, 77, 0.35);
 }
 
+/* ========== BOUTONS RAPIDES ========== */
+.dashboard-quick-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.dashboard-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  flex: 1;
+  max-width: 280px;
+}
+
+.dashboard-quick-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.dashboard-quick-btn-primary {
+  background-color: var(--color-text);
+  color: var(--color-white);
+  border: none;
+}
+
+.dashboard-quick-btn-secondary {
+  background-color: var(--color-white);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.dashboard-quick-btn-secondary:hover {
+  background-color: #f8f7f4;
+  border-color: #d5d3cb;
+}
+
 /* ========== GRAPHIQUE ========== */
 .dashboard-chart-card {
   background: var(--color-bg-page);
@@ -147,6 +194,7 @@
   font-size: 15px;
   font-weight: 600;
   margin: 0;
+  color: var(--color-text);
 }
 
 .dashboard-chart-legend {
@@ -260,6 +308,17 @@
 
   .dashboard-card-value {
     font-size: 15px;
+  }
+
+  .dashboard-quick-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dashboard-quick-btn {
+    max-width: 100%;
+    padding: 11px 16px;
+    font-size: 13.5px;
   }
 
   .dashboard-chart-card {
