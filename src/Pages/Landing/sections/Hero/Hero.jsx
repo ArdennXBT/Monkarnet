@@ -15,13 +15,31 @@ const SLIDES = [
   { src: clientsMockup, alt: 'Fiches clients Orbizo avec historique et coordonn\u00e9es' },
 ];
 
+const TITLES = [
+  { black: 'Votre chiffre d\u2019affaires,', accent: 'en temps r\u00e9el.' },
+  { black: 'Vos commandes,', accent: 'suivies \u00e0 la lettre.' },
+  { black: 'Votre catalogue,', accent: 'toujours \u00e0 jour.' },
+  { black: 'Vos clients,', accent: 'jamais oubli\u00e9s.' },
+];
+
+const TITLE_DELAY = 3800;
+
 const AUTOPLAY_DELAY = 4500;
 
 function Hero() {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [titleIndex, setTitleIndex] = useState(0);
   const touchStartX = useRef(null);
   const touchDeltaX = useRef(0);
+
+  // Rotation du titre, indépendante du carrousel d'images
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTitleIndex((current) => (current + 1) % TITLES.length);
+    }, TITLE_DELAY);
+    return () => clearInterval(timer);
+  }, []);
 
   const goTo = useCallback((i) => {
     setIndex(((i % SLIDES.length) + SLIDES.length) % SLIDES.length);
@@ -72,9 +90,9 @@ function Hero() {
               Simplifie le quotidien des commerçants
             </span>
 
-            <h1 className="hero-title">
-              <span className="hero-title-black">Votre chiffre d&rsquo;affaires,</span><br />
-              <span className="hero-title-gold">en temps réel.</span>
+            <h1 className="hero-title" key={titleIndex}>
+              <span className="hero-title-black">{TITLES[titleIndex].black}</span><br />
+              <span className="hero-title-gold">{TITLES[titleIndex].accent}</span>
             </h1>
 
             <p className="hero-lede">
