@@ -22,16 +22,22 @@
   align-items: center;
   text-decoration: none;
   line-height: 0;
-  background-color: var(--color-white);
-  border-radius: var(--radius-sm);
-  padding: 6px 8px;
 }
 
 .sidebar-logo-full {
   display: block;
-  height: 28px;
+  height: 34px;
   width: auto;
   max-width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.sidebar-logo-text {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-white);
+  margin-left: 10px;
+  white-space: nowrap;
 }
 
 .sidebar-close-btn {

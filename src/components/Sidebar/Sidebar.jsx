@@ -47,6 +47,7 @@ function Sidebar({ ouverte, onFermer }) {
             alt="Orbizo"
             className="sidebar-logo-full"
           />
+          <span className="sidebar-logo-text">Orbizo</span>
         </Link>
         <button className="sidebar-close-btn" onClick={onFermer}>
           <X size={22} />
