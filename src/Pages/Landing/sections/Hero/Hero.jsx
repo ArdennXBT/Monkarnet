@@ -9,22 +9,21 @@ import clientsMockup from '../../../../assets/hero-clients-mockup.png';
 import './Hero.css';
 
 const SLIDES = [
-  { src: dashboardMockup, alt: 'Tableau de bord Orbizo : chiffre d\u2019affaires, b\u00e9n\u00e9fice et commandes en temps r\u00e9el' },
-  { src: commandesMockup, alt: 'Suivi des commandes Orbizo par statut : en attente, en cours, livr\u00e9e, en litige' },
+  { src: dashboardMockup, alt: 'Tableau de bord Orbizo : chiffre d’affaires, bénéfice et commandes en temps réel' },
+  { src: commandesMockup, alt: 'Suivi des commandes Orbizo par statut : en attente, en cours, livrée, en litige' },
   { src: produitsMockup, alt: 'Catalogue produits Orbizo avec photos, prix et stock' },
-  { src: clientsMockup, alt: 'Fiches clients Orbizo avec historique et coordonn\u00e9es' },
+  { src: clientsMockup, alt: 'Fiches clients Orbizo avec historique et coordonnées' },
 ];
 
 const TITLES = [
-  { black: 'Votre chiffre d\u2019affaires,', accent: 'en temps r\u00e9el.' },
-  { black: 'Vos commandes,', accent: 'suivies \u00e0 la lettre.' },
-  { black: 'Votre catalogue,', accent: 'toujours \u00e0 jour.' },
-  { black: 'Vos clients,', accent: 'jamais oubli\u00e9s.' },
+  { black: 'Votre chiffre d’affaires,', accent: 'en temps réel.' },
+  { black: 'Vos commandes,', accent: 'suivies à la lettre.' },
+  { black: 'Votre catalogue,', accent: 'toujours à jour.' },
+  { black: 'Vos clients,', accent: 'jamais oubliés.' },
 ];
 
-const TITLE_DELAY = 3800;
-
-const AUTOPLAY_DELAY = 4500;
+const TITLE_DELAY = 3800;         // temps entre chaque titre
+const TOTAL_ROTATION_TIME = 10000; // 10 secondes puis arrêt (change en 8000 ou 11000 si tu veux)
 
 function Hero() {
   const [index, setIndex] = useState(0);
@@ -33,12 +32,21 @@ function Hero() {
   const touchStartX = useRef(null);
   const touchDeltaX = useRef(0);
 
-  // Rotation du titre, indépendante du carrousel d'images
+  // Rotation des titres pendant un temps limité, puis arrêt sur le titre principal
   useEffect(() => {
-    const timer = setInterval(() => {
+    const interval = setInterval(() => {
       setTitleIndex((current) => (current + 1) % TITLES.length);
     }, TITLE_DELAY);
-    return () => clearInterval(timer);
+
+    const stopTimer = setTimeout(() => {
+      clearInterval(interval);
+      setTitleIndex(0); // force le retour sur "Votre chiffre d'affaires, en temps réel."
+    }, TOTAL_ROTATION_TIME);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(stopTimer);
+    };
   }, []);
 
   const goTo = useCallback((i) => {
@@ -48,12 +56,12 @@ function Hero() {
   const goNext = useCallback(() => goTo(index + 1), [goTo, index]);
   const goPrev = useCallback(() => goTo(index - 1), [goTo, index]);
 
-  // Défilement automatique, en pause au survol ou au toucher
+  // Défilement automatique des images
   useEffect(() => {
     if (isPaused) return undefined;
     const timer = setInterval(() => {
       setIndex((current) => (current + 1) % SLIDES.length);
-    }, AUTOPLAY_DELAY);
+    }, 4500);
     return () => clearInterval(timer);
   }, [isPaused]);
 
@@ -91,7 +99,8 @@ function Hero() {
             </span>
 
             <h1 className="hero-title" key={titleIndex}>
-              <span className="hero-title-black">{TITLES[titleIndex].black}</span><br />
+              <span className="hero-title-black">{TITLES[titleIndex].black}</span>
+              <br />
               <span className="hero-title-gold">{TITLES[titleIndex].accent}</span>
             </h1>
 
