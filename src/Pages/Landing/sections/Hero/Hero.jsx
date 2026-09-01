@@ -22,8 +22,8 @@ const TITLES = [
   { black: 'Vos clients,', accent: 'jamais oubliés.' },
 ];
 
-const TITLE_DELAY = 3800;         // temps entre chaque titre
-const TOTAL_ROTATION_TIME = 10000; // 10 secondes puis arrêt (change en 8000 ou 11000 si tu veux)
+const TITLE_DELAY = 3800;
+const TOTAL_ROTATION_TIME = TITLE_DELAY * 4 + 400; // ≈ 15.6s → les 4 titres passent bien
 
 function Hero() {
   const [index, setIndex] = useState(0);
