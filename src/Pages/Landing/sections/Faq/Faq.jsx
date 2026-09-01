@@ -31,7 +31,7 @@ const faqs = [
   {
     question: "Comment puis-je payer mon abonnement ?",
     answer:
-      "Depuis votre page Profil, vous pouvez vous abonner et payer par Mobile Money ou par carte bancaire, en toute sécurité, en quelques clics.",
+      "Depuis votre page Abonnement, vous pouvez vous abonner et payer par carte bancaire, en toute sécurité, en quelques clics.",
   },
   {
     question: "Puis-je essayer avant de m'engager ?",

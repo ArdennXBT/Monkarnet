@@ -5,18 +5,18 @@ function Confidentialite() {
     <div className="legal-page">
       <div className="legal-container">
         <h1>Politique de confidentialité</h1>
-        <p className="legal-updated">Dernière mise à jour : 22/08/2026</p>
+        <p className="legal-updated">Dernière mise à jour : 01/09/2026</p>
 
         <h2>1. Qui sommes-nous</h2>
         <p>
-          Orbizo est édité par ARDENN TRADE X, immatriculée au Registre du
-          Commerce et du Crédit Mobilier (RCCM) sous le numéro RB/ABC/25 A 120345, dont le
-          siège est situé à Calavi, Bénin.
+          Orbizo est une application permettant aux commerçants de suivre et
+          gérer leur activité commerciale : commandes, produits, stock et
+          clients.
         </p>
         <p>
-          Pour toute question relative à cette politique de confidentialité ou à vos
-          données personnelles, vous pouvez nous contacter à :{' '}
-          <a href="mailto:0xardenn@gmail.com">0xardenn@gmail.com</a>
+          Pour toute question relative à cette politique de confidentialité ou
+          à vos données personnelles, vous pouvez nous contacter via le
+          formulaire de contact disponible sur l'application.
         </p>
 
         <h2>2. Quelles données nous collectons</h2>
@@ -32,9 +32,9 @@ function Confidentialite() {
           <li>
             <strong>Concernant les paiements d'abonnement :</strong> nous recevons
             uniquement le statut de la transaction (réussie ou échouée) transmis par
-            notre prestataire de paiement, SebPay. Nous n'avons accès à aucune
-            information bancaire ou de mobile money vous concernant — ces données
-            sont traitées exclusivement par SebPay.
+            notre prestataire de paiement, DodoPayments. Nous n'avons accès à aucune
+            information bancaire vous concernant — ces données sont traitées
+            exclusivement par DodoPayments.
           </li>
         </ul>
         <p>
@@ -64,7 +64,7 @@ function Confidentialite() {
             Nos prestataires techniques d'hébergement cloud, qui stockent les
             données de manière sécurisée dans le cadre de l'exploitation du
             service. Ce recours à des prestataires peut impliquer un hébergement
-            des données en dehors du territoire béninois.
+            des données en dehors de votre pays de résidence.
           </li>
         </ul>
 
@@ -81,15 +81,15 @@ function Confidentialite() {
 
         <h2>6. Vos droits</h2>
         <p>
-          Conformément au Code du numérique en République du Bénin (loi n° 2017-20)
-          et à la réglementation applicable, vous disposez d'un droit d'accès, de
+          Conformément à la réglementation applicable en matière de protection
+          des données personnelles, vous disposez d'un droit d'accès, de
           rectification, de modification et de suppression de vos données
           personnelles.
         </p>
         <p>
-          Pour exercer ces droits, contactez-nous à{' '}
-          <a href="mailto:0xardenn@gmail.com">0xardenn@gmail.com</a>. Nous nous
-          engageons à répondre dans un délai raisonnable.
+          Pour exercer ces droits, contactez-nous via le formulaire de contact
+          disponible sur l'application. Nous nous engageons à répondre dans un
+          délai raisonnable.
         </p>
 
         <h2>7. Sécurité</h2>

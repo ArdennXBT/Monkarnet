@@ -5,7 +5,7 @@ function Conditions() {
     <div className="legal-page">
       <div className="legal-container">
         <h1>Conditions générales d'utilisation</h1>
-        <p className="legal-updated">Dernière mise à jour : 22/08/2026</p>
+        <p className="legal-updated">Dernière mise à jour : 01/09/2026</p>
 
         <h2>1. Objet</h2>
         <p>
@@ -20,11 +20,7 @@ function Conditions() {
             sein de l'application.
           </strong>{' '}
           Seuls les paiements liés à votre abonnement Orbizo transitent, via notre
-          prestataire SebPay.
-        </p>
-        <p>
-          Orbizo est édité par ARDENN TRADE X, RCCM n° RB/ABC/25 A 120345,
-          Calavi, Bénin.
+          prestataire DodoPayments.
         </p>
 
         <h2>2. Accès au service</h2>
@@ -37,11 +33,11 @@ function Conditions() {
 
         <h2>3. Essai gratuit et abonnement</h2>
         <ul>
-          <li>Chaque nouveau compte bénéficie d'un <strong>essai gratuit de 14 jours</strong>, donnant accès à l'ensemble des fonctionnalités.</li>
+          <li>Chaque nouveau compte bénéficie d'un <strong>essai gratuit de 7 jours</strong>, donnant accès à l'ensemble des fonctionnalités, sans carte bancaire requise.</li>
           <li>À l'issue de cette période, l'accès à l'application est suspendu, sauf souscription à un <strong>abonnement mensuel ou annuel</strong>.</li>
           <li>
-            Le paiement de l'abonnement s'effectue via mobile money, par
-            l'intermédiaire de notre prestataire SebPay.{' '}
+            Le paiement de l'abonnement s'effectue par <strong>carte bancaire</strong>, par
+            l'intermédiaire de notre prestataire DodoPayments.{' '}
             <strong>Le renouvellement n'est pas automatique</strong> : vous devez
             effectuer le paiement manuellement à chaque échéance.
           </li>
@@ -71,8 +67,8 @@ function Conditions() {
           CGU.
         </p>
         <p>
-          Vous pouvez à tout moment demander la suppression de votre compte en nous
-          contactant à <a href="mailto:0xardenn@gmail.com">0xardenn@gmail.com</a>.
+          Vous pouvez à tout moment demander la suppression de votre compte via le
+          formulaire de contact disponible sur l'application.
         </p>
 
         <h2>6. Sous-comptes</h2>
@@ -86,8 +82,8 @@ function Conditions() {
         <h2>7. Propriété intellectuelle</h2>
         <p>
           L'application Orbizo, son code, son design, sa marque et ses contenus
-          sont la propriété exclusive de ARDENN TRADE X. Aucune reproduction
-          ou utilisation non autorisée n'est permise.
+          sont la propriété exclusive de son éditeur. Aucune reproduction ou
+          utilisation non autorisée n'est permise.
         </p>
         <p>
           Les données que vous saisissez dans Orbizo (vos produits, commandes,
@@ -112,10 +108,10 @@ function Conditions() {
 
         <h2>10. Droit applicable</h2>
         <p>
-          Les présentes CGU sont soumises au <strong>droit béninois</strong>. Tout
-          litige relatif à leur interprétation ou leur exécution relève de la
-          compétence des juridictions béninoises, sous réserve des règles
-          impératives applicables dans votre pays de résidence.
+          Tout litige relatif à l'interprétation ou l'exécution des présentes
+          CGU sera réglé à l'amiable dans la mesure du possible, sous réserve
+          des règles impératives de protection applicables dans votre pays de
+          résidence.
         </p>
       </div>
     </div>
