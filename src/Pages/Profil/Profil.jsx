@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useCommercant } from '../../context/CommercantContext';
+import { DEVISES } from '../../utils/devises';
 import './Profil.css';
 
 function Profil() {
@@ -14,6 +15,12 @@ function Profil() {
   const [succes, setSucces] = useState('');
   const [uploadEnCours, setUploadEnCours] = useState(false);
   const fileInputRef = useRef(null);
+
+  // --- Devise (préférence enregistrée séparément, en un clic) ---
+  const [devise, setDevise] = useState('USD');
+  const [erreurDevise, setErreurDevise] = useState('');
+  const [succesDevise, setSuccesDevise] = useState('');
+  const [chargementDevise, setChargementDevise] = useState(false);
 
   // --- Changement d'email ---
   const [etapeEmail, setEtapeEmail] = useState(1); // 1 = formulaire, 2 = code de confirmation
@@ -40,6 +47,8 @@ function Profil() {
         adresse: commercant.adresse || '',
         telephone: commercant.telephone || '',
       });
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setDevise(commercant.devise || 'USD');
     }
   }, [commercant]);
 
@@ -105,6 +114,40 @@ function Profil() {
       setErreur(err.message);
     } finally {
       setUploadEnCours(false);
+    }
+  };
+
+  // --- Devise : enregistrement immédiat au changement, indépendant du formulaire commerce ---
+  const handleDeviseChange = async (e) => {
+    const nouvelleDevise = e.target.value;
+    const ancienneDevise = devise;
+
+    setDevise(nouvelleDevise);
+    setErreurDevise('');
+    setSuccesDevise('');
+    setChargementDevise(true);
+
+    try {
+      const response = await fetch('https://monkarnet-backend.onrender.com/api/profil', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ devise: nouvelleDevise }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message || 'Erreur lors de la mise à jour.');
+
+      setCommercant(data);
+      setSuccesDevise('Enregistrée');
+    } catch (err) {
+      setDevise(ancienneDevise);
+      setErreurDevise(err.message);
+    } finally {
+      setChargementDevise(false);
     }
   };
 
@@ -226,24 +269,52 @@ function Profil() {
       <p className="profil-subtitle">Informations de votre commerce.</p>
 
       <div className="profil-card">
-        <button className="profil-avatar-btn" onClick={handlePhotoClick} disabled={uploadEnCours}>
-          {commercant.photo ? (
-            <img src={commercant.photo} alt="Photo de profil" className="profil-avatar-img" />
-          ) : (
-            <div className="profil-avatar">{commercant.nomComplet?.charAt(0) || 'C'}</div>
+        <div className="profil-identity">
+          <button className="profil-avatar-btn" onClick={handlePhotoClick} disabled={uploadEnCours}>
+            {commercant.photo ? (
+              <img src={commercant.photo} alt="Photo de profil" className="profil-avatar-img" />
+            ) : (
+              <div className="profil-avatar">{commercant.nomComplet?.charAt(0) || 'C'}</div>
+            )}
+            <span className="profil-avatar-overlay">{uploadEnCours ? '...' : 'Modifier'}</span>
+          </button>
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handlePhotoChange}
+            style={{ display: 'none' }}
+          />
+          <div>
+            <p className="profil-nom">{commercant.nomCommerce}</p>
+            <p className="profil-role">{commercant.role === 'superadmin' ? 'Super Admin' : commercant.role === 'sous-compte' ? 'Sous-compte' : 'Compte Admin'}</p>
+          </div>
+        </div>
+
+        <div className="profil-devise-block">
+          <label htmlFor="profil-devise" className="profil-devise-label">
+            Devise
+          </label>
+          <select
+            id="profil-devise"
+            className="profil-devise-select"
+            value={devise}
+            onChange={handleDeviseChange}
+            disabled={chargementDevise}
+          >
+            {DEVISES.map((d) => (
+              <option key={d.code} value={d.code}>
+                {d.code} ({d.symbole})
+              </option>
+            ))}
+          </select>
+          {chargementDevise && <span className="profil-devise-feedback">Enregistrement...</span>}
+          {!chargementDevise && succesDevise && (
+            <span className="profil-devise-feedback succes">{succesDevise}</span>
           )}
-          <span className="profil-avatar-overlay">{uploadEnCours ? '...' : 'Modifier'}</span>
-        </button>
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={handlePhotoChange}
-          style={{ display: 'none' }}
-        />
-        <div>
-          <p className="profil-nom">{commercant.nomCommerce}</p>
-          <p className="profil-role">{commercant.role === 'superadmin' ? 'Super Admin' : commercant.role === 'sous-compte' ? 'Sous-compte' : 'Compte Admin'}</p>
+          {!chargementDevise && erreurDevise && (
+            <span className="profil-devise-feedback erreur">{erreurDevise}</span>
+          )}
         </div>
       </div>
 
@@ -252,7 +323,7 @@ function Profil() {
 
       <div className="profil-section">
         <h2 className="profil-section-title">Informations du commerce</h2>
-        <form className="profil-form" onSubmit={handleSubmit}>
+        <form className="profil-form profil-form-grid" onSubmit={handleSubmit}>
           <label>
             Nom du commerce
             <input type="text" name="nomCommerce" value={formData.nomCommerce} onChange={handleChange} />

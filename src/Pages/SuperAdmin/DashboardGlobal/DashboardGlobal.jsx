@@ -1,9 +1,11 @@
-
 import { useState, useEffect } from 'react';
 import { Store, TrendingUp, ShoppingBag } from 'lucide-react';
 import './DashboardGlobal.css';
+import { useCommercant } from '../../../context/CommercantContext';
+import { formatMontant } from '../../../utils/formatMontant';
 
 function DashboardGlobal() {
+  const { commercant } = useCommercant();
   const [stats, setStats] = useState(null);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
@@ -35,7 +37,7 @@ function DashboardGlobal() {
   const statsAffichees = stats
     ? [
         { label: 'Commerces inscrits', value: stats.totalCommerces.toLocaleString('fr-FR'), icon: Store },
-        { label: 'CA total plateforme', value: `${stats.totalCA.toLocaleString('fr-FR')} F`, icon: TrendingUp },
+        { label: 'CA total plateforme', value: formatMontant(stats.totalCA, commercant?.devise), icon: TrendingUp },
         { label: 'Commandes totales', value: stats.totalCommandes.toLocaleString('fr-FR'), icon: ShoppingBag },
       ]
     : [];

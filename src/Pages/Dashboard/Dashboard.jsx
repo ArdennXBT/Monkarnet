@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { TrendingUp, ShoppingCart, Wallet, ChevronDown, Package } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import './Dashboard.css';
+import { useCommercant } from '../../context/CommercantContext';
+import { formatMontant } from '../../utils/formatMontant';
 
 const periodeCles = {
   Jour: 'jour',
@@ -11,12 +13,12 @@ const periodeCles = {
   Année: 'annee',
 };
 
-function CustomTooltip({ active, payload, label }) {
+function CustomTooltip({ active, payload, label, devise }) {
   if (active && payload && payload.length) {
     return (
       <div className="dashboard-chart-tooltip">
         <p className="dashboard-chart-tooltip-label">{label}</p>
-        <p className="dashboard-chart-tooltip-ca">CA : {payload[0].value.toLocaleString('fr-FR')} F</p>
+        <p className="dashboard-chart-tooltip-ca">CA : {formatMontant(payload[0].value, devise)}</p>
         <p className="dashboard-chart-tooltip-commandes">Commandes : {payload[1].value}</p>
       </div>
     );
@@ -25,6 +27,7 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 function Dashboard() {
+  const { commercant } = useCommercant();
   const [periode, setPeriode] = useState('jour');
   const [periodeLabel, setPeriodeLabel] = useState('Jour');
   const [showPeriodeMenu, setShowPeriodeMenu] = useState(false);
@@ -131,7 +134,7 @@ function Dashboard() {
               </div>
               <p className="dashboard-card-label">CA {periodeLabel.toLowerCase()}</p>
               <p className="dashboard-card-value">
-                {(donneesPeriode?.totalCA || 0).toLocaleString('fr-FR')} F
+                {formatMontant(donneesPeriode?.totalCA, commercant?.devise)}
               </p>
             </div>
 
@@ -141,7 +144,7 @@ function Dashboard() {
               </div>
               <p className="dashboard-card-label">Bénéfice</p>
               <p className="dashboard-card-value">
-                {(donneesPeriode?.totalBenefice || 0).toLocaleString('fr-FR')} F
+                {formatMontant(donneesPeriode?.totalBenefice, commercant?.devise)}
               </p>
             </div>
 
@@ -208,7 +211,7 @@ function Dashboard() {
                   axisLine={false}
                   tickLine={false}
                 />
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip content={<CustomTooltip devise={commercant?.devise} />} />
                 <Area type="monotone" dataKey="ca" stroke="#2F5FEA" strokeWidth={2.5} fill="url(#colorCa)" />
                 <Area type="monotone" dataKey="commandes" stroke="#16A34A" strokeWidth={2.5} fill="url(#colorCommandes)" />
               </AreaChart>

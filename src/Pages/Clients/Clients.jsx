@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Phone, MapPin, MessageCircle, Trophy, ChevronDown, ChevronUp } from 'lucide-react';
 import './Clients.css';
 import AccesAbonnementRequis from '../../components/AccesAbonnementRequis/AccesAbonnementRequis';
+import { useCommercant } from '../../context/CommercantContext';
+import { formatMontant } from '../../utils/formatMontant';
 
 // Indicatif pays utilisé pour construire les liens WhatsApp à partir des numéros locaux.
 // À adapter si tu gères plusieurs pays / si les numéros sont déjà stockés avec indicatif.
@@ -82,6 +84,7 @@ function estNouveauClient(dateCreation) {
 const MEDAILLES = ['🥇', '🥈', '🥉'];
 
 function Clients() {
+  const { commercant } = useCommercant();
   const [clients, setClients] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
@@ -282,7 +285,7 @@ function Clients() {
                           </p>
                         </div>
                         <p className="clients-top-montant">
-                          {c.montantPeriode.toLocaleString('fr-FR')} F
+                          {formatMontant(c.montantPeriode, commercant?.devise)}
                         </p>
                         <div className="clients-card-actions clients-top-actions">
                           {c.telephone && (
@@ -367,7 +370,7 @@ function Clients() {
                       </div>
                       <div>
                         <p className="clients-card-stat-value">
-                          {c.totalDepense.toLocaleString('fr-FR')} F
+                          {formatMontant(c.totalDepense, commercant?.devise)}
                         </p>
                         <p className="clients-card-stat-label">Total dépensé</p>
                       </div>

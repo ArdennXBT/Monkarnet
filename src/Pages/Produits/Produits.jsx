@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Plus, X, Pencil, Trash2, ImagePlus, Package, Search, Settings2, Check } from 'lucide-react';
 import './Produits.css';
 import AccesAbonnementRequis from '../../components/AccesAbonnementRequis/AccesAbonnementRequis';
+import { useCommercant } from '../../context/CommercantContext';
+import { formatMontant } from '../../utils/formatMontant';
 
 const CLOUDINARY_CLOUD_NAME = 'pfmip5ll';
 const CLOUDINARY_UPLOAD_PRESET = 'comerza_produits';
@@ -30,6 +32,7 @@ const FORM_VIDE = {
 };
 
 function Produits() {
+  const { commercant } = useCommercant();
   const [produits, setProduits] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
@@ -496,11 +499,11 @@ function Produits() {
 
                   <div className="produits-card-row prix-vente">
                     <span>Prix de vente</span>
-                    <strong>{p.prix.toLocaleString('fr-FR')} F</strong>
+                    <strong>{formatMontant(p.prix, commercant?.devise)}</strong>
                   </div>
                   <div className="produits-card-row">
                     <span>Prix d'achat</span>
-                    <strong>{(p.coutRevient || 0).toLocaleString('fr-FR')} F</strong>
+                    <strong>{formatMontant(p.coutRevient || 0, commercant?.devise)}</strong>
                   </div>
                   <div className="produits-card-row">
                     <span>Stock</span>
@@ -508,7 +511,7 @@ function Produits() {
                   </div>
 
                   <div className="produits-card-marge">
-                    <span>Marge : {marge.toLocaleString('fr-FR')} F</span>
+                    <span>Marge : {formatMontant(marge, commercant?.devise)}</span>
                     <span className="produits-card-marge-pct">{pourcentageMarge}%</span>
                   </div>
                 </div>

@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Plus, X, Trash2, Calendar, ChevronDown, Pencil, Printer } from 'lucide-react';
 import './Commandes.css';
 import AccesAbonnementRequis from '../../components/AccesAbonnementRequis/AccesAbonnementRequis';
+import { useCommercant } from '../../context/CommercantContext';
+import { formatMontant } from '../../utils/formatMontant';
 
 const filtres = ['Toutes', 'en_attente', 'en_cours', 'livree', 'litige'];
 const filtreLabels = {
@@ -38,6 +40,7 @@ function nomProduit(ligne) {
 const ligneVide = { produit: '', nomLibre: '', prixLibre: '', quantite: 1 };
 
 function Commandes() {
+  const { commercant } = useCommercant();
   const [commandes, setCommandes] = useState([]);
   const [produits, setProduits] = useState([]);
   const [chargement, setChargement] = useState(true);
@@ -403,13 +406,13 @@ function Commandes() {
                 {nomProduit(p)} × {p.quantite}
               </span>
               <span className="commandes-details-produit-prix">
-                {(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F
+                {formatMontant(p.prixUnitaire * p.quantite, commercant?.devise)}
               </span>
             </div>
           ))}
           <div className="commandes-details-total-ligne">
             <span>Total</span>
-            <span>{c.total.toLocaleString('fr-FR')} F</span>
+            <span>{formatMontant(c.total, commercant?.devise)}</span>
           </div>
         </div>
       </div>
@@ -557,7 +560,7 @@ function Commandes() {
                             <span className="commandes-numero-mobile">{c.numero || '—'}</span>
                             <span className="commandes-nom-client">{c.client?.nom}</span>
                           </td>
-                          <td className="commandes-montant">{c.total.toLocaleString('fr-FR')} F</td>
+                          <td className="commandes-montant">{formatMontant(c.total, commercant?.devise)}</td>
                           <td onClick={(e) => e.stopPropagation()}>
                             <select
                               className={`commandes-statut-select ${statutClass(c.statut)}`}
@@ -606,7 +609,7 @@ function Commandes() {
                       </div>
                       <div className="commandes-card-montant-wrap">
                         <span className="commandes-card-montant">
-                          {c.total.toLocaleString('fr-FR')} F
+                          {formatMontant(c.total, commercant?.devise)}
                         </span>
                         <ChevronDown size={16} className={`commandes-chevron ${estOuvert ? 'open' : ''}`} />
                       </div>
@@ -690,7 +693,7 @@ function Commandes() {
                         <option value="">Produit du catalogue...</option>
                         {produits.map((p) => (
                           <option key={p._id} value={p._id}>
-                            {p.nom} — {p.prix.toLocaleString('fr-FR')} F
+                            {p.nom} — {formatMontant(p.prix, commercant?.devise)}
                           </option>
                         ))}
                       </select>
@@ -817,7 +820,7 @@ function Commandes() {
                     <span>
                       {nomProduit(p)} × {p.quantite}
                     </span>
-                    <span>{(p.prixUnitaire * p.quantite).toLocaleString('fr-FR')} F</span>
+                    <span>{formatMontant(p.prixUnitaire * p.quantite, commercant?.devise)}</span>
                   </div>
                 ))}
 
@@ -825,7 +828,7 @@ function Commandes() {
 
                 <div className="commandes-recu-total">
                   <span>Total</span>
-                  <span>{commandeRecu.total.toLocaleString('fr-FR')} F</span>
+                  <span>{formatMontant(commandeRecu.total, commercant?.devise)}</span>
                 </div>
 
                 <div className="commandes-recu-merci">Merci pour votre commande !</div>
