@@ -23,7 +23,7 @@ const TITLES = [
 ];
 
 const TITLE_DELAY = 3800;
-const TOTAL_ROTATION_TIME = TITLE_DELAY * 4 + 400; // ≈ 15.6s → les 4 titres passent bien
+const TOTAL_ROTATION_TIME = TITLE_DELAY * 4 + 400;
 
 function Hero() {
   const [index, setIndex] = useState(0);
@@ -40,7 +40,7 @@ function Hero() {
 
     const stopTimer = setTimeout(() => {
       clearInterval(interval);
-      setTitleIndex(0); // force le retour sur "Votre chiffre d'affaires, en temps réel."
+      setTitleIndex(0);
     }, TOTAL_ROTATION_TIME);
 
     return () => {
@@ -110,7 +110,7 @@ function Hero() {
               perdent encore du temps.
             </p>
 
-            <Link to="/inscription" className="hero-cta">
+            <Link to="/login" className="hero-cta">
               Essai gratuit 7 jours
             </Link>
           </div>
@@ -132,13 +132,16 @@ function Hero() {
                 className="hero-slider-track"
                 style={{ transform: `translateX(-${index * 100}%)` }}
               >
-                {SLIDES.map((slide) => (
+                {SLIDES.map((slide, i) => (
                   <img
                     key={slide.src}
                     src={slide.src}
                     alt={slide.alt}
                     className="hero-image"
                     draggable="false"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority={i === 0 ? 'high' : 'auto'}
                   />
                 ))}
               </div>
