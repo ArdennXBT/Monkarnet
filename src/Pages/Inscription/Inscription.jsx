@@ -16,7 +16,6 @@ function Inscription() {
     nomCommerce: '',
   });
   const navigate = useNavigate();
-  const googleBtnRef = useRef(null);
   const hiddenGoogleBtnRef = useRef(null);
 
   const handleGoogleResponse = async (response) => {
@@ -41,26 +40,44 @@ function Inscription() {
   };
 
   useEffect(() => {
-    if (window.google && hiddenGoogleBtnRef.current) {
+    const initGoogle = () => {
+      if (!window.google || !hiddenGoogleBtnRef.current) return;
+
       window.google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
         callback: handleGoogleResponse,
       });
-      // Bouton natif Google rendu hors-écran : il gère le vrai flux OAuth,
-      // notre bouton visible ci-dessous ne fait que déclencher un clic dessus.
+
       window.google.accounts.id.renderButton(hiddenGoogleBtnRef.current, {
         theme: 'outline',
         size: 'large',
         width: 320,
         text: 'signup_with',
       });
+    };
+
+    if (window.google) {
+      initGoogle();
+    } else {
+      const checkGoogle = setInterval(() => {
+        if (window.google) {
+          clearInterval(checkGoogle);
+          initGoogle();
+        }
+      }, 100);
+
+      // Sécurité
+      setTimeout(() => clearInterval(checkGoogle), 5000);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCustomGoogleClick = () => {
     const nativeBtn = hiddenGoogleBtnRef.current?.querySelector('div[role="button"]');
-    nativeBtn?.click();
+    if (nativeBtn) {
+      nativeBtn.click();
+    } else {
+      setErreur('Bouton Google non prêt. Réessaie dans une seconde.');
+    }
   };
 
   const handleChange = (e) => {
@@ -90,7 +107,6 @@ function Inscription() {
         throw new Error(data.message || "Erreur lors de l'inscription.");
       }
 
-      // Le compte est créé mais pas encore vérifié : on redirige vers la page de code
       navigate('/verifier-email', { state: { email: formData.email } });
     } catch (err) {
       setErreur(err.message);
@@ -122,6 +138,8 @@ function Inscription() {
           </svg>
           S'inscrire avec Google
         </button>
+
+        {/* Bouton Google natif caché */}
         <div ref={hiddenGoogleBtnRef} className="inscription-google-hidden"></div>
 
         <div className="inscription-divider"><span>ou</span></div>
