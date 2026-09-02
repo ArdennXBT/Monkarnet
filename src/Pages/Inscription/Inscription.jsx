@@ -118,10 +118,7 @@ function Inscription() {
   return (
     <div className="inscription">
       <div className="inscription-card">
-        <span className="inscription-logo">
-          <img src="/logo-orbizo-icon.svg" alt="" className="inscription-logo-icon" />
-          Orbizo
-        </span>
+        
         <h1 className="inscription-title">Créer un compte</h1>
         <p className="inscription-subtitle"></p>
 
