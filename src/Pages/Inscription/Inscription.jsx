@@ -137,7 +137,7 @@ function Inscription() {
                 <input
                   type="text"
                   name="prenom"
-                  placeholder="Awa"
+                  placeholder="Ren"
                   value={formData.prenom}
                   onChange={handleChange}
                   required
@@ -151,7 +151,7 @@ function Inscription() {
                 <input
                   type="text"
                   name="nom"
-                  placeholder="Koffi"
+                  placeholder="Suxi"
                   value={formData.nom}
                   onChange={handleChange}
                   required
@@ -167,7 +167,7 @@ function Inscription() {
               <input
                 type="email"
                 name="email"
-                placeholder="vous@exemple.com"
+                placeholder="vous@gmail.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -205,7 +205,7 @@ function Inscription() {
               <input
                 type="text"
                 name="nomCommerce"
-                placeholder="Boutique Awa"
+                placeholder="Boutique Ren"
                 value={formData.nomCommerce}
                 onChange={handleChange}
                 required
