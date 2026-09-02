@@ -73,16 +73,22 @@
 }
 
 .header-login-btn {
+  display: inline-flex;
+  align-items: center;
   color: var(--hd-black);
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-  padding: 8px 4px;
-  transition: opacity 0.2s ease;
+  padding: 9px 22px;
+  border: 1.5px solid var(--hd-black);
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 .header-login-btn:hover {
-  opacity: 0.7;
+  background-color: var(--hd-black);
+  color: var(--hd-white);
+  transform: translateY(-1px);
 }
 
 /* Bouton hamburger (mobile) */

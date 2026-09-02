@@ -110,7 +110,7 @@ function Hero() {
               perdent encore du temps.
             </p>
 
-            <Link to="/login" className="hero-cta">
+            <Link to="/inscription" className="hero-cta">
               Essai gratuit 7 jours
             </Link>
           </div>
