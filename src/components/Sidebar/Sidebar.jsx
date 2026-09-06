@@ -43,7 +43,7 @@ function Sidebar({ ouverte, onFermer }) {
       <div className="sidebar-top">
         <Link to="/dashboard" className="sidebar-logo" onClick={onFermer}>
           <img
-            src="/logo-orbizo-full.svg"
+            src="/logo-orbizo-icon.svg"
             alt="Orbizo"
             className="sidebar-logo-full"
           />
