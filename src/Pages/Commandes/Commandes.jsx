@@ -69,6 +69,7 @@ function Commandes() {
   const [clientTelephone, setClientTelephone] = useState('');
   const [clientAdresse, setClientAdresse] = useState('');
   const [lignesProduits, setLignesProduits] = useState([{ ...ligneVide }]);
+  const [fraisLivraison, setFraisLivraison] = useState(''); // 🆕
 
   // Fermer le menu si on clique dehors
   useEffect(() => {
@@ -182,6 +183,21 @@ function Commandes() {
     );
   });
 
+  // 🆕 Calcul en direct du total dans le formulaire
+  const sousTotalFormulaire = lignesProduits.reduce((somme, l) => {
+    const quantite = Number(l.quantite) || 0;
+    let prix = 0;
+    if (l.produit) {
+      const produitInfo = produits.find((p) => p._id === l.produit);
+      prix = produitInfo ? produitInfo.prix : 0;
+    } else {
+      prix = Number(l.prixLibre) || 0;
+    }
+    return somme + prix * quantite;
+  }, 0);
+  const fraisFormulaire = Math.max(Number(fraisLivraison) || 0, 0);
+  const totalFormulaire = sousTotalFormulaire + fraisFormulaire;
+
   const ajouterLigne = () => {
     setLignesProduits([...lignesProduits, { ...ligneVide }]);
   };
@@ -237,6 +253,7 @@ function Commandes() {
     setClientTelephone('');
     setClientAdresse('');
     setLignesProduits([{ ...ligneVide }]);
+    setFraisLivraison(''); // 🆕
     setErreur('');
     setModalOuvert(true);
   };
@@ -247,6 +264,7 @@ function Commandes() {
     setClientNom(c.client?.nom || '');
     setClientTelephone(c.client?.telephone || '');
     setClientAdresse(c.client?.adresse || '');
+    setFraisLivraison(c.fraisLivraison ? String(c.fraisLivraison) : ''); // 🆕
 
     const lignes = (c.produits || []).map((p) => ({
       produit: p.produit && typeof p.produit === 'object' ? p.produit._id : p.produit || '',
@@ -327,6 +345,12 @@ function Commandes() {
       return;
     }
 
+    // 🆕 Validation des frais de livraison
+    if (fraisLivraison !== '' && (isNaN(Number(fraisLivraison)) || Number(fraisLivraison) < 0)) {
+      setErreur('Les frais de livraison doivent être un nombre positif.');
+      return;
+    }
+
     const estModification = modeModal === 'modifier';
     const url = estModification
       ? `https://monkarnet-backend.onrender.com/api/commandes/${commandeEnEditionId}`
@@ -336,10 +360,12 @@ function Commandes() {
       ? {
           client: { nom: clientNom, telephone: clientTelephone, adresse: clientAdresse },
           produits: produitsFormates,
+          fraisLivraison: Number(fraisLivraison) || 0, // 🆕
         }
       : {
           client: { nom: clientNom, telephone: clientTelephone, adresse: clientAdresse },
           produits: produitsFormates,
+          fraisLivraison: Number(fraisLivraison) || 0, // 🆕
           statut: 'en_attente',
         };
 
@@ -410,6 +436,15 @@ function Commandes() {
               </span>
             </div>
           ))}
+          {/* 🆕 Ligne livraison */}
+          {c.fraisLivraison > 0 && (
+            <div className="commandes-details-produit-ligne">
+              <span className="commandes-details-produit-nom">Livraison</span>
+              <span className="commandes-details-produit-prix">
+                {formatMontant(c.fraisLivraison, commercant?.devise)}
+              </span>
+            </div>
+          )}
           <div className="commandes-details-total-ligne">
             <span>Total</span>
             <span>{formatMontant(c.total, commercant?.devise)}</span>
@@ -741,6 +776,24 @@ function Commandes() {
                   + Ajouter un produit
                 </button>
 
+                {/* 🆕 Frais de livraison */}
+                <label>
+                  Frais de livraison (optionnel)
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                    value={fraisLivraison}
+                    onChange={(e) => setFraisLivraison(e.target.value)}
+                  />
+                </label>
+
+                {/* 🆕 Total en direct */}
+                <div className="commandes-modal-total">
+                  <span>Total</span>
+                  <span>{formatMontant(totalFormulaire, commercant?.devise)}</span>
+                </div>
+
                 <button type="submit" className="commandes-modal-submit">
                   {modeModal === 'modifier' ? 'Enregistrer les modifications' : 'Créer la commande'}
                 </button>
@@ -787,7 +840,7 @@ function Commandes() {
 
               <div className="commandes-recu-print-zone">
                 {commercant?.nomCommerce && (
-                <div className="commandes-recu-titre">{commercant.nomCommerce}</div>
+                  <div className="commandes-recu-titre">{commercant.nomCommerce}</div>
                 )}
                 <div className="commandes-recu-sous-titre">
                   Reçu de commande {commandeRecu.numero}
@@ -825,6 +878,14 @@ function Commandes() {
                     <span>{formatMontant(p.prixUnitaire * p.quantite, commercant?.devise)}</span>
                   </div>
                 ))}
+
+                {/* 🆕 Ligne livraison sur le reçu */}
+                {commandeRecu.fraisLivraison > 0 && (
+                  <div className="commandes-recu-ligne">
+                    <span>Livraison</span>
+                    <span>{formatMontant(commandeRecu.fraisLivraison, commercant?.devise)}</span>
+                  </div>
+                )}
 
                 <div className="commandes-recu-separateur" />
 
