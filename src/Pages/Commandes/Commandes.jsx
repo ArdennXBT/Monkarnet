@@ -786,7 +786,9 @@ function Commandes() {
               </div>
 
               <div className="commandes-recu-print-zone">
-                <div className="commandes-recu-titre">Comerza</div>
+                {commercant?.nomCommerce && (
+                <div className="commandes-recu-titre">{commercant.nomCommerce}</div>
+                )}
                 <div className="commandes-recu-sous-titre">
                   Reçu de commande {commandeRecu.numero}
                 </div>
